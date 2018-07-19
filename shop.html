@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>	
+		<!--markdown start-->
+		<script src="js/editor.md-master/lib/marked.min.js"></script>
+		<script src="js/editor.md-master/lib/prettify.min.js"></script>
+		<script src="js/editor.md-master/lib/raphael.min.js"></script>
+		<script src="js/editor.md-master/lib/underscore.min.js"></script>
+		<script src="js/editor.md-master/lib/sequence-diagram.min.js"></script>
+		<script src="js/editor.md-master/lib/flowchart.min.js"></script>
+		<script src="js/editor.md-master/lib/jquery.flowchart.min.js"></script>
+		<script src="js/editor.md-master/editormd.js"></script>
+		<!--markdown end-->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" charset="utf-8"></script>
+
+		
+		<script src="js/transport.js" type="text/javascript"></script>
+		<script src="js/jQuery.cookie.js" type="text/javascript"></script>
+		<script src="js/layui/layui.js" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/arrayFun.js" type="text/javascript"></script>
+	    <script src="js/common.js" type="text/javascript"></script>
+    	<script src="js/crontab.js" type="text/javascript"></script>
+		<script src="js/user.js" type="text/javascript"></script>
+	 
+		<script src="js/shop.js" type="text/javascript"></script>
+		<script src="js/index.js" type="text/javascript"></script>
+		
+		<link rel="stylesheet"href="js/editor.md-master/css/editormd.css" />		
+		
+		<title>应用商店</title>
+	</head>
+	<body>
+		<nav class="nav_herder">
+			<div class="nav_left" onClick="location='index.html'"><img src="img/icon_alarm.png" class="logo"/>冬笋物联网</div>
+			<div class="pull-right nav_right">
+				<p class="J_appCenter hd" onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span><em>|</em></p>
+				<p class="J_getMembers hd"><img src="img/top_management.png"/><span><!--成员管理--></span><em>|</em></p>
+				<p><img src="img/top_news.png"/></p><em>|</em>
+				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+				<p><img src="img/top_quit.png" id="J_logout"/></p>
+			</div>
+		</nav>
+		<div class="down-main">
+			<div class="left-main left-full">
+				<div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+				<div class="subNav" onClick="location='index.html'">
+					<img src="img/nav_home.png" class="hd_img"/>
+					<img src="img/nav_home_hover.png" class="hover_img"/>
+					<p class="sublist-title">首页</p>
+				</div>
+				<div class="subNav" onClick="location='mine.html'">
+					<img src="img/nav_equipment.png" class="hd_img"/>
+					<img src="img/nav_equipment_hover.png" class="hover_img"/>
+					<p class="sublist-title">我的网关</p>
+				</div>
+	  		</div>
+	  		<div class="right-product my-index right-full">
+	  			<div class="rightHeight">
+		  			<ol class="breadcrumb">
+					    <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+					    <li class="active"><a href="mine.html">我的网关</a></li>
+					    <li class="active J_gate_name"></li>
+					    <li class="active">应用安装</a></li>
+					</ol>
+		  			<div class="main_content shop_content">
+		  				<div class="top cf">
+							<span class="fl">应用商店</span>
+							<div class="fr">
+								<div class="bs-example bs-example-form" role="form">
+									<div class="input-group">
+										<input type="search" class="form-control" id="J_keyword" placeholder="输入应用名称">
+										<span class="input-group-addon"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!--内容部分-->
+						<div class="center">
+							
+							<div class="line">
+								<div class="left">
+									<span class="J_name"><img src="img/shop_icon_sbcs.png" />应用分类</span>
+									<p data-classname="category">
+										<span class="all J_first">全部</span>
+										<span></span>
+									</p>
+								</div>
+								<div class="more"><em>更多</em><img src="img/icon_under.png" /></div>
+							</div>
+							
+							<div class="line">
+								<div class="left">
+									<span class="J_name"><img src="img/shop_icon_sbcs.png" />通讯协议</span>
+									<p data-classname="protocol">
+										<span  class="all J_first">全部</span>
+										<span></span>
+									</p>
+								</div>
+								<div class="more"><em>更多</em><img src="img/icon_under.png" /></div>
+							</div>
+							
+							<div class="line">
+								<div class="left">
+									<span class="J_name"><img src="img/shop_icon_sbcs.png" />设备厂商</span>
+									<p data-classname="supplier">
+										<span  class="all J_first">全部</span>
+										<span></span>
+									</p>
+								</div>
+								<div class="more"><em>更多</em><img src="img/icon_under.png" /></div>
+							</div>
+							
+							<div class="line" style="display: none;">
+								<div>
+									<span class="J_name"><img src="img/shop_icon_sblx.png" />设备类型</span>
+									<span class="all J_first">全部</span>
+									<span>设备类型</span>
+									<span>设备类型</span>
+								</div>
+								<div class="more"><em>更多</em><img src="img/icon_under.png" /></div>
+							</div>
+							<div class="line" style="display: none;">
+								<div>
+									<span><img src="img/shop_icon_yyjg.png" />应用价格</span>
+									<span class="all J_first">全部</span>
+									<span>10-29</span>
+									<span>30以上</span>
+								</div>
+							</div>
+						</div>
+						<div class="content cf J_appList">
+							<div class="none">
+								<p><img src="img/photo_yysd_search.png"/></p>
+								<p>很抱歉，没有您要查找的应用！</p>
+								<button>应用商店</button>
+							</div>
+		  				</div>
+		  				<div id="J_pagination_nav" style="text-align: center;" class="pagination_nav J_none"></div>
+		  			</div>
+	  			</div>
+	  			<div class="copyright">SymTech Application © 2008-2017</div>
+			</div>
+		</div>
+		<div class="J_install_html main_content hd">
+				<div class="top cf">
+					<span class="fl">应用安装</span>
+					<div class="fr close-"></div>
+				</div>
+				<div class="txt_main">
+					<div class="name">
+						<span>应用实例：</span>
+						<input type="text" name="inst" class="J_inst" value="" />
+						<input type="hidden" name="device" readonly="true" class="J_device_sn" value="" />
+						<input type="hidden" name="device" class="J_app" value="" />
+					</div>
+					<div>
+						<p>应用配置：</p>
+						<div id="code1" class="ace_editor" style="min-height:300px; border: 1px solid #e1e1e1;"><textarea rows=20 class="ace_text-input">{}</textarea></div>
+        				<script>
+			            //初始化对象
+			            editor = ace.edit("code1");
+			            
+			            //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+			            theme = "clouds"
+			            language = "json"
+			            editor.setTheme("ace/theme/" + theme);
+			            editor.session.setMode("ace/mode/" + language);
+			            
+			            //字体大小
+			            editor.setFontSize(16);
+			            
+			            //设置只读（true时只读，用于展示代码）
+			            editor.setReadOnly(false); 
+			            
+			            //自动换行,设置为off关闭
+			            editor.setOption("wrap", "free")
+			            
+			            //启用提示菜单
+			            ace.require("ace/ext/language_tools");
+			            editor.setOptions({
+		                    enableBasicAutocompletion: true,
+		                    enableSnippets: true,
+		                    enableLiveAutocompletion: true
+		                });
+			                
+						var session = editor.getSession();
+						//console.log('-------------------session1',session.getValue());
+						$(function(){
+							/**
+							*	购买或安装(已添加监控)
+							*/
+							$(".J_install_html .button").click(function(){
+								var app = $('.J_app').val();
+								var inst = $('.J_inst').val(); // 手动填写的
+								var devs = JSON.parse(session.getValue());
+								if(devs==''){
+									devs = {};
+								}
+								if(inst==''){
+									err('应用实例不能为空');
+									return false;
+								}
+								var id = "install "+$('.J_device_sn').val()+"'s App "+app+ ' '+Date.parse(new Date());
+								var data = {
+								    "device": $('.J_device_sn').val(),
+								    "id": id,
+								    "data": {
+								        "inst": inst,
+								        "name": app,
+								        "version": localStorage.getItem('app_lastest_version_'+app),
+								        "conf": devs
+								    }
+								}
+								// console.log('-------------------data',data);
+								Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+								function app_install(req){		
+									if(req.message!=''){
+										var idarr = {
+											'id':id,
+											'times':20,
+											'docid':'',
+											'type':'app_install',
+                                            'title':"应用安装",
+											'crontabDesc':inst+"安装",
+										}
+										addCrontab(idarr);
+										alt('命令已发送，等待结果返回',1);
+									}else{
+										err('命令执行失败');
+									}
+									
+									setTimeout(function(){
+										window.location.href='collection.html?type=manage&device_sn='+$('.J_device_sn').val();
+										}, 2000);
+								}
+							})	
+						
+						})	
+			        </script>
+					</div>
+					<div class="button">确定</div>
+				</div>
+			</div>
+		<!--隐藏域-->
+		<div class="shade">
+			<div class="main_content shop_content info_shade">
+  				<div class="top cf">
+					<span class="fl">应用商店</span>
+					<div class="fr close-"></div>
+				</div>
+				<div class="shopinfo_center">
+	  				<!--<div class="left">
+	  					
+	  				</div>-->
+	  				<div class="button J_setupButton">安装应用</div>
+	  			</div>
+	  			<div class="shop_nav">
+	  				<ul class="nav nav-tabs">
+						<li class="active"><a href="#one" data-toggle="tab">应用介绍</a></li>
+						<!--<li><a href="#two" data-toggle="tab">应用说明</a></li>-->
+						<li><a href="#three" data-toggle="tab">用户评论</a></li>
+					</ul>
+					<div class="right">
+						<span onClick="javascript:alt('开发中',4);">
+						<img src="img/shop_collection.png"/>收藏</span>
+						<em>|</em>
+						<span onClick="javascript:alt('开发中',4);">
+						<img src="img/shop_share.png"/>分享</span>
+					</div>
+	  			</div>
+				<div class="tab-content shopinfo_content">
+					<div class="tab-pane fade in active cf" id="one">
+						<div id="myCarousel" class="carousel slide fl " >
+							<ol class="carousel-indicators" style="bottom:0;">
+								<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+								<li data-target="#myCarousel" data-slide-to="1"></li>
+								<li data-target="#myCarousel" data-slide-to="2"></li>
+							</ol>   
+							<div class="carousel-inner">
+								<div class="item active">
+									<img src="img/shop_collection_hover.png">
+								</div>
+								<!--<div class="item">
+									<img src="img/shop_collection_hover.png">
+								</div>
+								<div class="item">
+									<img src="img/shop_collection_hover.png">
+								</div>-->
+							</div>
+							<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+						        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+						        <span class="sr-only">Previous</span>
+						    </a>
+						    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+						        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+						        <span class="sr-only">Next</span>
+						    </a>
+						</div>
+						<div class="txt fl" id="my-editormd">
+							<textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:;"></textarea>
+						</div>
+					</div>
+					
+					<!--<div class="tab-pane fade" id="two">
+						2
+					</div>-->
+					<div class="tab-pane fade" id="three">
+						<div class="comment">
+							<div class="J_comment">
+								<!--循环部分-->
+								<!--<div class="comment_main cf">
+									<div class="img fl">
+										<img src="img/bg_left.png" />
+									</div>
+									<div class="fl">
+										<p><b>来宾1</b><span class="star-5"></span><span>16小时前</span></p>
+										<p>很不错的应用，安装简单！</p>
+										<p>
+											<img src="img/shop_praise.png" /> <img src="img/shop_praise_hover.png" />
+											<img src="img/shop_sharecmt.png" />
+											<img src="img/shop_delete.png" />
+										</p>
+									</div>
+								</div>-->
+							</div>
+							<div class="comment_bottom">
+								<div>
+									<input type="text" name="title" value="" placeholder="标题"/>
+								</div>
+								<div>
+									<textarea id="content" rows="5" cols="" placeholder="输入评论内容……"></textarea>
+								</div>
+								<input id="J_id" value="" type="hidden">
+								<div class="box">
+									<span>评星：</span>
+									<ul id="star0">
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+										<li></li>
+									</ul>
+									<input type="hidden" value="0" name="start">
+								</div>
+								<button>发布评论</button>
+							</div>
+						</div>
+					</div>
+				</div>
+  			</div>
+		</div>
+	</body>
+</html>

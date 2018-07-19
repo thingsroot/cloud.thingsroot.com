@@ -1,0 +1,84 @@
+{
+  "message": [
+    {
+      "\u901a\u8baf": 1,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 5,
+      "\u5e94\u7528": 10,
+      "time": "2018-05-15 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 0,
+      "\u8bbe\u5907": 0
+    },
+    {
+      "\u901a\u8baf": 0,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 0,
+      "\u5e94\u7528": 2,
+      "time": "2018-05-16 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 10,
+      "\u8bbe\u5907": 20
+    },
+    {
+      "\u901a\u8baf": 0,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 4,
+      "\u5e94\u7528": 10,
+      "time": "2018-05-17 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 14,
+      "\u8bbe\u5907": 9
+    },
+    {
+      "\u901a\u8baf": 0,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 2,
+      "\u5e94\u7528": 0,
+      "time": "2018-05-18 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 0,
+      "\u8bbe\u5907": 0
+    },
+    {
+      "\u901a\u8baf": 3,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 5,
+      "\u5e94\u7528": 7,
+      "time": "2018-05-19 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 10,
+      "\u8bbe\u5907": 1
+    },
+    {
+      "\u901a\u8baf": 23,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 1,
+      "\u5e94\u7528": 5,
+      "time": "2018-05-20 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 9,
+      "\u8bbe\u5907": 10
+    },
+    {
+      "\u901a\u8baf": 10,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 4,
+      "\u5e94\u7528": 33,
+      "time": "2018-05-21 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 7,
+      "\u8bbe\u5907": 18
+    },
+    {
+      "\u901a\u8baf": 6,
+      "name": "device_event_type_statistics",
+      "\u7cfb\u7edf": 7,
+      "\u5e94\u7528": 19,
+      "time": "2018-05-22 08:00:00",
+      "owner": "\u65cb\u601d\u79d1\u6280",
+      "\u6570\u636e": 8,
+      "\u8bbe\u5907": 4
+    }
+  ]
+}

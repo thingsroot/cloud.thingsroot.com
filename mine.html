@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/style.css?v=20180611" rel="stylesheet" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+		<title>我的网关</title>
+	</head>
+	<body>
+		<nav class="nav_herder">
+			<div class="nav_left" onClick="location='index.html'"><img src="img/icon_alarm.png" class="logo"/>冬笋物联网</div>
+			<div class="pull-right nav_right">
+				<p class="J_appCenter hd" onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span><em>|</em></p>
+				<p class="J_getMembers hd"><img src="img/top_management.png"/><span><!--成员管理--></span><em>|</em></p>
+				<p><img src="img/top_news.png"/><em>|</em></p>
+				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span><em>|</em></p>
+				<p><img src="img/top_quit.png" id="J_logout"/></p>
+			</div>
+		</nav>
+		<div class="down-main">
+			<div class="left-main left-full">
+				<div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+				<div class="subNav" onClick="location='index.html'">
+					<img src="img/nav_home.png" class="hd_img"/>
+					<img src="img/nav_home_hover.png" class="hover_img"/>
+					<p class="sublist-title">首页</p>
+				</div>
+				<div class="subNav bg-color" onClick="location='mine.html'">
+					<img src="img/nav_equipment.png" class="hd_img"/>
+					<img src="img/nav_equipment_hover.png" class="hover_img"/>
+					<p class="sublist-title">我的网关</p>
+				</div>
+	  		</div>
+	  		<div class="right-product my-index right-full">
+	  			<div class="rightHeight">
+			  		<ol class="breadcrumb">
+					    <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+					    <li class="active">我的网关</li>
+					</ol>
+					<div class="main_content">
+						<div class="top cf">
+							<span class="fl">我的网关</span>
+							<div class="fr">
+								<span class="btn bind J_bind">+ 绑定新网关</span>
+
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										名称
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li data-name="device_name"><a style="cursor:pointer">名称</a></li>
+										<li data-name="device_desc"><a style="cursor:pointer">描述</a></li>
+									</ul>
+								</div>
+
+								<!--<div class="btn-group">-->
+									<!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span id="J_searchType" data-name="device_name">名称</span> <i></i></button>-->
+									<!--<ul class="dropdown-menu top_menu animated fadeInDown" role="menu">-->
+										<!--<li data-name="device_name">名称</li>-->
+										<!--<li data-name="device_desc">描述</li>-->
+									<!--</ul>-->
+								<!--</div>-->
+
+								<div class="bs-example J_mineSearchForm">
+									<div class="input-group">
+										<input id="J_keyword" type="search" class="form-control" placeholder="输入设备名称">
+										<span class="input-group-addon"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="tit cf">
+							<div class="taps fl"><span class="color" data-filter="all">全部</span><span data-filter="online">在线</span><span data-filter="offline">离线</span><span data-filter="offline_7d">离线7天</span></div>
+							<div class="fr refresh" data-filter="all">
+								<img src="img/icon_refresh.png" />
+							</div>
+						</div>
+						<div class="table_height" style="height:690px;">
+							<!--内容区域-->
+							<table class="table">
+							    <tbody>
+								    <tr id="J_bodyline" class="J_none">
+								        <th><label class="checkbox"><input type="checkbox" class="all"/>全选<em></em></label></th>
+								        <th class="J_mine_order" data-orderName="device_name" data-orderType="desc">名称<i></i></th>
+								        <th class="J_mine_order" data-orderName="device_desc" data-orderType="desc">描述<i></i></th>
+								        <th class="J_mine_order" data-orderName="last_updated" data-orderType="desc">地理位置<i></i></th>
+								        <th class="J_mine_order" data-orderName="last_updated" data-orderType="desc">最后上线时间<i></i></th>
+								        <th class="J_mine_order" data-orderName="device_status" data-orderType="desc">状态<i></i></th>
+								        <th>操作</th>
+								    </tr>
+								</tbody>
+							</table>
+							<input type="hidden" value="" id="list_original">
+							<input type="hidden" value="" id="J_list_current">
+							<div class="bottom J_none">
+								<label class="checkbox"><input type="checkbox" class="all"/>全选<em></em></label>
+								<span id="J_remove">移除</span>
+								<span id="J_upgrade">升级</span>
+								<!--<div class="btn-group">
+									<span class="more">更多</span>
+									<div class="more_content animated fadeInLeft hd">
+										<p onclick="location=''">XXXXXX</p>
+										<p onclick="location=''">XXXXXX</p>
+										<p onclick="location=''">XXXXXX</p>
+									</div>
+								</div>-->
+							</div>
+							<!--内容区域end-->
+							<!--无内容状态-->
+							<div class="none hd">
+								<p><img src="img/photo_wdwg.png"/></p>
+								<p>没有查询到符合条件的记录！</p>
+								<button class="J_bind">绑定新网关</button>
+							</div>
+							<!--无内容状态end-->
+						</div>
+					</div>
+					<div id="J_pagination_nav" style="text-align: center;" class="pagination_nav J_none"></div>
+		  		</div>
+				<div class="copyright re_copy">SymTech Application © 2008-2017</div>
+	  		</div>
+	  	</div>
+	  	<!--隐藏域-->	
+	  	<div class="shade">
+	  		<div class="main animated fadeInDown">
+	  			<div class="tit">
+	  				<b>绑定新网关</b>
+	  				<span class="close-"></span>
+	  			</div>
+	  			<div class="add_content">
+	  				<p>网关名称 *</p>
+	  				<input type="text" name="name" autocomplete="off"/>
+	  				<div class="warning animated bounceIn hd"><i></i>网关名称不能为空</div>
+	  				<p>网关序列号 *</p>
+	  				<input type="text" name="sn" />
+	  				<p class="warning J_add_none"><em></em>输入提交后不可修改</p>
+	  				<p class="J_add_none">设备归属</p>
+	  				<select name="owner_type" id="owner_type" class="J_add_none">
+	  						<option value=1>仅自己可见</option>
+	  						<option value=2>所有人可见</option>
+	  				</select>
+	  				<p>网关描述</p>
+	  				<textarea rows="4" name="desc" id="desc"></textarea>
+	  				<div class="bottom">
+	  					<button class="sure" data="add" index="">确定</button>
+	  					<button class="remake">重置</button>
+	  				</div>
+	  			</div>
+	  		</div>
+	  	</div>
+	<script src="js/jquery-1.11.3.min.js?v=20180611" type="text/javascript"></script>
+	<script src="js/transport.js?v=20180611" type="text/javascript"></script>	
+	<script src="js/jQuery.cookie.js?v=20180611" type="text/javascript"></script>	
+	<script src="js/layui/layui.js?v=20180611" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js?v=20180611" type="text/javascript"></script>
+	<script src="js/arrayFun.js?v=20180611" type="text/javascript"></script>
+    <script src="js/common.js?v=20180611" type="text/javascript"></script>
+	<script src="js/user.js?v=20180611" type="text/javascript"></script>
+	<script src="js/mine.js?v=20180611" type="text/javascript"></script>
+	<script src="js/index.js?v=20180611" type="text/javascript"></script>
+	<script>
+		$(function(){
+			$('.remake').click(function(){
+				$("#myform")[0].reset();
+				return false;
+			});
+		})
+	</script>	
+	</body>
+</html>

@@ -1,0 +1,269 @@
+<!--[if lt IE 9]>
+	<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]--> 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+      <style type="text/css">
+          .bs-example{
+            margin: 16px;
+          }
+      </style>
+<!-- <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <script src="static/js/jquery-2.2.4.min.js"></script>
+    <script src="static/js/bootstrap.min.js" ></script> -->
+	
+	 <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="container-fluid">
+      <div class="bs-example"><div class="col-md-4"></div><h1>参数</h1></div>
+
+      <div class="bs-example">
+
+
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-4 control-label">网关状态:</label>
+            <div class="col-sm-8">
+              <div class="form-control" ><span class="gate_status_result" > </span></div>
+			  
+            </div>
+          </div>		
+		
+          <div class="form-group">
+            <label class="col-sm-4 control-label">授权码:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control tunnel_config" id="authcode" placeholder="01010101010101" value="01010101010101">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">网关SN:</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control tunnel_config" id="gatesn" placeholder="2-30002-001813-00075" value="2-30002-001813-00075">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">连接模式:</label>
+            <div class="col-sm-8">
+              <button type="button" class="btn btn-default btn-primary active tunnel_config" id="virtual_network">虚拟网络</button>
+              <button type="button" class="btn btn-default tunnel_config" id="virtual_serial">虚拟串口</button>
+            </div>
+          </div>
+
+                <!-- vpn_network  -->
+                <div class="" id="v_network">
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label"><span id="vn_ipaddr">虚拟网卡IP:</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control tunnel_config" id="tap_ip" placeholder="192.168.0.33" value="192.168.0.33">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label"><span id="vn_netmask">虚拟网卡netmask:</span></label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control tunnel_config" id="tap_netmask" placeholder="255.255.255.0" value="255.255.255.0">
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">网关IP:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control tunnel_config" id="dev_ip" placeholder="device ipaddress" value="192.168.0.245">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">传输协议:</label>
+                      <div class="col-sm-8">
+                        <button type="button" class="btn btn-default btn-primary active tunnel_config" id="protocol_tcp">tcp</button>
+
+                        <button type="button" class="btn btn-default tunnel_config" id="protocol_kcp">kcp</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">网络模式:</label>
+                      <div class="col-sm-8">
+                        <button type="button" class="btn btn-default btn-primary active tunnel_config" id="bridge">桥接模式</button>
+
+                        <button type="button" class="btn btn-default tunnel_config" id="router">路由模式</button>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-lg btn-default hide" id="start_vpn"></button>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-4 col-sm-8">
+                            <div class="alert alert-info hide" role="alert" id="vpn_ret_message">...</div>
+                      </div>
+                    </div>
+
+                </div>
+                <!-- vpn_network  -->
+
+                <!-- virtual_serial  -->
+                <div class="hide" id="v_serial">
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">本地虚拟串口:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="local_virtual_serial" placeholder="com1">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">远程虚拟串口:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="remote_virtual_serial" placeholder="com1">
+                      </div>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">波特率:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="baudrate" placeholder="9600">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">数据位:</label>
+                      <div class="col-sm-8">
+                          <input type="text" class="form-control" id="data_bit" placeholder="8">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">校验位:</label>
+                      <div class="col-sm-8">
+                        <input type="text" class="form-control" id="check_bit" placeholder="N">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-4 control-label">停止位:</label>
+                      <div class="col-sm-8">
+                          <input type="text" class="form-control" id="stop_bit" placeholder="1">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="col-sm-offset-4 col-sm-8">
+                        <button type="button" class="btn btn-default hide" id="start_serial"></button>
+                      </div>
+                    </div>
+                </div>
+                <!-- virtual_serial  -->
+
+          <div class="form-group">
+            <div class="col-sm-offset-4 col-sm-8">
+              <button type="button" class="btn btn-lg btn-default btn-primary hide" id="mytest">测试</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+
+    </div>
+
+  </div>
+
+  <div class="col-md-6">
+      <div class="container-fluid">
+        <div class="bs-example"><h1>状态</h1></div>
+        <div class="bs-example hide">
+          <button type="button" class="btn btn-default btn-primary" id="query">本地状态</button>
+
+          <button type="button" class="btn btn-default btn-primary" id="cloud">代理状态</button>
+
+          <button type="button" class="btn btn-default btn-primary" id="check_env">运行环境</button>
+
+        </div>
+
+        <div class="bs-example">
+            <p><span>本地运行环境：</span> <span class="service_error" id="check_env_result"></span></p><br />
+            <p><span>本地服务状态：</span> <span id="check_local_result"></span></p><br />
+            <p><span>本地连接状态：</span> <span class="service_error" id="local_link_result"></span></p><br />
+            <p><span>云端隧道名称：</span> <span class="service_error" id="cloud_tunnel_name"></span></p><br />            
+            <p><span>云端隧道状态：</span> <span class="service_error" id="cloud_tunnel_status"></span></p><br />
+            <p><span>本次启动时间：</span> <span class="service_error" id="this_start_time"></span></p><br />            
+            <p><span>上次消耗流量：</span> <span class="service_error" id="last_Traffic_data"></span></p><br />            
+            <p><span>Ping设备IP状态：</span> <span class="service_error" id="ping_devip_result"></span></p><br /> 
+            
+
+            
+
+          <table class="table" id="mes_table">
+
+             <thead>
+                <tr>
+                   <th width="30%">服务名称</th>
+                   <th width="40%">状态</th>
+                   <th width="30%"></th>
+                </tr>
+             </thead>
+             <tbody>
+
+             </tbody>
+          </table>
+
+          <div class="alert alert-info hide" role="alert" id="cloud_ret_message">...</div>
+          
+        </div>
+
+      </div>
+
+</div>
+
+
+<!-- <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+	开始演示模态框
+</button> -->
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+<!-- 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button> -->
+				<h4 class="modal-title" id="myModalLabel">
+					警告消息
+				</h4>
+			</div>
+			<div class="modal-body">
+				<span class="error_tips">你准备操作的网关正在被其他用户使用！请关闭当前页面，稍候再试！</span>
+			</div>
+			<div class="modal-footer">
+<!-- 				<button type="button" class="btn btn-primary close_page">
+					关闭页面
+				</button> -->
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+
+<script type="text/javascript" src="js/ioevpn_1.js"></script>
+<script type="text/javascript" src="js/ioevpn_2.js"></script>
+</body>
+</html>

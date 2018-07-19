@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" charset="utf-8"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" charset="utf-8"></script>
+
+		<title>采集设备</title>
+	</head>
+	<body>
+		<nav class="nav_herder">
+			<div class="nav_left" onClick="location='index.html'"><img src="img/icon_alarm.png" class="logo"/>冬笋物联网</div>
+			<div class="pull-right nav_right">
+				<p class="J_appCenter hd" onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span><em>|</em></p>
+				<p class="J_getMembers hd"><img src="img/top_management.png"/><span><!--成员管理--></span><em>|</em></p>
+				<p><img src="img/top_news.png"/><em>|</em></p>
+				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span><em>|</em></p>
+				<p><img src="img/top_quit.png" id="J_logout"/></p>
+			</div>
+		</nav>
+		<div class="down-main">
+			<div class="left-main left-full">
+				<div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+				<div class="subNav" onClick="location='index.html'">
+					<img src="img/nav_home.png" class="hd_img"/>
+					<img src="img/nav_home_hover.png" class="hover_img"/>
+					<p class="sublist-title">首页</p>
+				</div>
+				<div class="subNav bg-color" onClick="location='mine.html'">
+					<img src="img/nav_equipment.png" class="hd_img"/>
+					<img src="img/nav_equipment_hover.png" class="hover_img"/>
+					<p class="sublist-title">我的网关</p>
+				</div>
+	  		</div>
+	  		<div class="right-product my-index right-full">
+	  			<div class="rightHeight">
+		  			<ol class="breadcrumb">
+					    <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+					    <li class="active"><a href="mine.html">我的网关</a></li>
+					    <li class="active J_gate_name">网关名称</li>
+					</ol>
+			  		<div class="collection_main">
+			  			<div class="top cf">
+			  				<div class="tab J_gateAppTabTitle_device"><!--color-->
+			  					<img src="img/nav_ea.png" class="img" />
+			  					<img src="img/nav_ea_hover.png" class="hover" />
+			  					<p>采集设备</p>
+			  				</div>
+			  				<div class="tab J_gateAppTabTitle_manage">
+			  					<img src="img/nav_app.png" class="img" />
+			  					<img src="img/nav_app_hover.png" class="hover" />
+			  					<p>网关应用</p>
+			  				</div>
+			  				<div class="tab J_gateAppTabTitle_monitor">
+			  					<img src="img/nav_information.png" class="img" />
+			  					<img src="img/nav_information_hover.png" class="hover" />
+			  					<p>网关信息</p>
+			  				</div>
+			  				<div class="fr hd">
+			  					<div class="bs-example bs-example-form">
+									<div class="input-group">
+										<input type="search" class="form-control" placeholder="输入设备的数据项名称">
+										<span class="input-group-addon"></span>
+									</div>
+								</div>
+			  				</div>
+			  			</div>
+			  			<div class="J_content" style="height:680px;">
+	
+				  			<!--采集设备------------------------->
+			  				<div class="content_main cf op J_deviceDataList J_gateAppTabContent_device">
+			  					<div class="collection_left">
+			  						<!--<div>
+			  							<p><span></span>应用1<img src="img/icon_under.png" class=""/></p>
+			  							<ul class="hd">
+			  								<li class="color">usifhshfsia</li>
+			  								<li>usifhshfsia</li>
+			  							</ul>
+			  						</div>-->
+			  					</div>
+			  					<div class="collection_right">
+			  						<div style="height:590px">
+				  						<table class="table">
+										    <thead>
+										      <tr>
+										        <th data-ordername="name" data-ordertype="desc">名称<i></i></th>
+										        <th data-ordername="desc" data-ordertype="desc">描述<i></i></th>
+										        <th data-ordername="tm" data-ordertype="desc">时间戳<i></i></th>
+										        <th data-ordername="pv" data-ordertype="desc">数值<i></i></th>
+										        <th data-ordername="q" data-ordertype="desc">质量戳<i></i></th>
+										      </tr>
+										    </thead>
+										    <tbody id="J_device_data_list">
+										    </tbody>
+										</table>
+									</div>
+									<div id="J_device_pagination_nav" style="text-align: center; opacity: 0;" class="pagination_nav hd J_device_none"></div>
+			  					</div>
+			  					<div class="none hd">
+									<p><img src="img/photo_cjsb.png"/></p >
+									<p>很抱歉，还没有相关设备和信息！</p >
+									<!--<button>我的网关</button>-->
+								</div>
+			  				</div>
+	
+	
+			  				<!--网关应用列表------------------------->
+			  				<div class="content_main cf op J_gateAppList J_gateAppTabContent_manage">
+			  					<div class="none hd">
+									<p><img src="img/photo_wgyy.png"/></p>
+									<p>很抱歉，您还没有安装任何应用，快去应用商店吧！</p>
+									<button class="J_goshop">安装应用</button>
+								</div>
+								<div class="go_shop J_goshop hd"><img src="img/add.png"/></div>
+			  				</div>
+	
+	
+			  				<!--网关详情3------------------------->
+			  				<div class="content_main cf op J_gateAppTabContent_monitor">
+			  					<div class="wginfo_left">
+			  						<div class="tit">
+			  							<p>基本信息</p>
+			  							<div>
+			  								<span class="btn btn-default J_ioevpn">远程链接</span>
+
+											<div class="btn-group" role="group">
+												<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													<span class="badge badge-warning upgrade_tip hd" style="background-color: darkred">i</span>
+													<span>更多</span>
+													<span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu">
+													<li class="J_app_gate_upgrade" ><a href="javascript:alt('开发中',4);">升级到最新版</a></li>
+													<li class="J_app_gate_enablebeta hd"><a href="javascript:alt('开发中',4);">开启BETA模式</a></li>
+													<li class="J_app_gate_disablebeta hd"><a href="javascript:alt('开发中',4);">关闭BETA模式</a></li>
+													<!--<li class="J_app_gate_backuo"><a href="javascript:alt('开发中',4);">配置备份</a></li>-->
+													<!--<li class="J_app_gate_restore"><a href="javascript:alt('开发中',4);">配置恢复</a></li>-->
+
+												</ul>
+											</div>
+
+			  							</div>
+			  						</div>
+			  						<div class="line J_basic_sn"><span class="item_title">序列号：</span><span  class="item_content"></span></div>
+			  						<div class="line J_basic_location"><span class="item_title">位置：</span><span  class="item_content"></span></div>
+			  						<div class="line J_basic_name"><span class="item_title">名称：</span><span  class="item_content"></span></div>
+			  						<div class="line J_basic_desc"><span class="item_title">描述：</span><span  class="item_content"></span></div>
+			  						<div class="line J_basic_model"><span class="item_title">型号：</span><span  class="item_content"></span></div>
+			  						<div class="tit">
+			  							<p>配置信息</p>
+			  						</div>
+			  						<div class="line J_config_cpu"><span class="item_title">CPU：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_ram"><span class="item_title">内存：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_rom"><span class="item_title">储存：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_os"><span class="item_title">操作系统：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_skynet_version"><span class="item_title">核心软件：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_iot_version"><span class="item_title">业务软件：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_public_ip"><span class="item_title">公网IP：</span><span  class="item_content"></span></div>
+			  						<div class="line J_config_"><span class="item_title">本地IP：</span><span  class="item_content"></span></div>
+			  					</div>
+			  					<div class="wginfo_right cf">
+			  						<div class="tit">监控信息</div>
+			  						<div class="content">
+			  							<div class="top">
+			  								<p>CPU负载</p>
+			  								<span>周期：15s 聚合方式：Average</span>
+			  							</div>
+			  							<div class="main" id="charts">
+			  								无数据
+			  							</div>
+			  						</div>
+			  						<div class="content">
+			  							<div class="top">
+			  								<p>内存占用</p>
+			  								<span>周期：15s 聚合方式：Average</span>
+			  							</div>
+			  							<div class="main" id="charts_used">
+			  								无数据
+			  							</div>
+			  						</div>
+			  						<div class="content">
+			  							<div class="top">
+			  								<p>网络流量</p>
+			  								<span>周期：15s</span>
+			  							</div>
+			  							<div class="main" id="charts_free">
+			  								功能开发中...
+			  							</div>
+			  						</div>
+			  						<div class="content">
+			  							<div class="top">
+			  								<p>串口流量</p>
+			  								<span>周期：15s</span>
+			  							</div>
+			  							<div class="main" id="charts_c">
+			  								功能开发中...
+			  							</div>
+			  						</div>
+			  					</div>
+			  				</div>
+	
+			  			</div>
+			  			<div id="J_app_pagination_nav" style="text-align: center; opacity: 0;margin-top:20px;" class="pagination_nav hd J_app_none"></div>
+			  		</div>
+		  		</div>
+	  			<div class="copyright">SymTech Application © 2008-2017</div>
+	  		</div>
+		</div>
+
+		<!--隐藏域-->
+		<div class="shade">
+			<div class="main_content shop_content info_shade">
+				<div class="top cf">
+					<span class="fl">应用详情</span>
+					<div class="close-"></div>
+				</div>
+	  			<div class="J_content">
+	  				<div class="content_main">
+	  					<div class="useinfo_top">
+	  						<div class="logo"><img src="img/nav_home_hover.png"></div>
+	  						<div>
+	  							<div class="tit">appname</div>
+	  							<p class="see J_appcenter_see">在应用商店中查看</p>
+	  							<p class="J_app_version">版本：...<em>|</em>上次更新：...</p>
+	  							<div class="J_oneAppInfo" data-autorunning="" data-isRunning="" data-app_name="" data-inst="" data-cloudver="" data-version="">
+		  						<input type="hidden" value="" id="J_current_inst"><!--当前应用的inst-->
+	  								<div class="button J_app_contorl" >启动</div>
+	  								<!--<div class="button color">停止</div>-->
+	  								<div class="button color J_app_restart" data-isRunning="restart">重启</div>
+
+									<div class="btn-group" role="group">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											更多
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu">
+											<li class="J_app_more_config" ><a style="cursor:pointer">应用配置</a></li>
+											<li class="J_app_more_command1"><a style="cursor:pointer">应用调试</a></li>
+											<li class="J_app_more_command2 hd"><a style="cursor:pointer">克隆&调试</a></li>
+											<li class="J_app_more_update hd"><a style="cursor:pointer">应用升级</a></li>
+										</ul>
+									</div>
+
+	  								
+	  							</div>
+	  						</div>
+	  					</div>
+	  					<div class="useinfo_main">
+	  						<div class="runtime_top">
+								<ul class="nav nav-tabs J_tabs">
+									<li class="active"><a href="#three" data-toggle="tab">运行日志</a></li>
+									<li><a href="#four" data-toggle="tab">通讯报文</a></li>
+								</ul>
+								
+								<!--运行日志的工具栏-->
+								<div class="running_time">
+									<div class="button" id="J_contorlLogListFlag">上传日志</div>
+									<div class="button off"  id="J_clearLogListFlag">清除记录</div>
+									<div class="bs-example J_logSearchForm">
+										<div class="input-group">
+											<input type="search" class="form-control J_logkeyword" placeholder="输入搜索内容">
+											<span class="input-group-addon"></span>
+										</div>
+									</div>
+								</div>
+								
+								<!--通讯报文的工具栏-->
+								<div class="running_time hd">
+									<div class="button"  id="J_contorlCommListFlag">上传报文</div>
+									<div class="button off"  id="J_clearCommListFlag">清除记录</div>
+									<div class="bs-example J_commSearchForm">
+										<div class="input-group">
+											<input type="search" class="form-control J_commkeyword" placeholder="输入搜索内容">
+											<span class="input-group-addon"></span>
+										</div>
+									</div>
+								</div>
+							</div>		
+							
+							<div class="tab-content">
+								<div class="tab-pane fade in active" id="three">
+									 <table class="table">
+									    <thead>
+									      <tr>
+									        <th data-ordername="localeTime" data-ordertype="desc">时间<i class=""></i></th>
+									      	<th data-ordername="cateName" data-ordertype="desc">类型<i class=""></i></th>
+									        <th data-ordername="content" data-ordertype="desc">内容<i class=""></i></th>
+									      </tr>
+									    </thead>
+									    <tbody id="J_gate_log_list">
+										    <!--<tr>
+										        <td>1</td>
+										        <td>Q120-imax6ull-01</td>
+										        <td>2018-2-12 10:57:08</td>
+										    </tr>-->
+									    </tbody>
+									</table>
+								</div>
+								<div class="tab-pane fade" id="four">
+									 <table class="table">
+									    <thead>
+									      <tr>
+									        <th data-ordername="localeTime" data-ordertype="desc">时间<i></i></th>
+									      	<th data-ordername="cateName" data-ordertype="desc">应用<i></i></th>
+									        <th data-ordername="direction" data-ordertype="desc">方向<i></i></th>
+									        <th data-ordername="content" data-ordertype="desc">报文<i></i></th>
+									      </tr>
+									    </thead>
+									    <tbody id="J_gate_comm_list"></tbody>
+									</table>
+									<!--分页-->
+									<div></div>
+									
+								</div>
+							</div>
+	  					</div>
+
+						<div class="app_config_modify main_content hd">
+							<div class="txt_main">
+								<div>
+									<p>应用配置：</p>
+									<div id="json_editor"  style="height:300px; border: 0px solid #e1e1e1;">
+									</div>
+
+									<script>
+
+                                        //console.log('-------------------session1',session.getValue());
+									</script>
+								</div>
+								<div class="text-center"><span class="button config_confirm">确定</span>
+									<span class="button config_cancle">取消</span></div>
+
+							</div>
+						</div>
+
+	  				</div>
+	  			</div>
+	  		</div>
+		</div>
+		<!--隐藏域end-->
+		
+	<script src="js/transport.js" type="text/javascript"></script>
+	<script src="js/jQuery.cookie.js" type="text/javascript"></script>
+	<script src="js/layui/layui.js" charset="utf-8"></script>
+	<script src="js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="js/arrayFun.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/crontab.js?v=20180706" type="text/javascript"></script>
+	<script src="js/user.js" type="text/javascript"></script>
+	<!-- 引入 echarts vintage 主题 -->
+	<script type="text/javascript" src="assets/library/echarts.min.js"></script>
+	<script type="text/javascript" src="assets/library/theme/macarons.js"></script>
+	
+	
+	<script src="js/collection.js" type="text/javascript"></script>
+	<script src="js/index.js" type="text/javascript"></script>
+
+	<!-- 上传报文和上传日志 -->
+	<script src="js/paho-mqtt.js"></script>
+	<script src="js/mqtt_utility.js"></script>
+	<script src="js/collection_sys_enable.js?v=20180709"></script>
+
+					
+	<script>
+		$(function(){
+			$('.J_tabs li').click(function(){
+				$('.running_time').hide();
+				$('.running_time').eq($(this).index()).show();
+			});
+		})
+	</script>
+	</body>
+</html>

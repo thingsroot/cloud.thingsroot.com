@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+		<title>新用户设置密码</title>
+	</head>
+	<body>
+		<div class="logoin">
+			<div class="main">
+				<div class="logo"><img src="img/login_bg.png"/></div>
+				<div class="txt">
+					<div class="findcode"><span></span>设置密码</div>
+					<div class="logoin_main">
+						<div class="input">
+							<p><img src="img/login_password.png" /><input type="password" id='newpwd' placeholder="设置密码"/></p>
+							<p><img src="img/login_password.png" /><input type="password" id="renewpwd" placeholder="确认密码"/></p>
+						</div>
+						<!--<div class="warning animated bounceIn"><i></i>两次密码输入不一致</div>-->
+						<div class="sign">确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright re_copy">SymTech Application © 2008-2017</div>
+		
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>	
+		<script src="js/transport.js" type="text/javascript"></script>
+		<script src="js/jQuery.cookie.js" type="text/javascript"></script>	
+		<script src="js/layui/layui.js" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/arrayFun.js" type="text/javascript"></script>
+		<script src="js/common.js" type="text/javascript"></script>	
+		<script>
+			$(function(){
+				$(".main").css("margin-top",($(window).height()-$(".main").height())/2);
+			})
+			$('.sign').click(function(){
+		        var regex = {
+		            pwd:/^(\w){6,15}$/
+		        };
+		        var newpwd = $("#newpwd").val();
+		        var renewpwd = $("#renewpwd").val();
+		        if (!regex.pwd.test(newpwd) || newpwd==''){
+		            alt('密码请6-15位数密码',5);
+		            return false;
+		        }
+		        if (!regex.pwd.test(renewpwd) || renewpwd==''){
+		            alt('确认密码请6-15位数密码',5);
+		            return false;
+		        }
+		        if(newpwd != renewpwd){
+		            alt("两次密码,请保持一致！",5);
+		            return false;
+		        }
+		        var key = getUrlParam('key');
+		        if(key==''){
+					alt('错误的链接',5);
+					return false;
+		        }
+				Ajax.call('/api/method/frappe.core.doctype.user.user.update_password',{key:key,new_password:newpwd}, update_password, 'POST', 'JSON', 'FORM');
+				function update_password(req) {
+					alert(typeof(req.home_page));
+					if(typeof(req.home_page)!='undefined'){
+						alt('密码设置成功，请登录',1);
+						setTimeout("redirect('login.html');", 3000);
+					}else{
+						alt(req.message,5);
+					}
+					console.log(req);
+				}
+			})
+		</script>
+	</body>
+</html>

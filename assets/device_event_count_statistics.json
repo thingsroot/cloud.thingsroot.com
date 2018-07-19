@@ -1,0 +1,34 @@
+{
+  "message": [
+    {
+      "device": "IDIDIDIDID",
+      "total": "7",
+      "today": "0",
+      "points": "[{'time': '2018-05-15T00:00:00+08:00', 'count': 0}, {'time': '2018-05-16T00:00:00+08:00', 'count': 0}, {'time': '2018-05-17T00:00:00+08:00', 'count': 0}, {'time': '2018-05-18T00:00:00+08:00', 'count': 7}, {'time': '2018-05-19T00:00:00+08:00', 'count': 0}, {'time': '2018-05-20T00:00:00+08:00', 'count': 0}, {'time': '2018-05-21T00:00:00+08:00', 'count': 0}, {'time': '2018-05-22T00:00:00+08:00', 'count': 0}]"
+    },
+    {
+      "total": "0",
+      "device": "XXXXXXXXXX",
+      "points": "[]",
+      "today": "0"
+    },
+    {
+      "total": "0",
+      "device": "IDIDIDIDID1",
+      "points": "[]",
+      "today": "0"
+    },
+    {
+      "total": "0",
+      "device": "vbvbvbmmmm",
+      "points": "[]",
+      "today": "0"
+    },
+    {
+      "total": "0",
+      "device": "2-26001-161121-00015",
+      "points": "[]",
+      "today": "0"
+    }
+  ]
+}

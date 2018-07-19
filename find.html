@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link href="css/style.css" rel="stylesheet" />
+		<title>找回密码</title>
+	</head>
+	<body>
+		<div class="logoin">
+			<div class="main">
+				<div class="logo"><img src="img/login_bg.png"/></div>
+				<div class="txt">
+					<div class="findcode"><span></span>找回密码</div>
+					<div class="logoin_main">
+						<div class="input">
+							<p><img src="img/login_mail.png" /><input id="J_email" type="text" placeholder="邮箱" value=""/></p>
+						</div>
+						<div class="sign">发送</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright re_copy">SymTech Application © 2008-2017</div>
+		
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>	
+		<script src="js/transport.js" type="text/javascript"></script>
+		<script src="js/jQuery.cookie.js" type="text/javascript"></script>	
+		<script src="js/layui/layui.js" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/arrayFun.js" type="text/javascript"></script>
+		<script src="js/common.js" type="text/javascript"></script>
+		<script>
+			$(function(){
+				$(".main").css("margin-top",($(window).height()-$(".main").height())/2);
+			})
+			$('.sign').click(function(){
+		        var email = $('#J_email').val();
+		        var regex = {
+		            email: /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
+		        };
+		        if(!regex.email.test(email) || email == ''){
+					alt('邮箱格式不正确',5);
+					return false;
+				}
+				var data = {
+					cmd:'frappe.core.doctype.user.user.reset_password',
+					user:email
+				}
+				Ajax.call('/',data, reset_password, 'POST', 'JSON', 'FORM');
+				function reset_password(req) {
+					//lijiabin@ahatrip.net
+					if(req && typeof req.message!='undefined'){
+						err('用户不存在');
+					}else{						
+						alt('密码重置说明已发送到您的电子邮件',1);
+						setTimeout("redirect('login.html');", 2000);					
+					}				
+				}
+			})
+		</script>
+	</body>
+</html>
