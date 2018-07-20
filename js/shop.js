@@ -206,7 +206,7 @@ $(function(){
 	/**
 	*	安装弹窗
 	*/
-	$(".shade .J_setupButton").click(function(){
+	$(".shade.app-detail .J_setupButton").click(function(){
 		//var html = $('.J_install_html').html();
 		//layui.use('layer', function(){
 		//	layui.layer.open({
@@ -217,8 +217,10 @@ $(function(){
 		//	  content: html
 		//	});
 		//});
-		$(".shade").hide();
-		$(".J_install_html").show();
+		$(".shade.app-detail").hide();
+
+		// $(".J_install_html").show();
+        $(".shade.app-install").show();
 		$(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
 	})
 	// 应用列表点击立即安装， 显示安装窗口
@@ -226,7 +228,10 @@ $(function(){
 		var index = $(this).attr('index');
 		var app_name = $('.J_name_'+index).attr('name');
 		$('.J_app').val(app_name);
-		$(".J_install_html").show();
+
+
+		// $(".J_install_html").show();
+        $(".shade.app-install").show();
 		$(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
 	})
 	
@@ -237,7 +242,7 @@ $(function(){
 		var index = $(this).attr('index');
 		var app_name = $('.J_name_'+index).attr('name');
 		var lastest_version = $('.J_name_'+index).attr('lastest_version');
-		$(".shade").fadeIn(300);
+		$(".shade.app-detail").fadeIn(300);
 //		$(".info_shade").css("margin-top",($(window).height()-$(".info_shade").height())/2);
 		
 		var data  = {
@@ -360,11 +365,12 @@ $(function(){
 	
 	//	分类详情隐藏
 	$(".info_shade .close-").on("click",function(){
-		$(".shade").fadeOut(300);
+		$(".shade.app-detail").fadeOut(300);
 	});
 
 	$(".J_install_html .close-").on("click",function(){
-		$(".J_install_html ").fadeOut(300);
+		// $(".J_install_html ").fadeOut(300);
+        $(".shade.app-install").fadeOut(300);
 	});
 	
 	$('.J_gate_name').html('<a href="collection.html?type=manage&device_sn='+device_sn+'">'+device_sn+'</a>');
