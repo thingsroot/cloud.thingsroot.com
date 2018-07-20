@@ -94,7 +94,7 @@ $(function(){
 	function isLogin(){
 		var noLoginArr = ['login','register','find','find2']; // 排除无需登陆的页面板块
 		auth_token = getCookie('auth_token');
-		console.log("token:::",auth_token);
+		// console.log("token:::",auth_token);
         get_NewToken();
         // getToken();
 
@@ -187,6 +187,6 @@ $(function(){
 		//}
 	}
 	function getTokened(req){
-		console.log('getToken-----------------------------------------',req);
+		// console.log('getToken-----------------------------------------',req);
 		setCookie('auth_token',req.message);
 	}

@@ -35,6 +35,7 @@ $(function(){
     var code_editor = ace.edit("editor_code");
     code_editor.setTheme("ace/theme/tomorrow");
     code_editor.session.setMode("ace/mode/lua");
+    code_editor.setFontSize(16);
     code_editor.setOptions({
 		enableBasicAutocompletion: true,
 		enableSnippets: true,

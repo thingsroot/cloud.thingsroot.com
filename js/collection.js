@@ -9,8 +9,10 @@ $(function(){
 	var pageSize = 9; // 每页条数
 	var device_sn = getParam('device_sn');
 	var tab_type = getParam('type'); // 当前处在哪个tab
+	var tab_num ;
 	if(tab_type==''){
 		tab_type = 'device';
+        tab_num = 0;
 	}
 	//var set_app_option_list = new Array();
 	
@@ -44,12 +46,12 @@ $(function(){
 		//console.log('displayGateInfo',req);
 
 		if(req.basic.iot_beta){
-			console.log("当前是beta模式");
+			// console.log("当前是beta模式");
             $('.J_app_gate_enablebeta').addClass('hd');
             $('.J_app_gate_disablebeta').removeClass('hd');
 		}
 		else{
-            console.log("当前是正式模式");
+            // console.log("当前是正式模式");
             $('.J_app_gate_enablebeta').removeClass('hd');
             $('.J_app_gate_disablebeta').addClass('hd');
 		}
@@ -70,7 +72,7 @@ $(function(){
                 $('span.upgrade_tip').addClass('hd');
 			}
 
-            console.log(req.freeioe_lastver , iot_version);
+            // console.log(req.freeioe_lastver , iot_version);
             localStorage.setItem('firmware_lastver_'+device_sn,JSON.stringify(req));
         }
 	}
@@ -142,7 +144,7 @@ $(function(){
         var id = device_sn +" gate_disable_beta "+ Date.parse(new Date());
 
         Ajax.call('/api/method/iot.device_api.sys_enable_beta', JSON.stringify({"device": device_sn , "data": 0}), gate_disablebeta, 'POST', 'JSON', 'JSON');
-		console.log(id);
+		// console.log(id);
         function gate_disablebeta(req){
             if(req.message!=''){
                 // var idarr = {
@@ -264,7 +266,7 @@ $(function(){
 				Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(param), app_uninstall,'POST', 'JSON', 'JSON',false);
 				function app_uninstall(req){
 			  		layer.closeAll();
-					console.log(req);			
+					// console.log(req);
 					if(req.message!=''){
 						var idarr = {
 							'id':id,
@@ -305,11 +307,11 @@ $(function(){
 		    "data": {"inst": inst},	
 		    "id": id
 		};
-		console.log(param);
+		// console.log(param);
 		if(isRunning=='已停止'){//去关闭
 			Ajax.call('/api/method/iot.device_api.app_start', JSON.stringify(param), app_start,'POST', 'JSON', 'JSON');
 			function app_start(req){
-				console.log('app_start',req);
+				// console.log('app_start',req);
 				if(req.message!=''){
 					var idarr = {
 						'id':id,
@@ -328,7 +330,7 @@ $(function(){
 		}else if(isRunning=='运行中'){
 			Ajax.call('/api/method/iot.device_api.app_stop', JSON.stringify(param), app_stop,'POST', 'JSON', 'JSON');
 			function app_stop(req){
-				console.log('app_stop',req);
+				// console.log('app_stop',req);
 				if(req.message!=''){
 					var idarr = {
 						'id':id,
@@ -347,7 +349,7 @@ $(function(){
 		}else if(isRunning=='restart'){// 启动重启
 			Ajax.call('/api/method/iot.device_api.app_restart', JSON.stringify(param), app_restart,'POST', 'JSON', 'JSON');
 			function app_restart(req){
-				console.log('app_restart',req);
+				// console.log('app_restart',req);
 				if(req.message!=''){
 					var idarr = {
 						'id':id,
@@ -373,10 +375,25 @@ $(function(){
 //========================================================================================================
 //========================================================================================================
 //========================================================================================================
+    function requestAppList(){
+        Ajax.call('/api/method/iot.device_api.app_list', JSON.stringify({'device':device_sn,'id': 'request ' + device_sn + ' app_list '+Date.parse(new Date())}), request_AppList,'POST', 'JSON', 'JSON');
+
+        function request_AppList(req){
+            if(req.message!=''){
+                alt('请求网关发送应用列表命令已发送',1);
+            }else{
+                err('命令执行失败');
+            }
+        }
+    }
+
+
+
 	function getAppList(){
 		if($('.J_gateAppTabTitle_manage').hasClass('color')==false){
 			return false;
 		}
+        // Ajax.call('/api/method/iot.device_api.app_list', JSON.stringify({'device':device_sn,'id': 'request ' + device_sn + ' app_list '+Date.parse(new Date())}), '','POST', 'JSON', 'JSON');
 		Ajax.call('/api/method/iot_ui.iot_api.gate_applist', {'sn':device_sn}, getList, 'GET', 'JSON', 'FORM');
 		// 主动请求列表数据
 		function getList(items){//0050562F49F7
@@ -1159,14 +1176,20 @@ $(function(){
 	$('.collection_main .J_gateAppTabTitle_'+tab_type).addClass('color');
 	$('.J_content .J_gateAppTabContent_'+tab_type).removeClass("op");
 	if(tab_type=='device'){	// 采集设备tab
-	    $('.top .fr').show();// 搜索按钮
+        tab_num = 0;
+	    $('.top .datasearch').show();// 搜索按钮
+        $('.applistrefresh').removeClass('hd');// 刷新按钮
 	    $("#J_device_pagination_nav").css('opacity',1);
 	}else if(tab_type=='manage'){ // 网关设备tab
-	    $('.top .fr').hide();
+        tab_num = 1;
+	    $('.top .datasearch').hide();
+        $('.applistrefresh').removeClass('hd');// 刷新按钮
 	    $("#J_app_pagination_nav").removeClass('hd');
 	    getAppList();
 	}else if(tab_type=='monitor'){	// 网关信息tab
-	    $('.top .fr').hide();
+        tab_num = 2;
+	    $('.top .datasearch').hide();
+        $('.applistrefresh').addClass('hd');// 刷新按钮
 	    // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 	    setTimeout(function(){		    
 			tag_hisdata('charts', 'cpuload', 0, 1, 1,'','',0);
@@ -1183,7 +1206,8 @@ $(function(){
 		var num=$(this).index();
         $(".content_main").eq(num).removeClass("op");
 	    $(".content_main").eq(num).siblings().addClass("op");
-        
+        tab_num = num;
+        console.log(tab_num);
         if(num==0){
         	$(".pagination").css("opacity","1");
         }else{
@@ -1192,16 +1216,20 @@ $(function(){
         
         // 显示翻页代码等
         if(num==0){
-	        $('.top .fr').show();
+	        $('.top .datasearch').show();
+            $('.applistrefresh').removeClass('hd');// 刷新按钮
 	        $("#J_device_pagination_nav").css('opacity',1);
 	        $("#J_app_pagination_nav").css('opacity',0);
         }else if(num==1){
-	        $('.top .fr').hide();
+	        $('.top .datasearch').hide();
+            $('.applistrefresh').removeClass('hd');// 刷新按钮
 	        $("#J_device_pagination_nav").css('opacity',0);
 	        $("#J_app_pagination_nav").css('opacity',1);
+            // requestAppList();
 	        getAppList();
         }else{
-	        $('.top .fr').hide();
+	        $('.top .datasearch').hide();
+            $('.applistrefresh').addClass('hd');// 刷新按钮
 	        $("#J_device_pagination_nav").css('opacity',0);
 	        $("#J_app_pagination_nav").css('opacity',0);
 	        // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
@@ -1212,7 +1240,18 @@ $(function(){
 		    }, 200);
         }
 	});
-	
+
+    $('.btn.applistrefresh').on("click", function(){
+        if(tab_num==0){
+            Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
+		}
+		else if(tab_num==1){
+        	requestAppList();
+        }
+    });
+
+
+
 	//详情隐藏
 	$(".info_shade .close-").on("click",function(){
         $('div.useinfo_main').removeClass('hd');
@@ -1243,5 +1282,5 @@ $(function(){
 	setInterval(reset_device_data_list, 3000);
 
 	// 定时刷新已安装应用
-	setInterval(getAppList, 4000);
+	setInterval(getAppList, 8000);
 })
