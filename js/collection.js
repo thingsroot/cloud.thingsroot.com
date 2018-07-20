@@ -106,7 +106,7 @@ $(function(){
                 alt('命令已发送，等待结果返回',1);
                 setTimeout(function(){
                     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
-                }, 15000);
+                }, 20000);
             }else{
                 err('命令执行失败');
             }
@@ -436,7 +436,9 @@ $(function(){
 		for (var i = 0; i < arrLen; i++) {
 			var inst = data[i].inst;
 			var id='无';
-			var app_name='无';
+			var app_name = '无';
+			var fork_app = '';
+			var fork_ver = '';
 			var icon_image='http://iot.symgrid.com/assets/app_center/img/logo.png';
 			var fullname,owner;
 			var ver = '本地应用';
@@ -448,6 +450,8 @@ $(function(){
 			if(data[i].cloud!=null){
 				id = data[i].cloud.name;
 				app_name = data[i].cloud.app_name;
+				fork_app  = data[i].cloud.fork_app;
+				fork_ver = data[i].cloud.fork_ver;
 				icon_image = "http://iot.symgrid.com"+data[i].cloud.icon_image;
 				fullname = data[i].cloud.fullname;
 				owner = data[i].cloud.owner;
@@ -465,6 +469,9 @@ $(function(){
 			if(owner==owner_login){// 登录用户非应用作者，关闭调试功能。
 				isdebug = 1;
 			}else{
+                if(fork_app!=null && cloudver==fork_ver){
+                    isdebug = 1;
+				}
 				isdebug = 0;
 			}
 			
@@ -479,7 +486,7 @@ $(function(){
 				 isRunning = '已停止';
 			}
 			html += `<div class="application_main J_${inst}" i="${i}" id="J_${data[i].info.name}" app_name="${data[i].info.name}" device_sn="${data[i].info.sn}" inst="${inst}" auto="${data[i].info.auto}">
-  						<div class="content app_frame"  data-isRunning="${isRunning}" data-autorunning="${autorunning}" data-app_name="${data[i].info.name}" data-version="${data[i].info.version}" data-inst="${inst}" data-isdebug="${isdebug}" data-icon_image="${icon_image}" data-ver="${ver}" data-cloudver="${cloudver}" data-localapp="${localapp}">
+  						<div class="content app_frame"  data-isRunning="${isRunning}" data-autorunning="${autorunning}" data-app_name="${data[i].info.name}" data-version="${data[i].info.version}" data-inst="${inst}" data-isdebug="${isdebug}" data-icon_image="${icon_image}" data-ver="${ver}" data-cloudver="${cloudver}" data-localapp="${localapp}" data-fork_app="${fork_app}" data-fork_ver="${fork_ver}">
   							<div class="img"><img src="${icon_image}" /></div>
   							<div class="txt">
   								<div class="tit"><b>${inst}</b></div>
@@ -491,7 +498,7 @@ $(function(){
   							<div class="num">${ver}</div>
   						</div>
   						<div class="bottom">
-  							<div class="fl app_frame" data-isRunning="${isRunning}" data-autorunning="${autorunning}" data-app_name="${data[i].info.name}" data-version="${data[i].info.version}" data-inst="${inst}" data-isdebug="${isdebug}" data-icon_image="${icon_image}" data-ver="${ver}" data-cloudver="${cloudver}"  data-localapp="${localapp}">查看</div>
+  							<div class="fl app_frame" data-isRunning="${isRunning}" data-autorunning="${autorunning}" data-app_name="${data[i].info.name}" data-version="${data[i].info.version}" data-inst="${inst}" data-isdebug="${isdebug}" data-icon_image="${icon_image}" data-ver="${ver}" data-cloudver="${cloudver}"  data-localapp="${localapp}"  data-fork_app="${fork_app}" data-fork_ver="${fork_ver}">查看</div>
 
   							<div class="fr">
 		  						<span class="${autocheck} set" id="J_app_list_start_${i}"></span>
@@ -529,7 +536,7 @@ $(function(){
             //$('.J_app_restart').show();
         }
         $(".shade .tit").html(inst);
-        console.log("localapp:",localapp);
+
         if(localapp==1){ // 本地应用、隐藏。
             $('.J_appcenter_see,.J_more').hide();
             $('.J_more').parent().hide();
@@ -541,15 +548,15 @@ $(function(){
         }
         if(isdebug!=='1'){ // 作者非登录用户。
             if(localapp!=1){
-                $('.J_app_more_command1').addClass('hd');
-                $('.J_app_more_command2').removeClass('hd');
+                $('.J_app_more_debug').addClass('hd');
+                $('.J_app_more_fork').removeClass('hd');
 			}else{
-                $('.J_app_more_command1').addClass('hd');
-                $('.J_app_more_command2').addClass('hd');
+                $('.J_app_more_debug').addClass('hd');
+                $('.J_app_more_fork').addClass('hd');
 			}
         }else{
-            $('.J_app_more_command1').removeClass('hd');
-            $('.J_app_more_command2').addClass('hd');
+            $('.J_app_more_debug').removeClass('hd');
+            $('.J_app_more_fork').addClass('hd');
         }
         if(cloudver > ver){
             $('.J_app_more_update').removeClass('hd');
@@ -697,11 +704,48 @@ $(function(){
     });
 
 	// 应用调试跳转
-	$('.J_app_more_command1').click(function(){
+	$('.J_app_more_debug').click(function(){
 		var url = 'debug.html?app='+$(".J_oneAppInfo").attr("data-app_name")+'&device_sn='+device_sn+'&app_inst='+$(".J_oneAppInfo").attr("data-inst")+'&version='+$(".J_oneAppInfo").attr("data-version")+'';
 		window.location.href=url;
 	});
 
+
+    // 应用克隆
+    $('.J_app_more_fork').click(function(){
+        var app_name = $(".shade .J_oneAppInfo").attr('data-app_name');
+        var cloudver = $(".shade .J_oneAppInfo").attr('data-cloudver');
+        var version = $(".shade .J_oneAppInfo").attr('data-version');
+        var inst = $(".shade .J_oneAppInfo").attr('data-inst');
+
+        var data = {"app": app_name, "version": version };
+
+
+        Ajax.call('/api/method/app_center.appmgr.get_fork', {'app':app_name, "version":version}, app_get_fork, 'GET', 'JSON', 'FORM');
+        function app_get_fork(req){
+            console.log(req);
+            if(req.message instanceof Array && req.message[0]!=null){
+                var url = 'debug.html?app='+ req.message[0] +'&device_sn='+ device_sn + '&app_inst='+ inst +'&version='+ req.message[1] +'';
+                // console.log("1", url)
+                window.location.href=url;
+
+            }else{
+                Ajax.call('/api/method/app_center.appmgr.fork', JSON.stringify(data), app_fork, 'POST', 'JSON', 'JSON');
+            }
+        }
+        function app_fork(req){
+
+            if(req.message!=''){
+                    console.log(req.message);
+                	var url = 'debug.html?app='+ req.message +'&device_sn='+ device_sn + '&app_inst='+ inst +'&version='+ version +'';
+                	// console.log("2", url)
+                	window.location.href=url;
+            }else{
+                console.log(req);
+                err('命令执行失败');
+            }
+        }
+
+    });
 // ====================================================================================================
 // ====================================================================================================
 // ====================================================================================================

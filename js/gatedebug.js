@@ -529,21 +529,22 @@ $(function(){
 				$.each(data,function(i,v){
 					version_list += `<option value="${data[i].version}">${data[i].version}</option>`;
 				})
+
+                html = html.replace(/version_list/,localStorage.getItem('version_list'));
+
+                layui.use('layer', function(){
+                    layui.layer.open({
+                        title: '重置编辑器工作区内容到',
+                        type: 1,
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['460px', '240px'], //宽高
+                        content: '<div class="ly">'+html+'</div>'
+                    });
+                });
 			}
-			console.log('version_list',version_list);
+			// console.log('version_list',version_list);
 			localStorage.setItem('version_list',version_list);
 		}
-		html = html.replace(/version_list/,localStorage.getItem('version_list'));
-		
-		layui.use('layer', function(){
-			layui.layer.open({
-			  title: '重置编辑器工作区内容到',
-			  type: 1,
-			  skin: 'layui-layer-rim', //加上边框
-			  area: ['460px', '240px'], //宽高
-			  content: '<div class="ly">'+html+'</div>'
-			});
-		});
 	});
 	$('body').on('click','.ly #J_revert_do',function(){
 		var backend_url = '/api/method/app_center.editor.editor_revert';
