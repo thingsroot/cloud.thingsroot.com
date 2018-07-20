@@ -1220,6 +1220,7 @@ $(function(){
             $('.applistrefresh').removeClass('hd');// 刷新按钮
 	        $("#J_device_pagination_nav").css('opacity',1);
 	        $("#J_app_pagination_nav").css('opacity',0);
+            Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
         }else if(num==1){
 	        $('.top .datasearch').hide();
             $('.applistrefresh').removeClass('hd');// 刷新按钮
