@@ -31,7 +31,7 @@ table th{color:#A7A9B1;}
 .pagination>li>a, .pagination>li>span{border:none;background: none;}
 .product_main .main::-webkit-scrollbar,.debug_bottom::-webkit-scrollbar ,.main tbody::-webkit-scrollbar,.debug_main::-webkit-scrollbar,.info_shade::-webkit-scrollbar{display:none;}
 .fl{float:left}
-.fr{float:right}
+.fr{float:right; margin: 0px 5px 0px 5px;}
 .cf:after{display:block;clear:both;content:"";visibility:hidden;height:0} 
 .cf{zoom:1}
 .hd{display: none;}
@@ -1286,6 +1286,52 @@ th .on{
 .product_main2 th:nth-child(4),.product_main2 td:nth-child(4){
 	width:30%;
 }
+
+.netcfg_left{
+	padding: 0 18px;
+	width: 600px;
+	float:left;
+	min-height: 100%;
+}
+
+.netcfg_left .tit{
+	padding:10px 0;
+	border-bottom: 1px solid #e1e1e1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.netcfg_left .tit p{
+	font-weight: 800;
+	color: #354E77;
+	font-size: 16px;
+}
+.netcfg_left .top_menu{
+	width: 140px;
+}
+.netcfg_left .top_menu li{
+	color:#848689;
+	border-bottom: 1px solid #e1e1e1;
+	padding: 10px;
+	text-align: center;
+}
+.netcfg_left .top_menu li:last-child{
+	border-bottom: 0;
+}
+.netcfg_left .line{
+	padding: 10px 0;
+	border-bottom: 1px solid #e1e1e1;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.netcfg_left .line span{
+	color: #848689;
+}
+
+
+
+
 .wginfo_left{
 	padding: 0 18px;
 	width: 400px;

@@ -63,6 +63,36 @@
 			  					<p>网关信息</p>
 			  				</div>
 
+
+
+                            <div class="tab J_gateAppTabTitle_netcfg hide">
+                                <img src="img/nav_information.png" class="img" />
+                                <img src="img/nav_information_hover.png" class="hover" />
+                                <p>网络配置</p>
+                            </div>
+
+                            <div class="tab J_gateAppTabTitle_vpn hide">
+                                <img src="img/nav_information.png" class="img" />
+                                <img src="img/nav_information_hover.png" class="hover" />
+                                <p>远程链接</p>
+                            </div>
+
+
+                            <!--<div class="btn-group hd" role="group">-->
+                                <!--<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                                    <!--<span>更多功能</span>-->
+                                    <!--<span class="caret"></span>-->
+                                <!--</button>-->
+                                <!--<ul class="dropdown-menu">-->
+                                    <!--<li class="J_app_gate_enable_vpn" ><a style="cursor:pointer">开启远程链接</a></li>-->
+                                    <!--<li class="J_app_gate_disable_vpn" ><a style="cursor:pointer">禁用远程链接</a></li>-->
+                                    <!--<li class="J_app_gate_enable_lancfg"><a style="cursor:pointer">开启LAN口配置</a></li>-->
+                                    <!--<li class="J_app_gate_disable_lancfg"><a style="cursor:pointer">禁用LAN口配置</a></li>-->
+                                    <!--<li class="J_app_gate_enable_ntpcfg"><a style="cursor:pointer">开启NTP配置</a></li>-->
+                                    <!--<li class="J_app_gate_disable_ntpcfg"><a style="cursor:pointer">禁用NTP配置</a></li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+
 							<div class="fr applistrefresh hd">
 								<div class="btn applistrefresh"><span class="glyphicon glyphicon-refresh"></span></div>
 							</div>
@@ -76,7 +106,10 @@
 								</div>
 			  				</div>
 
-
+							<div class="fr data_upload hd">
+								<div class="btn btn-primary enable_data_upload hd"><span>开启上传</span></div>
+								<div class="btn btn-primary disable_data_upload hd"><span>关闭上传</span></div>
+							</div>
 
 			  			</div>
 			  			<div class="J_content" style="height:680px;">
@@ -127,7 +160,7 @@
 								</div>
 								<div class="go_shop J_goshop hd"><img src="img/add.png"/></div>
 			  				</div>
-	
+                            <!--网关应用列表------------------------->
 	
 			  				<!--网关详情3------------------------->
 			  				<div class="content_main cf op J_gateAppTabContent_monitor">
@@ -139,14 +172,23 @@
 
 											<div class="btn-group" role="group">
 												<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-													<span class="badge badge-warning upgrade_tip hd" style="background-color: darkred">i</span>
+													<span class="badge badge-warning upgrade_tip hd" style="background-color: #008b2f">i</span>
 													<span>更多</span>
 													<span class="caret"></span>
 												</button>
 												<ul class="dropdown-menu">
-													<li class="J_app_gate_upgrade" ><a href="javascript:alt('开发中',4);">升级到最新版</a></li>
-													<li class="J_app_gate_enablebeta hd"><a href="javascript:alt('开发中',4);">开启BETA模式</a></li>
-													<li class="J_app_gate_disablebeta hd"><a href="javascript:alt('开发中',4);">关闭BETA模式</a></li>
+													<li class="J_app_gate_upgrade hd"><a style="cursor:pointer">升级到最新版 <span class="badge badge-warning" style="background-color: #008b2f">i</span></a></li>
+													<li class="J_app_gate_enablebeta hd"><a style="cursor:pointer">开启BETA模式</a></li>
+													<li class="J_app_gate_disablebeta hd"><a style="cursor:pointer">关闭BETA模式</a></li>
+
+                                                    <li class="J_app_gate_enable_vpn hd" ><a style="cursor:pointer">开启远程链接</a></li>
+                                                    <li class="J_app_gate_disable_vpn hd" ><a style="cursor:pointer">禁用远程链接</a></li>
+                                                    <li class="J_app_gate_enable_netcfg hd"><a style="cursor:pointer">开启网络配置</a></li>
+                                                    <li class="J_app_gate_disable_netcfg hd"><a style="cursor:pointer">禁用网络配置</a></li>
+
+													<!--<li class="J_app_gate_enable_dataup hd"><a style="cursor:pointer">开启数据上送</a></li>-->
+													<!--<li class="J_app_gate_disable_dataup hd"><a style="cursor:pointer">禁用数据上送</a></li>-->
+
 													<!--<li class="J_app_gate_backuo"><a href="javascript:alt('开发中',4);">配置备份</a></li>-->
 													<!--<li class="J_app_gate_restore"><a href="javascript:alt('开发中',4);">配置恢复</a></li>-->
 
@@ -171,6 +213,7 @@
 			  						<div class="line J_config_iot_version"><span class="item_title">业务软件：</span><span  class="item_content"></span></div>
 			  						<div class="line J_config_public_ip"><span class="item_title">公网IP：</span><span  class="item_content"></span></div>
 			  						<div class="line J_config_"><span class="item_title">本地IP：</span><span  class="item_content"></span></div>
+                                    <div class="line J_isbeta_"><span class="item_title">BETA模式：</span><span  class="item_content"></span></div>
 			  					</div>
 			  					<div class="wginfo_right cf">
 			  						<div class="tit">监控信息</div>
@@ -212,7 +255,295 @@
 			  						</div>
 			  					</div>
 			  				</div>
-	
+                            <!--网关详情3------------------------->
+
+
+
+                            <!--网关配置界面 开始------------------------->
+                            <div class="content_main cf op J_gateAppTabContent_netcfg">
+
+
+                                <div class="netcfg_left">
+                                    <div class="tit">
+                                        <p>LAN口配置</p>
+                                        <div><span class="btn btn-default lan_modify">修改</span></div>
+                                    </div>
+                                    <div class="line N_lanip_">
+
+
+										<div class="input-group">
+											  <span class="input-group-addon" style="width: 150px; background-image: none">
+												LAN口    IP地址：
+											  </span>
+
+											<input type="text" class="form-control" readonly="readonly">
+										</div><!-- /input-group -->
+
+                                    </div>
+
+
+
+									<div class="line N_laninetmask_">
+											<div class="input-group">
+												  <span class="input-group-addon" style="width: 150px; background-image: none">
+													LAN口子网掩码：
+												  </span>
+												<input type="text" class="form-control" readonly="readonly">
+											</div><!-- /input-group -->
+
+
+									</div>
+
+                                    <!--<div class="line N_lanip_"><span class="item_title">LAN口IP地址：</span><span  class="item_content"></span></div>-->
+                                    <!--<div class="line N_laninetmask_"><span class="item_title">LAN口子网掩码：</span><span  class="item_content"></span></div>-->
+
+                                    <div class="line lan_modify_op hd">
+                                        <span class="btn btn-default lan_modify_confirm">确定</span>
+                                        <span class="btn btn-default lan_modify_cancel" >取消</span>
+                                    </div>
+
+                                    <div class="tit">
+                                        <p>NTP配置</p>
+                                        <div><span class="btn btn-default ntp_modify">修改</span></div>
+                                    </div>
+                                    <div class="line N_ntpclient_"><span class="item_title">启用NTP客户端：</span><span  class="item_content"></span></div>
+                                    <div class="line N_ntpsrvlist_"><span class="item_title">NTP服务器：</span><span  class="item_content"></span></div>
+
+                                    <div class="line ntp_modify_op hd">
+                                        <span class="btn btn-default ntp_modify_confirm">确定</span>
+                                        <span class="btn btn-default ntp_modify_cancel">取消</span>
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+                            <!--网关配置界面 结束------------------------->
+
+                            <!--网关远程连接 开始------------------------->
+                            <div class="content_main cf op J_gateAppTabContent_vpn">
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="container-fluid">
+                                            <div class="bs-example"><div class="col-md-4"></div><h1>参数</h1></div>
+
+                                            <div class="bs-example">
+
+
+                                                <form class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">网关状态:</label>
+                                                        <div class="col-sm-8">
+                                                            <div class="form-control" ><span class="gate_status_result" > </span></div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">授权码:</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control tunnel_config" id="authcode" placeholder="01010101010101" value="01010101010101">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">网关SN:</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control tunnel_config" id="gatesn" placeholder="2-30002-001813-00075" value="2-30002-001813-00075">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">连接模式:</label>
+                                                        <div class="col-sm-8">
+                                                            <button type="button" class="btn btn-default btn-primary active tunnel_config" id="virtual_network">虚拟网络</button>
+                                                            <button type="button" class="btn btn-default tunnel_config" id="virtual_serial">虚拟串口</button>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- vpn_network  -->
+                                                    <div class="" id="v_network">
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"><span id="vn_ipaddr">虚拟网卡IP:</span></label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control tunnel_config" id="tap_ip" placeholder="192.168.0.33" value="192.168.0.33">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label"><span id="vn_netmask">虚拟网卡netmask:</span></label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control tunnel_config" id="tap_netmask" placeholder="255.255.255.0" value="255.255.255.0">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">网关IP:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control tunnel_config" id="dev_ip" placeholder="device ipaddress" value="192.168.0.245">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">传输协议:</label>
+                                                            <div class="col-sm-8">
+                                                                <button type="button" class="btn btn-default btn-primary active tunnel_config" id="protocol_tcp">tcp</button>
+
+                                                                <button type="button" class="btn btn-default tunnel_config" id="protocol_kcp">kcp</button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">网络模式:</label>
+                                                            <div class="col-sm-8">
+                                                                <button type="button" class="btn btn-default btn-primary active tunnel_config" id="bridge">桥接模式</button>
+
+                                                                <button type="button" class="btn btn-default tunnel_config" id="router">路由模式</button>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-4 col-sm-8">
+                                                                <button type="button" class="btn btn-lg btn-default hide" id="start_vpn"></button>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-4 col-sm-8">
+                                                                <div class="alert alert-info hide" role="alert" id="vpn_ret_message">...</div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- vpn_network  -->
+
+                                                    <!-- virtual_serial  -->
+                                                    <div class="hide" id="v_serial">
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">本地虚拟串口:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="local_virtual_serial" placeholder="com1">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">远程虚拟串口:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="remote_virtual_serial" placeholder="com1">
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">波特率:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="baudrate" placeholder="9600">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">数据位:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="data_bit" placeholder="8">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">校验位:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="check_bit" placeholder="N">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label class="col-sm-4 control-label">停止位:</label>
+                                                            <div class="col-sm-8">
+                                                                <input type="text" class="form-control" id="stop_bit" placeholder="1">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <div class="col-sm-offset-4 col-sm-8">
+                                                                <button type="button" class="btn btn-default hide" id="start_serial"></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- virtual_serial  -->
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-4 col-sm-8">
+                                                            <button type="button" class="btn btn-lg btn-default btn-primary hide" id="mytest">测试</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="container-fluid">
+                                            <div class="bs-example"><h1>状态</h1></div>
+                                            <div class="bs-example hide">
+                                                <button type="button" class="btn btn-default btn-primary" id="query">本地状态</button>
+
+                                                <button type="button" class="btn btn-default btn-primary" id="cloud">代理状态</button>
+
+                                                <button type="button" class="btn btn-default btn-primary" id="check_env">运行环境</button>
+
+                                            </div>
+
+                                            <div class="bs-example">
+                                                <p><span>本地运行环境：</span> <span class="service_error" id="check_env_result"></span></p><br />
+                                                <p><span>本地服务状态：</span> <span id="check_local_result"></span></p><br />
+                                                <p><span>本地连接状态：</span> <span class="service_error" id="local_link_result"></span></p><br />
+                                                <p><span>云端隧道名称：</span> <span class="service_error" id="cloud_tunnel_name"></span></p><br />
+                                                <p><span>云端隧道状态：</span> <span class="service_error" id="cloud_tunnel_status"></span></p><br />
+                                                <p><span>本次启动时间：</span> <span class="service_error" id="this_start_time"></span></p><br />
+                                                <p><span>上次消耗流量：</span> <span class="service_error" id="last_Traffic_data"></span></p><br />
+                                                <p><span>Ping设备IP状态：</span> <span class="service_error" id="ping_devip_result"></span></p><br />
+
+
+
+
+                                                <table class="table" id="mes_table">
+
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="30%">服务名称</th>
+                                                        <th width="40%">状态</th>
+                                                        <th width="30%"></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="alert alert-info hide" role="alert" id="cloud_ret_message">...</div>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                            </div>
+                            <!--网关远程连接 结束------------------------->
+
+
 			  			</div>
 			  			<div id="J_app_pagination_nav" style="text-align: center; opacity: 0;margin-top:20px;" class="pagination_nav hd J_app_none"></div>
 			  		</div>

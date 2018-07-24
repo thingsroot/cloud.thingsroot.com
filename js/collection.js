@@ -10,6 +10,8 @@ $(function(){
 	var device_sn = getParam('device_sn');
 	var tab_type = getParam('type'); // 当前处在哪个tab
 	var tab_num ;
+	var net_cfg ;
+	var btp_cfg ;
 	if(tab_type==''){
 		tab_type = 'device';
         tab_num = 0;
@@ -40,6 +42,7 @@ $(function(){
 		$('.J_config_skynet_version span.item_content').html(req.config.skynet_version);
 		$('.J_config_iot_version span.item_content').html(req.config.iot_version);
 		$('.J_config_public_ip span.item_content').html(req.config.public_ip);
+
 		//$('.J_config_public_ip span').after(req.config.public_ip);
 		
 		$('.J_gate_name').html(req.basic.name);
@@ -49,12 +52,54 @@ $(function(){
 			// console.log("当前是beta模式");
             $('.J_app_gate_enablebeta').addClass('hd');
             $('.J_app_gate_disablebeta').removeClass('hd');
+            $('.J_isbeta_ span.item_content').html("启用");
 		}
 		else{
             // console.log("当前是正式模式");
             $('.J_app_gate_enablebeta').removeClass('hd');
             $('.J_app_gate_disablebeta').addClass('hd');
+            $('.J_isbeta_ span.item_content').html("禁用");
 		}
+
+        if(req.config.data_upload){
+            // console.log("当前是beta模式");
+            $('.enable_data_upload').addClass('hd');
+            $('.disable_data_upload').removeClass('hd');
+
+        }
+        else{
+            // console.log("当前是正式模式");
+            $('.enable_data_upload').removeClass('hd');
+            $('.disable_data_upload').addClass('hd');
+
+        }
+		{
+            $('.J_app_gate_disable_netcfg').addClass('hd');
+            $('.J_app_gate_enable_netcfg').removeClass('hd');
+            $('.J_gateAppTabTitle_netcfg').addClass('hide');
+		}
+		for(x in req.applist){
+            console.log(req.applist[x].name);
+			if(req.applist[x].name=="network_uci"){
+                console.log("1");
+                $('.J_app_gate_enable_netcfg').addClass('hd');
+                $('.J_app_gate_disable_netcfg').removeClass('hd');
+                $('.J_gateAppTabTitle_netcfg').removeClass('hide');
+                break;
+			}
+            // if(req.applist[x]=="frpc"){
+            //     $('.J_app_gate_disable_vpn').addClass('hd');
+            //     $('.J_app_gate_enable_vpn').removeClass('hd');
+            //     $('.J_gateAppTabTitle_vpn').removeClass('hd');
+            // }else{
+            //     $('.J_app_gate_enable_vpn').addClass('hd');
+            //     $('.J_gateAppTabTitle_vpn').addClass('hd');
+            //     $('.J_app_gate_disable_vpn').removeClass('hd');
+            //
+            // }
+
+		}
+
 
 		localStorage.setItem('device_detail_'+device_sn,JSON.stringify(req));
         /*网关固件版本---------------------------------------------------*/
@@ -64,7 +109,7 @@ $(function(){
             $('.J_basic_sn').attr('data-firmware_lastver',req.firmware_lastver);
             $('.J_basic_sn').attr('data-iot_lastver',req.freeioe_lastver);
             var iot_version  = $('.J_basic_sn').attr('data-iot_version');
-            if(req.freeioe_lastver > iot_version){
+            if(Number(req.freeioe_lastver) > Number(iot_version)){
                 $('.J_app_gate_upgrade').removeClass('hd');
                 $('span.upgrade_tip').removeClass('hd');
 			}else{
@@ -126,9 +171,9 @@ $(function(){
         function gate_enable_beta(req){
             if(req.message!=''){
                 alt('命令发送成功',1);
-                setTimeout(function(){
-                    Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
-                }, 10000);
+                // setTimeout(function(){
+                //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+                // }, 10000);
             }else{
                 err('命令执行失败');
             }
@@ -157,9 +202,9 @@ $(function(){
                 // };
                 // addCrontab(idarr);
                 alt('命令已发送，等待结果返回',1);
-                setTimeout(function(){
-                    Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
-                }, 10000);
+                // setTimeout(function(){
+                //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+                // }, 10000);
             }else{
                 err('命令执行失败');
             }
@@ -255,9 +300,7 @@ $(function(){
 			layer.confirm('确定要卸载吗？', {
 			  btn: ['确认','取消']
 			}, function(){
-			  	var device = '';
 				var id = "uninstall "+device_sn+"'s App "+inst+ ' '+Date.parse(new Date());
-				var data = '';
 				var param = {
 				    "device": device_sn,
 				    "id": id,
@@ -481,6 +524,9 @@ $(function(){
             if(data[i].info.conf!=null){
                 appconfigs[data[i].inst] = data[i].info.conf;
             }
+            else{
+                appconfigs[data[i].inst] = {};
+			}
             // console.log(data[i].cloud);
 			// console.log(inst, owner, owner_login);
 			if(owner==owner_login){// 登录用户非应用作者，关闭调试功能。
@@ -575,7 +621,8 @@ $(function(){
             $('.J_app_more_debug').removeClass('hd');
             $('.J_app_more_fork').addClass('hd');
         }
-        if(cloudver > ver){
+
+        if(Number(cloudver) > Number(ver)){
             $('.J_app_more_update').removeClass('hd');
 		}else{
             $('.J_app_more_update').addClass('hd');
@@ -1179,23 +1226,28 @@ $(function(){
         tab_num = 0;
 	    $('.top .datasearch').show();// 搜索按钮
         $('.applistrefresh').removeClass('hd');// 刷新按钮
+        $('.data_upload').removeClass('hd');// 数据上送
 	    $("#J_device_pagination_nav").css('opacity',1);
 	}else if(tab_type=='manage'){ // 网关设备tab
         tab_num = 1;
 	    $('.top .datasearch').hide();
         $('.applistrefresh').removeClass('hd');// 刷新按钮
+
 	    $("#J_app_pagination_nav").removeClass('hd');
 	    getAppList();
 	}else if(tab_type=='monitor'){	// 网关信息tab
         tab_num = 2;
 	    $('.top .datasearch').hide();
         $('.applistrefresh').addClass('hd');// 刷新按钮
+
 	    // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 	    setTimeout(function(){		    
 			tag_hisdata('charts', 'cpuload', 0, 1, 1,'','',0);
 			tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',0);
 			//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',0);	
 	    }, 200);
+
+
 	}
 	
 	
@@ -1218,17 +1270,19 @@ $(function(){
         if(num==0){
 	        $('.top .datasearch').show();
             $('.applistrefresh').removeClass('hd');// 刷新按钮
+            $('.data_upload').removeClass('hd');// 数据上送
 	        $("#J_device_pagination_nav").css('opacity',1);
 	        $("#J_app_pagination_nav").css('opacity',0);
             Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
         }else if(num==1){
 	        $('.top .datasearch').hide();
             $('.applistrefresh').removeClass('hd');// 刷新按钮
+            $('.data_upload').addClass('hd');// 数据上送
 	        $("#J_device_pagination_nav").css('opacity',0);
 	        $("#J_app_pagination_nav").css('opacity',1);
             // requestAppList();
 	        getAppList();
-        }else{
+        }else if(num==2){
 	        $('.top .datasearch').hide();
             $('.applistrefresh').addClass('hd');// 刷新按钮
 	        $("#J_device_pagination_nav").css('opacity',0);
@@ -1239,8 +1293,48 @@ $(function(){
 				tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',0);
 				//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',0);	
 		    }, 200);
+        }else if(num==3){
+            $('.top .datasearch').hide();
+            $('.applistrefresh').addClass('hd');// 刷新按钮
+            $('.data_upload').addClass('hd');// 数据上送
+            $("#J_device_pagination_nav").css('opacity',0);
+            $("#J_app_pagination_nav").css('opacity',0);
+            // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
+
+            Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON', false);
+
         }
+
+
 	});
+
+
+    function gate_netcfg(req){
+        req = req.message;
+        if(req!=""){
+
+            $.each(req,function(n,value) {
+                if(value.name=="network_lan"){
+
+                    net_cfg = JSON.parse(value.pv);
+                    $('.N_lanip_ input.form-control').val(net_cfg.ipaddr);
+                    $('.N_laninetmask_ input.form-control').val(net_cfg.netmask);
+
+                }
+                if(value.name=="ntp"){
+                    ntp_cfg = JSON.parse(value.pv);
+                    if(ntp_cfg.enabled){
+                        $('.N_ntpclient_ span.item_content').html('启用');
+                    }else{
+                        $('.N_ntpclient_ span.item_content').html('禁用');
+                    }
+
+                    $('.N_ntpsrvlist_ span.item_content').html(JSON.stringify(ntp_cfg.server));
+                }
+            });
+        }
+
+    }
 
     $('.btn.applistrefresh').on("click", function(){
         if(tab_num==0){
@@ -1251,6 +1345,246 @@ $(function(){
         }
     });
 
+    //开启网关数据上传
+    $('.enable_data_upload').on("click", function(){
+        var id = "enable "+device_sn+"  data upload  " + Date.parse(new Date());
+        var data = {
+            "device": device_sn,
+            "id": id,
+            "data": 1
+        };
+        Ajax.call('/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), gate_data_upload , 'POST', 'JSON', 'JSON');
+
+
+        function gate_data_upload(req) {
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'gate_data_upload',
+                    'type': 'data_upload',
+                    'title': "开启数据上传",
+                    'crontabDesc': 'enable data_upload',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+                var data = {
+                    "device": device_sn,
+                    "id": id,
+                    "data": 1
+                };
+                // setTimeout(function(){
+                //     Ajax.call('/api/method/iot.device_api.sys_restart', JSON.stringify(data), '', 'POST', 'JSON', 'JSON');
+                // }, 1000);
+
+                // setTimeout(function(){
+                //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+                // }, 15000);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+
+    });
+    //开启网关数据上传
+
+    //关闭网关数据上传
+    $('.disable_data_upload').on("click", function(){
+        var id = "enable "+device_sn+"  data upload  " + Date.parse(new Date());
+        var data = {
+            "device": device_sn,
+            "id": id,
+            "data": 0
+        };
+        Ajax.call('/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), disable_gate_data_upload , 'POST', 'JSON', 'JSON');
+
+
+        function disable_gate_data_upload(req) {
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'disable_gate_data_upload',
+                    'type': 'data_upload',
+                    'title': "关闭数据上传",
+                    'crontabDesc': 'disable data_upload',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+                var data = {
+                    "device": device_sn,
+                    "id": id,
+                    "data": 1
+                };
+                // setTimeout(function(){
+                //     Ajax.call('/api/method/iot.device_api.sys_restart', JSON.stringify(data), '', 'POST', 'JSON', 'JSON');
+                // }, 1000);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+
+    });
+    //关闭网关数据上传
+
+    //开启网关网络配置
+    $('.J_app_gate_enable_netcfg').on("click", function(){
+        var id = "install "+device_sn+"'s App network_uci  " + Date.parse(new Date());
+        var data = {
+            "device": device_sn,
+            "id": id,
+            "data": {
+                "inst": "Network",
+                "name": "network_uci",
+                "version":'latest'
+            }
+        };
+
+
+        Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+
+        // setTimeout(function(){
+        //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+        // }, 10000);
+
+        function app_install(req) {
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'J_network_uci',
+                    'type': 'app_install',
+                    'title': "应用安装",
+                    'crontabDesc': 'network_uci',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+
+    });
+    //开启网关网络配置
+
+    //关闭网关网络配置
+    $('.J_app_gate_disable_netcfg').on("click", function(){
+        var id = "uninstall "+device_sn+"'s App network_uci  " + Date.parse(new Date());
+        var param = {
+            "device": device_sn,
+            "id": id,
+            "data": {"inst": "Network"}
+        };
+        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(param), app_uninstall,'POST', 'JSON', 'JSON',false);
+        setTimeout(function(){
+            Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+        }, 10000);
+
+        function app_uninstall(req) {
+
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'J_network_uci',
+                    'type': 'app_uninstall',
+                    'title': "应用卸载",
+                    'crontabDesc': 'network_uci',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+    });
+    //关闭网关网络配置
+
+
+    $('.lan_modify').on("click", function(){
+        $('.lan_modify_op').removeClass('hd');
+        $('.N_lanip_ input.form-control').removeAttr('readonly');
+        $('.N_laninetmask_ input.form-control').removeAttr('readonly');
+        $('.lan_modify_cancel').attr('data-ipaddr',$('.N_lanip_ input.form-control').val());
+        $('.lan_modify_cancel').attr('data-netmask',$('.N_laninetmask_ input.form-control').val());
+
+    });
+    $('.lan_modify_cancel').on("click", function(){
+        $('.lan_modify_op').addClass('hd');
+        $('.N_lanip_ input.form-control').val($('.lan_modify_cancel').attr('data-ipaddr'));
+        $('.N_laninetmask_ input.form-control').val($('.lan_modify_cancel').attr('data-netmask'));
+        $('.N_lanip_ input.form-control').attr('readonly', 'readonly');
+        $('.N_laninetmask_ input.form-control').attr('readonly', 'readonly');
+
+    });
+
+    $('.lan_modify_confirm').on("click", function(){
+        var ipaddr = $('.N_lanip_ input.form-control').val();
+        var netmask = $('.N_laninetmask_ input.form-control').val();
+		net_cfg.ipaddr = ipaddr;
+        net_cfg.netmask = netmask;
+        console.log(net_cfg);
+		var id =  device_sn + " lan_cfg " + Date.parse(new Date());
+        var data = {
+            "id": id,
+            "device": device_sn,
+            "data": {
+                "device": device_sn + ".Network",
+                "output": "network_lan",
+                "value": net_cfg,
+                "prop": "value"
+            }
+        }
+
+        Ajax.call('/api/method/iot.device_api.send_output', JSON.stringify(data), gate_lan_set, 'POST', 'JSON', 'JSON');
+
+        function gate_lan_set(req){
+            if(req.message!=''){
+                var idarr = {
+                    'id':id,
+                    'times':20,
+                    'docid':'',
+                    'type':'gate_lan_cfg',
+                    'title':"LAN口配置",
+                    'crontabDesc':device_sn + " LAN口 配置 ",
+                };
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回',1);
+
+                $('.lan_modify_op').addClass('hd');
+                $('.N_lanip_ input.form-control').attr('readonly', 'readonly');
+                $('.N_laninetmask_ input.form-control').attr('readonly', 'readonly');
+
+                setTimeout(function(){
+                    Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON');
+                }, 4000);
+            }else{
+                err('命令执行失败');
+                $('.lan_modify_op').addClass('hd');
+                $('.N_lanip_ input.form-control').val($('.lan_modify_cancel').attr('data-ipaddr'));
+                $('.N_laninetmask_ input.form-control').val($('.lan_modify_cancel').attr('data-netmask'));
+                $('.N_lanip_ input.form-control').attr('readonly', 'readonly');
+                $('.N_laninetmask_ input.form-control').attr('readonly', 'readonly');
+
+            }
+        }
+        // $('.lan_modify_op').addClass('hd');
+        // $('.N_lanip_ input.form-control').attr('readonly', 'readonly');
+        // $('.N_laninetmask_ input.form-control').attr('readonly', 'readonly');
+
+    });
 
 
 	//详情隐藏
@@ -1277,7 +1611,12 @@ $(function(){
 		tag_hisdata('charts', 'cpuload', 0, 1, 1,'','',1);
 		tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',1);
 		// tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',1);
-	}, 5000);
+	}, 15000);
+
+    // 周期获取网关状态信息
+    setInterval(function(){
+        Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+    }, 15000);
 
 	/* 定时刷新采集设备数据 */
 	setInterval(reset_device_data_list, 3000);
