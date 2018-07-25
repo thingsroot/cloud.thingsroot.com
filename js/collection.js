@@ -453,7 +453,15 @@ $(function(){
 		// 主动请求列表数据
 		function getList(items){//0050562F49F7
 			//console.log('gate_applist',items);
-			localStorage.setItem('app_list_current_'+device_sn,JSON.stringify(items.message));
+			var app_list = new Array();
+			if (items.message) {
+				items.message.forEach(function(d) {
+					if(!d.info.downloading) {
+						app_list.push(d);
+					}
+				})
+			}
+			localStorage.setItem('app_list_current_'+device_sn,JSON.stringify(app_list));
 			display_app_list(1);
 		}
 	}
