@@ -37,7 +37,7 @@ function check_local_status() {
             var html_tr =     '<tr><tr class="active">'
                             +  '<td>' + key + '</td>'
                             +  '<td>' + val + '</td>'
-                            +  '<td></td></tr>'
+                            +  '<td></td></tr>';
             $("#mes_table").append(html_tr);
           });
 

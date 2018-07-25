@@ -234,9 +234,33 @@ $(function(){
 
     //  WEB映射
     $('.J_webmapping').click(function(){
-        var url = 'http://'+ device_sn + ".symgrid.com:880";
-        window.open(url,"_blank");
-        // window.location.href='ioevpn.html?gate_sn='+device_sn;
+        // var id = "set " + "ioe_frpc's config "+ ' '+Date.parse(new Date());
+        // var data = {
+        //     "device": device_sn,
+        //     "id": id,
+        //     "data": {
+        //         "inst": "ioe_frpc",
+        //         "conf": {
+        //             "enable_web": true,
+        //             "token": "BWYJVj2HYhVtdGZL",
+        //             "auto_start": true
+        //         }
+        //     }
+        // };
+		//
+        // Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
+        // function ioe_frpc_config(req){
+        //     if(req.message!=''){
+        //         // alt('命令已发送，等待结果返回',1);
+        //         var url = 'http://'+ device_sn + ".symgrid.com:880";
+        //         window.open(url,"_blank");
+        //     }else{
+        //         err('命令执行失败');
+        //     }
+        // }
+
+                var url = 'http://'+ device_sn + ".symgrid.com:880";
+                window.open(url,"_blank");
     })
 
 //单个应用的操作/////////////////////////////////////////////////////////////////////////////////
