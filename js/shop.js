@@ -89,7 +89,7 @@ $(function(){
 			$('.J_none').show();
 		}
 		var html='';
-		console.log(data);
+		// console.log(data);
 		for (var i = 0; i < arrLen; i++) {
 			/* 临时获取最新应用版本号 */
 			var lastest_version = '';
@@ -301,7 +301,7 @@ $(function(){
 			var arrLen = data.length;
 			var html='';
 			for (var i = 0; i < arrLen; i++) {
-				console.log(data[i].star);
+				// console.log(data[i].star);
 				html += `<div class="comment_main cf">
 							<div class="img fl">
 								<!--<img src="img/bg_left.png" />-->

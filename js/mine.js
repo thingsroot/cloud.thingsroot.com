@@ -151,7 +151,7 @@ $(function(){
 					var sn=new Array();
 					sn[0] = device_sn;
 					var data = {'sn':sn};
-					console.log(data);
+
 					Ajax.call('/api/method/iot_ui.iot_api.remove_gate', JSON.stringify(data), 'remove_list_originalFun', 'POST', 'JSON', 'JSON',false);
 					//remove_list_original(device_sn); // 删除本地缓存
 					//$('.J_list_one_'+index).remove();
@@ -379,7 +379,6 @@ $(function(){
 			}
 			Ajax.call('/api/method/iot_ui.iot_api.add_new_gate', JSON.stringify(data), add_new_gate, 'POST', 'JSON', 'JSON',false);
 			function add_new_gate(req){
-				console.log(req);
 				if(req.message==true){
 					alt('添加成功',1);
 					$(".shade").hide();

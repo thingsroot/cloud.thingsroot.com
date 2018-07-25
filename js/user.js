@@ -113,7 +113,6 @@ $(function(){
 	function logout(){
 		Ajax.call('/?cmd=logout', '', logoutFun, 'GET', 'JSON', 'FORM');
 		function logoutFun(req){
-			console.log('退出',req);
 			delCookie('auth_token');
 		}
 		setTimeout("redirect('login.html')", 1500);

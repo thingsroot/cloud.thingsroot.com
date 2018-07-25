@@ -83,7 +83,7 @@ function adalt(title,content,icon){
 		  }
 		});
 		setTimeout(function(){
-			console.log('lay',index);
+			// console.log('lay',index);
 			layer.close(index);
 		}, 15000);
 	});
@@ -134,7 +134,7 @@ function errorMsg(result,err_message){
 			}
 		}) || []).join(',') || err_message;
 
-		console.log('msg',msg);
+		// console.log('msg',msg);
 		return msg;
 	}else{
 		return err_message;

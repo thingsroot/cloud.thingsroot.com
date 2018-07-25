@@ -73,33 +73,39 @@ $(function(){
             $('.disable_data_upload').addClass('hd');
 
         }
-		{
+
             $('.J_app_gate_disable_netcfg').addClass('hd');
             $('.J_app_gate_enable_netcfg').removeClass('hd');
             $('.J_gateAppTabTitle_netcfg').addClass('hide');
-		}
+
+            $('.J_app_gate_disable_vpn').addClass('hd');
+            $('.J_app_gate_enable_vpn').removeClass('hd');
+            $('.J_gateAppTabTitle_vpn').addClass('hd');
+            $('.J_webmapping').addClass('hd');
+            $('.J_ioevpn').addClass('hd');
+
 		for(x in req.applist){
-            console.log(req.applist[x].name);
+            // console.log(req.applist[x].name);
 			if(req.applist[x].name=="network_uci"){
-                console.log("1");
                 $('.J_app_gate_enable_netcfg').addClass('hd');
                 $('.J_app_gate_disable_netcfg').removeClass('hd');
                 $('.J_gateAppTabTitle_netcfg').removeClass('hide');
                 break;
 			}
-            // if(req.applist[x]=="frpc"){
-            //     $('.J_app_gate_disable_vpn').addClass('hd');
-            //     $('.J_app_gate_enable_vpn').removeClass('hd');
-            //     $('.J_gateAppTabTitle_vpn').removeClass('hd');
-            // }else{
-            //     $('.J_app_gate_enable_vpn').addClass('hd');
-            //     $('.J_gateAppTabTitle_vpn').addClass('hd');
-            //     $('.J_app_gate_disable_vpn').removeClass('hd');
-            //
-            // }
+
 
 		}
-
+        for(x in req.applist) {
+            if(req.applist[x].name=="frpc"){
+                // console.log("frpc");
+                $('.J_app_gate_enable_vpn').addClass('hd');
+                $('.J_app_gate_disable_vpn').removeClass('hd');
+                $('.J_webmapping').removeClass('hd');
+                $('.J_ioevpn').removeClass('hd');
+                // $('.J_gateAppTabTitle_vpn').removeClass('hd');
+                break;
+            }
+        }
 
 		localStorage.setItem('device_detail_'+device_sn,JSON.stringify(req));
         /*网关固件版本---------------------------------------------------*/
@@ -226,6 +232,12 @@ $(function(){
 		// window.location.href='ioevpn.html?gate_sn='+device_sn;
 	})
 
+    //  WEB映射
+    $('.J_webmapping').click(function(){
+        var url = 'http://'+ device_sn + ".symgrid.com:880";
+        window.open(url,"_blank");
+        // window.location.href='ioevpn.html?gate_sn='+device_sn;
+    })
 
 //单个应用的操作/////////////////////////////////////////////////////////////////////////////////
 	/*
@@ -447,7 +459,11 @@ $(function(){
 	}
 	// 应用列表翻页
 	layui.use(['laypage', 'layer'], function(){
-		var data = JSON.parse(localStorage.getItem('app_list_current_'+device_sn));
+        var data = localStorage.getItem('app_list_current_'+device_sn);
+        if(data=="undefined"){
+            return false;
+        }
+		var data = JSON.parse(data);
 		var length = 0;
 		if(data && typeof(data)!=='undefined'){
 			length = data.length;
@@ -476,12 +492,13 @@ $(function(){
     */ 
 	function display_app_list(page_num){
 		var data = localStorage.getItem('app_list_current_'+device_sn);
-		data = JSON.parse(data);
-		if(!data){
+
+		if(data=="undefined"){
 			$('.J_gateAppList .none').show();
 			$('.J_app_none,.go_shop').hide();
 			return false;
 		}
+        data = JSON.parse(data);
 		data = pagination(page_num,pageSize,data);
 		var arrLen = data.length;
 		if(arrLen==0 && page_num==1){
@@ -1232,14 +1249,14 @@ $(function(){
         tab_num = 1;
 	    $('.top .datasearch').hide();
         $('.applistrefresh').removeClass('hd');// 刷新按钮
-
+        $('.data_upload').addClass('hd');// 数据上送
 	    $("#J_app_pagination_nav").removeClass('hd');
 	    getAppList();
 	}else if(tab_type=='monitor'){	// 网关信息tab
         tab_num = 2;
 	    $('.top .datasearch').hide();
         $('.applistrefresh').addClass('hd');// 刷新按钮
-
+        $('.data_upload').addClass('hd');// 数据上送
 	    // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 	    setTimeout(function(){		    
 			tag_hisdata('charts', 'cpuload', 0, 1, 1,'','',0);
@@ -1285,6 +1302,7 @@ $(function(){
         }else if(num==2){
 	        $('.top .datasearch').hide();
             $('.applistrefresh').addClass('hd');// 刷新按钮
+            $('.data_upload').addClass('hd');// 数据上送
 	        $("#J_device_pagination_nav").css('opacity',0);
 	        $("#J_app_pagination_nav").css('opacity',0);
 	        // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
@@ -1479,15 +1497,15 @@ $(function(){
     //关闭网关网络配置
     $('.J_app_gate_disable_netcfg').on("click", function(){
         var id = "uninstall "+device_sn+"'s App network_uci  " + Date.parse(new Date());
-        var param = {
+        var data = {
             "device": device_sn,
             "id": id,
             "data": {"inst": "Network"}
         };
-        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(param), app_uninstall,'POST', 'JSON', 'JSON',false);
-        setTimeout(function(){
-            Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
-        }, 10000);
+        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
+        // setTimeout(function(){
+        //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+        // }, 10000);
 
         function app_uninstall(req) {
 
@@ -1513,6 +1531,83 @@ $(function(){
     //关闭网关网络配置
 
 
+    //开启网关远程连接
+    $('.J_app_gate_enable_vpn').on("click", function(){
+        var id = "install "+device_sn+"'s App frpc  " + Date.parse(new Date());
+        var data = {
+            "device": device_sn,
+            "id": id,
+            "data": {
+                "inst": "ioe_frpc",
+                "name": "frpc",
+				"from_web": 1,
+                "version":'latest'
+            }
+        };
+
+
+        Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+
+        function app_install(req) {
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'J_frpc',
+                    'type': 'app_install',
+                    'title': "应用安装",
+                    'crontabDesc': 'frpc',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+
+    });
+    //开启网关远程连接
+
+    //关闭网关远程连接
+    $('.J_app_gate_disable_vpn').on("click", function(){
+        var id = "uninstall "+device_sn+"'s App frpc  " + Date.parse(new Date());
+        var data = {
+            "device": device_sn,
+            "id": id,
+            "data": {"inst": "ioe_frpc"}
+        };
+        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
+        // setTimeout(function(){
+        //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+        // }, 10000);
+
+        function app_uninstall(req) {
+
+            if (req.message != '') {
+                var idarr = {
+                    'id': id,
+                    'times': 10,
+                    'docid': 'J_frpc',
+                    'type': 'app_uninstall',
+                    'title': "应用卸载",
+                    'crontabDesc': 'frpc',
+                }
+                addCrontab(idarr);
+                alt('命令已发送，等待结果返回', 1);
+
+                return;
+            } else {
+                err('命令执行失败');
+                return;
+            }
+        }
+    });
+    //关闭网关远程连接
+
+
     $('.lan_modify').on("click", function(){
         $('.lan_modify_op').removeClass('hd');
         $('.N_lanip_ input.form-control').removeAttr('readonly');
@@ -1535,7 +1630,7 @@ $(function(){
         var netmask = $('.N_laninetmask_ input.form-control').val();
 		net_cfg.ipaddr = ipaddr;
         net_cfg.netmask = netmask;
-        console.log(net_cfg);
+
 		var id =  device_sn + " lan_cfg " + Date.parse(new Date());
         var data = {
             "id": id,
