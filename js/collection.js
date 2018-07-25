@@ -496,6 +496,8 @@ $(function(){
 		if(data=="undefined"){
 			$('.J_gateAppList .none').show();
 			$('.J_app_none,.go_shop').hide();
+            $('.application_main.J_Network').remove();
+
 			return false;
 		}
         data = JSON.parse(data);
@@ -1541,6 +1543,11 @@ $(function(){
                 "inst": "ioe_frpc",
                 "name": "frpc",
 				"from_web": 1,
+				"conf": {
+					"enable_web": true,
+					"token": "BWYJVj2HYhVtdGZL",
+					"auto_start": true
+                },
                 "version":'latest'
             }
         };
