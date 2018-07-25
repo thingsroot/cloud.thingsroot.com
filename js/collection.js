@@ -1477,9 +1477,17 @@ $(function(){
 
         Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
 
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
+
         // setTimeout(function(){
         //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
         // }, 10000);
+
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
 
         function app_install(req) {
             if (req.message != '') {
@@ -1562,6 +1570,10 @@ $(function(){
 
 
         Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
 
         function app_install(req) {
             if (req.message != '') {
