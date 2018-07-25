@@ -502,19 +502,24 @@ $(function(){
 		var data = localStorage.getItem('app_list_current_'+device_sn);
 
 		if(data=="undefined"){
+			/*
 			$('.J_gateAppList .none').show();
 			$('.J_app_none,.go_shop').hide();
-            $('.application_main.J_Network').remove();
-
+            $('div.application_main').remove();
+            $('div.go_shop.J_goshop').remove();
+            $('.J_gateAppList .go_shop').before("");
 			return false;
+			*/
+			data = "[]";
 		}
         data = JSON.parse(data);
 		data = pagination(page_num,pageSize,data);
 		var arrLen = data.length;
 		if(arrLen==0 && page_num==1){
 			$('.J_gateAppList .none').show();
+            $('.J_app_none,.go_shop').hide();
 			$('.J_app_none').hide();
-			return false;
+			//return false;
 		}else{
 			$('.J_gateAppList .none').hide();
 			$('.J_app_none,.go_shop').show();
