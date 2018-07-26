@@ -25,6 +25,8 @@
 
 <div class="row">
 
+
+
   <div class="col-md-6">
     <div class="container-fluid">
       <div class="bs-example"><div class="col-md-4"></div><h1>参数</h1></div>
@@ -56,8 +58,8 @@
           <div class="form-group">
             <label class="col-sm-4 control-label">连接模式:</label>
             <div class="col-sm-8">
-              <button type="button" class="btn btn-default btn-primary active tunnel_config" id="virtual_network">虚拟网络</button>
-              <button type="button" class="btn btn-default tunnel_config" id="virtual_serial">虚拟串口</button>
+              <button type="button" class="btn btn-default btn-primary active tunnel_config " id="virtual_network">虚拟网络</button>
+              <button type="button" class="btn btn-default tunnel_config hide" id="virtual_serial">虚拟串口</button>
             </div>
           </div>
 
@@ -188,6 +190,8 @@
 
   </div>
 
+
+
   <div class="col-md-6">
       <div class="container-fluid">
         <div class="bs-example"><h1>状态</h1></div>
@@ -204,14 +208,14 @@
             <p><span>本地运行环境：</span> <span class="service_error" id="check_env_result"></span></p><br />
             <p><span>本地服务状态：</span> <span id="check_local_result"></span></p><br />
             <p><span>本地连接状态：</span> <span class="service_error" id="local_link_result"></span></p><br />
-            <p><span>云端隧道名称：</span> <span class="service_error" id="cloud_tunnel_name"></span></p><br />            
+            <p><span>云端隧道名称：</span> <span class="service_error" id="cloud_tunnel_name"></span></p><br />
             <p><span>云端隧道状态：</span> <span class="service_error" id="cloud_tunnel_status"></span></p><br />
-            <p><span>本次启动时间：</span> <span class="service_error" id="this_start_time"></span></p><br />            
-            <p><span>上次消耗流量：</span> <span class="service_error" id="last_Traffic_data"></span></p><br />            
-            <p><span>Ping设备IP状态：</span> <span class="service_error" id="ping_devip_result"></span></p><br /> 
-            
+            <p><span>本次启动时间：</span> <span class="service_error" id="this_start_time"></span></p><br />
+            <p><span>上次消耗流量：</span> <span class="service_error" id="last_Traffic_data"></span></p><br />
+            <p><span>Ping设备IP状态：</span> <span class="service_error" id="ping_devip_result"></span></p><br />
 
-            
+
+
 
           <table class="table" id="mes_table">
 
@@ -228,7 +232,7 @@
           </table>
 
           <div class="alert alert-info hide" role="alert" id="cloud_ret_message">...</div>
-          
+
         </div>
 
       </div>

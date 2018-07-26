@@ -234,9 +234,55 @@ $(function(){
 
     //  WEB映射
     $('.J_webmapping').click(function(){
-        var url = 'http://'+ device_sn + ".symgrid.com:880";
-        window.open(url,"_blank");
-        // window.location.href='ioevpn.html?gate_sn='+device_sn;
+        var _frpc_visitors;
+        var _frpc_run;
+        Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,'vsn':device_sn + '.ioe_frpc'}, check_frpc_visitors, 'GET', 'JSON', 'JSON', false);
+        function check_frpc_visitors(req){
+            if(req.message!=''){
+                for(x in req.message){
+                    // console.log(req.applist[x].name);
+                    if(req.message[x].name=="frpc_visitors"){
+                        _frpc_visitors = req.message[x].pv;
+                    }
+                    if(req.message[x].name=="frpc_run"){
+                        _frpc_run = req.message[x].pv;
+                    }
+                }
+
+            }
+        }
+
+
+		if(_frpc_visitors=="\[\"2-30002-001813-00075__web\"\]"  && _frpc_run==1){
+            var url = 'http://'+ device_sn + ".symgrid.com:880";
+            window.open(url,"_blank");
+		}else{
+            var id = "set " + "ioe_frpc's config "+ ' '+Date.parse(new Date());
+            var data = {
+                "device": device_sn,
+                "id": id,
+                "data": {
+                    "inst": "ioe_frpc",
+                    "conf": {
+                        "enable_web": true,
+                        "token": "BWYJVj2HYhVtdGZL",
+                        "auto_start": true
+                    }
+                }
+            };
+
+            Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
+            function ioe_frpc_config(req){
+                if(req.message!=''){
+                    alt('正在设置，等待10秒后重试',1);
+                }else{
+                    err('命令执行失败，请稍后重试！');
+                }
+            }
+		}
+
+
+
     })
 
 //单个应用的操作/////////////////////////////////////////////////////////////////////////////////
@@ -502,17 +548,24 @@ $(function(){
 		var data = localStorage.getItem('app_list_current_'+device_sn);
 
 		if(data=="undefined"){
+			/*
 			$('.J_gateAppList .none').show();
 			$('.J_app_none,.go_shop').hide();
+            $('div.application_main').remove();
+            $('div.go_shop.J_goshop').remove();
+            $('.J_gateAppList .go_shop').before("");
 			return false;
+			*/
+			data = "[]";
 		}
         data = JSON.parse(data);
 		data = pagination(page_num,pageSize,data);
 		var arrLen = data.length;
 		if(arrLen==0 && page_num==1){
 			$('.J_gateAppList .none').show();
+            $('.J_app_none,.go_shop').hide();
 			$('.J_app_none').hide();
-			return false;
+			//return false;
 		}else{
 			$('.J_gateAppList .none').hide();
 			$('.J_app_none,.go_shop').show();
@@ -1475,9 +1528,17 @@ $(function(){
 
         Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
 
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
+
         // setTimeout(function(){
         //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
         // }, 10000);
+
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
 
         function app_install(req) {
             if (req.message != '') {
@@ -1549,12 +1610,21 @@ $(function(){
                 "inst": "ioe_frpc",
                 "name": "frpc",
 				"from_web": 1,
+				"conf": {
+					"enable_web": true,
+					"token": "BWYJVj2HYhVtdGZL",
+					"auto_start": true
+                },
                 "version":'latest'
             }
         };
 
 
         Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+
+        setTimeout(function(){
+            requestAppList();
+        }, 5000);
 
         function app_install(req) {
             if (req.message != '') {
