@@ -253,7 +253,7 @@ $(function(){
         }
 
 
-		if(_frpc_visitors=="\[\"2-30002-001813-00075__web\"\]"  && _frpc_run==1){
+		if(_frpc_visitors=="\[\"" + device_sn + "__web\"\]"  && _frpc_run==1){
             var url = 'http://'+ device_sn + ".symgrid.com:880";
             window.open(url,"_blank");
 		}else{
