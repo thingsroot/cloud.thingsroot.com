@@ -353,7 +353,6 @@ function query_cloudproxy_status(proxy_item) {
     });
 }
 
-
 function check_ip_alive(ip) {
   postdata = {"ipaddr":ip}
    $.ajax({
@@ -388,7 +387,6 @@ function check_ip_alive(ip) {
       }
   });
 }
-
 
 function send_keep_alive() {
     // 发送心跳
@@ -446,8 +444,6 @@ function start_local_vpn(postinfo) {
 
 }
 
-
-
 function stop_local_vpn() {
       $.ajax({
         url: 'http://127.0.0.1:5000/stop',
@@ -495,7 +491,6 @@ function stop_local_vpn() {
 
 }
 
-
 function check_gate_isbusy(sn, url, code) {
 	    var postinfo = {
 			"gate_sn": sn,
@@ -518,7 +513,9 @@ function check_gate_isbusy(sn, url, code) {
 					vpn_msg_html = "你准备操作的网关正在被其他用户使用！请关闭当前页面，稍候再试！";
 					$("span.error_tips").html(vpn_msg_html);
 					 $('#myModal').modal('show'); 		
-				}
+				}else{
+                    $("input#dev_ip").val(data.br_lan_ipv4);
+                }
 			
 		    },
 
@@ -530,7 +527,6 @@ function check_gate_isbusy(sn, url, code) {
       });
 
 }
-
 
 function check_gate_alive(sn, url, code) {
 	    var postinfo = {
@@ -724,7 +720,6 @@ function stop_vpn_in_modal() {
         }
       });
 };
-
 
 function closeWindows() {
 		var userAgent = navigator.userAgent;

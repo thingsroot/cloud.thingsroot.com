@@ -234,33 +234,55 @@ $(function(){
 
     //  WEB映射
     $('.J_webmapping').click(function(){
-        // var id = "set " + "ioe_frpc's config "+ ' '+Date.parse(new Date());
-        // var data = {
-        //     "device": device_sn,
-        //     "id": id,
-        //     "data": {
-        //         "inst": "ioe_frpc",
-        //         "conf": {
-        //             "enable_web": true,
-        //             "token": "BWYJVj2HYhVtdGZL",
-        //             "auto_start": true
-        //         }
-        //     }
-        // };
-		//
-        // Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
-        // function ioe_frpc_config(req){
-        //     if(req.message!=''){
-        //         // alt('命令已发送，等待结果返回',1);
-        //         var url = 'http://'+ device_sn + ".symgrid.com:880";
-        //         window.open(url,"_blank");
-        //     }else{
-        //         err('命令执行失败');
-        //     }
-        // }
+        var _frpc_visitors;
+        var _frpc_run;
+        Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,'vsn':device_sn + '.ioe_frpc'}, check_frpc_visitors, 'GET', 'JSON', 'JSON', false);
+        function check_frpc_visitors(req){
+            if(req.message!=''){
+                for(x in req.message){
+                    // console.log(req.applist[x].name);
+                    if(req.message[x].name=="frpc_visitors"){
+                        _frpc_visitors = req.message[x].pv;
+                    }
+                    if(req.message[x].name=="frpc_run"){
+                        _frpc_run = req.message[x].pv;
+                    }
+                }
 
-                var url = 'http://'+ device_sn + ".symgrid.com:880";
-                window.open(url,"_blank");
+            }
+        }
+
+
+		if(_frpc_visitors=="\[\"2-30002-001813-00075__web\"\]"  && _frpc_run==1){
+            var url = 'http://'+ device_sn + ".symgrid.com:880";
+            window.open(url,"_blank");
+		}else{
+            var id = "set " + "ioe_frpc's config "+ ' '+Date.parse(new Date());
+            var data = {
+                "device": device_sn,
+                "id": id,
+                "data": {
+                    "inst": "ioe_frpc",
+                    "conf": {
+                        "enable_web": true,
+                        "token": "BWYJVj2HYhVtdGZL",
+                        "auto_start": true
+                    }
+                }
+            };
+
+            Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
+            function ioe_frpc_config(req){
+                if(req.message!=''){
+                    alt('正在设置，等待10秒后重试',1);
+                }else{
+                    err('命令执行失败，请稍后重试！');
+                }
+            }
+		}
+
+
+
     })
 
 //单个应用的操作/////////////////////////////////////////////////////////////////////////////////

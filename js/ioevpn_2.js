@@ -10,7 +10,7 @@
   check_local_status_has_start = "";
   check_cloud_status_ret = "";
   check_act_result_ret ="";
-	check_act_result_ret_has_start = "";
+  check_act_result_ret_has_start = "";
   exitTime = "";
   link_mode = "virtual_network";
   net_mode = "bridge";
@@ -40,7 +40,7 @@ $(document).ready(function(){
 	  check_local_status();
 	  },5000);
 	  
-		setInterval(function(){	  check_gate_alive(gate_sn, cloud_url, auth_code);	  },5000);  
+	setInterval(function(){	  check_gate_alive(gate_sn, cloud_url, auth_code);	  },5000);
 
 	check_local_status_has_start = true;
 	check_cloud_status_ret = setInterval(function(){
@@ -219,7 +219,6 @@ $(document).ready(function(){
       $("button#protocol_kcp").removeClass("btn-primary active");
     });
 
-
     $("button#protocol_kcp").click(function(){
       net_protocol="kcp";
       // console.log(net_protocol);
@@ -239,7 +238,6 @@ $(document).ready(function(){
       $("button#virtual_serial").removeClass("btn-primary active");
     });
 
-
     $("button#virtual_serial").click(function(){
       link_mode="virtual_serial";
       frpc_item = gate_sn + "_" + link_mode;
@@ -258,7 +256,6 @@ $(document).ready(function(){
       $("button#start_serial").removeClass("hide");
     });
 // 选择按钮--连接模式-----结束
-
 
 
 // 关闭页面按钮-----开始
