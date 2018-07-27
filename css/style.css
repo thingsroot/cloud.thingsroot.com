@@ -685,7 +685,7 @@ th .on{
 	background: #edeef1;
 	border-bottom: 1px solid #e1e1e1;
 	float:left;
-	height:600px;
+	height:100%;
 	width: 160px;
 	overflow-y: scroll;
 }
