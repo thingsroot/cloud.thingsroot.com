@@ -62,10 +62,8 @@
         function update_gate_list(req){
             if(req.message){
                 _gate_list_lenth = req.message;
-                console.log(_gate_list_lenth);
             }else{
                 _gate_list_lenth = 0;
-                console.log(_gate_list_lenth);
             }
             if(_gate_list_lenth == '0'){
                 if(filter=="all"){
@@ -107,7 +105,7 @@
         //"pagingType": "full_numbers" ,
         "bStateSave": false,
         "sPaginationType": "full_numbers",
-        "iDisplayLength" : 8,
+        "iDisplayLength" : 10,
         "ajax": {
             "url": table_obj.rtvalueurl,
             "dataSrc": "message",
