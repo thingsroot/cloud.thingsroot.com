@@ -516,6 +516,14 @@
         });
 
 
+        $('button.remake').on('click', function(){
+
+            $("input[name='name']").val("");
+            $("input[name='sn']").val("");
+            $("#desc").val("");
+        });
+
+
         $('div.search_filter li').on('click', function(){
             $('.search_keyword').text($(this).text());
         });
