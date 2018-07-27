@@ -2124,6 +2124,11 @@ th .on{
 	width: 20px;
     height: 100%;
 }
+
+.gate_hand{
+	cursor: pointer;
+}
+
 .comment_bottom .box li{
 	display: inline-block;
 	width:18px;

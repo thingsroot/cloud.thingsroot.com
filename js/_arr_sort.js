@@ -1,5 +1,5 @@
 /**
- * @file            mine.js
+ * @file            mine-old.js
  * @description     设备频道。
  * @author          dongsun Team ( http://www.dongsun.com/ )
  * @date            2018-03-08 dongsun

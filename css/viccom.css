@@ -1,0 +1,23 @@
+.main_content #table_footer {
+	border-top: 1px solid #e1e1e1;
+}
+
+.main_content #table_footer .J_buttons_viccom {
+    padding-top: 15px;
+    padding-left: 17.5px;
+}
+
+.main_content #table_footer span{
+	padding: 5px 25px;
+    background: #F5F6FA;
+    margin-left: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #232326;
+}
+table.dataTable thead td {
+    border-bottom: 0px solid #e1e1e1;
+  }
+table.dataTable.no-footer {
+    border-bottom: 0px solid #111;
+}
