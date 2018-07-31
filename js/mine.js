@@ -68,9 +68,10 @@
             if(_gate_list_lenth == '0'){
                 if(filter=="all"){
                     $('div.none p').eq(1).text('您的账户下没有网关呢！');
+                    $('div.none button').removeClass('hd');
                 }else{
                     $('div.none p').eq(1).text('没有查询到符合条件的记录！');
-                    $('div.none button').hide();
+                    $('div.none button').addClass('hd');
                 }
                 $('div.none').show();
                 $('table.table').hide();
@@ -313,6 +314,7 @@
                         if(req.message==true){
                             alt('添加成功',1);
                             $(".shade").hide();
+                            Ajax.call('' + _gate_list_lenth_url, '', update_gate_list, 'GET', 'JSON', 'JSON');
                             table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();
                         }
                         console.log(req);
@@ -508,6 +510,7 @@
                 }else{
                     alt('移除选择网关失败',1);
                 }
+                Ajax.call('' + _gate_list_lenth_url, '', update_gate_list, 'GET', 'JSON', 'JSON');
                 table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();
             }
 
@@ -548,7 +551,7 @@
         });
 
 
-        setInterval('table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();', 20000);
+        setInterval('Ajax.call(\'\' + _gate_list_lenth_url, \'\', update_gate_list, \'GET\', \'JSON\', \'JSON\');table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();', 20000);
 
         // $('#table_footer span[id="J_upgrade"]').click(function(e){
         //     var mmmm = $(this).parent().children().first().children().first();
