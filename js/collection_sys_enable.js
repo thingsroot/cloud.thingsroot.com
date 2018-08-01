@@ -7,8 +7,8 @@
 $(function(){
 	var device_sn = getParam('device_sn');
 	var symlinksn = device_sn;
-    var cuser_id = getCookie('usr');//$.cookie('user_id');
-    var csid = getCookie('auth_token');//$.cookie('sid');
+    var cuser_id = $.cookie('user_id');
+    var csid = $.cookie('sid');
 	var current_vsn = '192929';
 	var hostname = "iot.symgrid.com";
 	var isShift = false;
@@ -324,6 +324,7 @@ $(function(){
             var lastWillQos = 0;
             var lastWillRetain = false;
             var lastWillMessage = null;
+            console.info(clientId, user, pass);
             if(path){
                 client = new Paho.MQTT.Client(hostname, Number(port), path, clientId);
             } else {
