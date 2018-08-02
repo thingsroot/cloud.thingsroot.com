@@ -685,7 +685,7 @@ th .on{
 	background: #edeef1;
 	border-bottom: 1px solid #e1e1e1;
 	float:left;
-	height:100%;
+	height:600px;
 	width: 160px;
 	overflow-y: scroll;
 }
@@ -1720,12 +1720,39 @@ th .on{
 }
 /*登录*/
 .logoin{
-	position: relative;
+	position: absolute;
     left: 0;
     top: 0;
-    /* background: #F5F6FA; */
-    width: 100%;
-    height: 650px;
+	right: 0;
+	bottom: 0;
+	background: url("../img/html_background.png") no-repeat center;
+	background-size: cover;
+}
+         /*登录头部*/
+.logoin .header{
+	width: 100%;
+	height: 72px;
+	background-color: rgba(0,0,0,0.4);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 99;
+}
+.logoin .header span{
+	color: #fff;
+	font-size: 22px;
+	padding-left: 40px;
+}
+.logoin .header span >img{
+	margin-right: 10px;
+}
+.logoin .header a{
+	color: #fff;
+	font-size: 14px;
+	margin-right: 40px;
 }
 .logoin .main{
 	display: flex;
@@ -1740,7 +1767,7 @@ th .on{
 .logoin .logo img{float: left;}
 .logoin .top p{
 	display: inline-block;
-	margin: 40px;
+	margin: 20px 40px;
 	font-size: 18px;
 	padding: 8px 17px;
 	cursor: pointer;
@@ -2124,11 +2151,6 @@ th .on{
 	width: 20px;
     height: 100%;
 }
-
-.gate_hand{
-	cursor: pointer;
-}
-
 .comment_bottom .box li{
 	display: inline-block;
 	width:18px;
