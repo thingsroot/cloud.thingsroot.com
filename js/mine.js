@@ -527,7 +527,7 @@
 
         $('div.search_filter li').on('click', function(){
             $('.search_keyword').text($(this).text());
-        });
+                              });
 
 
         $('table.table tbody').on('click', 'tr td:nth-child(2)', function () {
