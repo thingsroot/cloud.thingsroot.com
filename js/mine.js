@@ -527,7 +527,7 @@
 
         $('div.search_filter li').on('click', function(){
             $('.search_keyword').text($(this).text());
-                              });
+        });
 
 
         $('table.table tbody').on('click', 'tr td:nth-child(2)', function () {
@@ -550,6 +550,8 @@
             $(".more_content").addClass("hd");
         });
 
+
+        
 
         setInterval('Ajax.call(\'\' + _gate_list_lenth_url, \'\', update_gate_list, \'GET\', \'JSON\', \'JSON\');table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();', 20000);
 
