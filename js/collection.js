@@ -1322,6 +1322,7 @@ $(function(){
 	    setTimeout(function(){		    
 			tag_hisdata('charts', 'cpuload', 0, 4, 1,'','',0);
 			tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',0);
+			tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1,'','',0);
 			//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',0);	
 	    }, 200);
 
@@ -1370,6 +1371,7 @@ $(function(){
 		    setTimeout(function(){		    
 				tag_hisdata('charts', 'cpuload', 0, 4, 1,'','',0);
 				tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',0);
+				tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1,'','',0);
 				//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',0);	
 		    }, 200);
         }else if(num==3){
@@ -1783,6 +1785,7 @@ $(function(){
 	setInterval(function(){
 		tag_hisdata('charts', 'cpuload', 0, 4, 1,'','',1);
 		tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1,'','',1);
+		tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1,'','',1);
 		// tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1,'','',1);
 	}, 15000);
 
