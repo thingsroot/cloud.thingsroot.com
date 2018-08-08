@@ -1324,7 +1324,7 @@ $(function(){
 	    // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 	    setTimeout(function(){		    
 			tag_hisdata('charts', 'cpuload', 0, 4, 1, 0, 0);
-			tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 0, 0);
+			tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 0, 1);
 			tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1, 0, 1);
 			//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1, 0, 0);
 	    }, 200);
@@ -1373,7 +1373,7 @@ $(function(){
 	        // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 		    setTimeout(function(){		    
 				tag_hisdata('charts', 'cpuload', 0, 4, 1, 0, 0);
-				tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 0, 0);
+				tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 0, 1);
 				tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1, 0, 1);
 				//tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1, 0, 0);
 		    }, 200);
@@ -1787,7 +1787,7 @@ $(function(){
 	// 刷新cpu等echarts图表
 	setInterval(function(){
 		tag_hisdata('charts', 'cpuload', 0, 4, 1, 1, 0);
-		tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 1, 0);
+		tag_hisdata('charts_used', 'mem_used', 0, 512 * 1000 * 1000, 1, 1, 1);
 		tag_hisdata('charts_wan', 'wan_s', 0, 1000000000, 1, 1, 1);
 		// tag_hisdata('charts_free', 'mem_free', 0, 512 * 1000 * 1000, 1, 1, 0);
 	}, 15000);
