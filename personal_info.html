@@ -10,6 +10,7 @@
 		<title>个人信息</title>
 	</head>
 	<body>
+	<!-- 头部 -->
 		<nav class="nav_herder">
 			<div class="nav_left" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
 			<div class="pull-right nav_right">
@@ -21,6 +22,7 @@
 			</div>
 		</nav>
 		<div class="down-main">
+			<!-- 左导航 -->
 			<div class="left-main left-full">
 				<div class="sidebar-fold">个人中心</div>
 				<div class="subNav bg-color" onClick="location='personal_info.html'">
@@ -33,7 +35,7 @@
 					<img src="img/personal_collect_hover.png" class="hover_img"/>
 					<p class="sublist-title">我的收藏</p>
 				</div>
-				<div class="subNav" onClick="javascript:alt('开发中',4);">
+				<div class="subNav" onClick="location='message.html'">
 					<img src="img/personal_news.png" class="hd_img"/>
 					<img src="img/personal_news_hover.png" class="hover_img"/>
 					<p class="sublist-title">消息中心</p>
@@ -49,6 +51,7 @@
 					<p class="sublist-title">设置</p>
 				</div>
 	  		</div>
+			<!-- 个人信息内容 -->
 	  		<div class="right-product my-index right-full">
 	  			<div class="rightHeight">
 			  		<ol class="breadcrumb">
@@ -63,38 +66,71 @@
 							<div class="info_main">
 								<p>头像</p>
 								<div class="icon js_uploadBox">
-									<button>编辑头像</button>
 									<div class="js_showBox"></div>
+									<button>编辑头像</button>
 									<input type="file" class="js_upFile" >
 								</div>
 							</div>
-							<div class="info_main">
-								<p>姓</p>
-								<input type="text" value="" name="first_name" />
+							<div class="userinfo_main">
+								<p><span>用户名</span><span style="font-size: 18px;font-weight: 600" id="user_name"></span></p>
+								<p><span>邮&nbsp;&nbsp;&nbsp;箱</span><span id="user_email"></span></p>
+								<p><span>电&nbsp;&nbsp;&nbsp;话</span><span id="user_phone"></span></p>
+								<p><span>身&nbsp;&nbsp;&nbsp;份</span><span id="user_identity"></span></p>
 							</div>
-							<div class="info_main">
-								<p>名</p>
-								<input type="text" value="" name="last_name" />
+							<div class="edit_info">
+								<button id="edit_userInfo">编辑</button>
+								<button id="edit_userPassword">修改密码</button>
 							</div>
-							<div class="info_main">
-								<p>电话</p>
-								<input type="text" value="" name="phone" />
-							</div>
-							<!--<div class="info_main">
-								<p>手机</p>
-								<input type="text" value="" name="mobile_no" />
-							</div>-->
-							<!--<div class="info_main">
-								<p>密码</p>
-								<input type="text" value="" name="new_password" />
-							</div>-->
-							<div class="makesure J_updateUser">保存</div>
 						</div>
 					</div>
 	  			</div>
 				<div class="copyright">SymTech Application © 2008-2017</div>
 	  		</div>
+			<!-- 编辑弹框 -->
+			<div id="edit_userInfoBox" style="display: none;">
+				<div>
+					<div class="title">编辑资料 <span class="close_editUserInfo">×</span></div>
+					<div class="info_main">
+						<p>姓</p>
+						<input type="text" value="" name="first_name" />
+					</div>
+					<div class="info_main">
+						<p>名</p>
+						<input type="text" value="" name="last_name" />
+					</div>
+					<div class="info_main">
+						<p>邮&nbsp;&nbsp;箱</p>
+						<input type="text" value="" name="email" />
+					</div>
+					<div class="info_main">
+						<p>电&nbsp;&nbsp;话</p>
+						<input type="text" value="" name="phone" />
+					</div>
+					<button class="J_updateUser">保存</button>
+				</div>
+			</div>
+
+			<!-- 修改密码弹框 -->
+			<div id="edit_userPasswordBox" style="display: none;">
+				<div>
+					<div class="title">修改密码 <span class="close_editUserPassword">×</span></div>
+					<div class="info_main">
+						<p>请输入旧密码</p>
+						<input type="password" value="" name="old_password" />
+					</div>
+					<div class="info_main">
+						<p>请输入新密码</p>
+						<input type="password" value="" name="new_password" />
+					</div>
+					<div class="info_main">
+						<p>请再次输入新密码</p>
+						<input type="password" value="" name="new_passwords" />
+					</div>
+					<button class="J_updateUserPassword">保存</button>
+				</div>
+			</div>
 	  	</div>
+
 	  	
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>	
 	<script src="js/transport.js" type="text/javascript"></script>
@@ -109,6 +145,19 @@
 	<script src="js/index.js" type="text/javascript"></script>
 	<script>
 		$(function(){
+            //计时器
+            var timer;
+            //获取用户信息
+            var usr = getCookie('usr');
+            Ajax.call('/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
+            function displayUserFun(req) {
+                var name = req.data.first_name+req.data.last_name;
+            	$("#user_name").html(name);
+            	$("#user_email").html(req.data.email);
+            	$("#user_phone").html(req.data.phone);
+            	// $(".userinfo_main>#user_identity").val(req.data.identity);
+            	console.log(req);
+            }
 //			上传头像
 			$(".js_upFile").uploadView({
 				uploadBox: '.js_uploadBox',//设置上传框容器
@@ -135,30 +184,96 @@
 		            });
 				}
 			});
-			
-			// 用户信息回显
-			var usr = getCookie('usr');
-			Ajax.call('/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
-			function displayUserFun(req) {
-				$("input[name=first_name]").val(req.data.first_name);
-				$("input[name=last_name]").val(req.data.last_name);
-				$("input[name=phone]").val(req.data.phone);
-				$("input[name=mobile_no]").val(req.data.mobile_no);
-				console.log(req);
-			}
-			// 修改个人信息
-			$('.J_updateUser').click(function(){
-				var userInfo = {
-				    "first_name":$("input[name=first_name]").val(),
-				    "last_name":$("input[name=last_name]").val(),
-				    "phone":$("input[name=phone]").val(),
-				}
-				Ajax.call('/api/resource/User/'+usr,JSON.stringify(userInfo), update_userinfoFun, 'PUT', 'JSON', 'JSON');
-				function update_userinfoFun(req) {
-					console.log(req);
-					alt('保存成功',1);
-				}
+
+			//点击编辑按钮
+			$('#edit_userInfo').click(function(){
+			    $('#edit_userInfoBox').show();
+			    //用户信息回显
+                var usr = getCookie('usr');
+                Ajax.call('/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
+                function displayUserFun(req) {
+                    $("input[name=first_name]").val(req.data.first_name);
+                    $("input[name=last_name]").val(req.data.last_name);
+                    $("input[name=email]").val(req.data.email);
+                    $("input[name=phone]").val(req.data.mobile_no);
+                    console.log(req);
+                }
 			});
+
+            // 修改个人信息 --- 保存
+            $('.J_updateUser').click(function(){
+                var userInfo = {
+                    "first_name":$("input[name=first_name]").val(),
+                    "last_name":$("input[name=last_name]").val(),
+                    "email":$("input[name=email]").val(),
+                    "phone":$("input[name=phone]").val()
+                };
+                Ajax.call('/api/resource/User/'+usr,JSON.stringify(userInfo), update_userinfoFun, 'PUT', 'JSON', 'JSON');
+                function update_userinfoFun(req) {
+                    console.log(req);
+                    alt('保存成功',1);
+                    $('#edit_userInfoBox').hide();
+                    setTimeout(function () {
+                        location.reload();
+                    },3000);
+                }
+            });
+
+			//关闭修改弹框
+			$('.close_editUserInfo').click(function(){
+                $('#edit_userInfoBox').hide();
+			});
+
+			//点击修改密码
+			$('#edit_userPassword').click(function () {
+                $('#edit_userPasswordBox').show();
+            });
+
+			//点击保存===修改密码
+			$('.J_updateUserPassword').click(function () {
+			    var new0 = $("input[name=old_password]").val();
+			    var new1 = $("input[name=new_password]").val();
+			    var new2 =  $("input[name=new_passwords]").val();
+			    if(new0 == ''){
+			        alt('请输入旧密码',1);
+				}else if(new1 == ''){
+                    alt('请输入新密码',1);
+                }else if(new2 == ''){
+                    alt('请再次输入新密码',1);
+                }else if( new0!=''&&new1!=''&&new2!=''&&new0 == new1 ){
+			        alt('新密码不能与旧密码一致',1);
+				}else if( new1 == new2){
+                    //修改密码请求接口
+                    var password = {
+                        "old_password":$("input[name=old_password]").val(),
+                        "new_password":$("input[name=new_password]").val()
+                    };
+                    Ajax.call('/api/method/frappe.core.doctype.user.user.update_password',JSON.stringify(password), revise_password, 'POST', 'JSON', 'JSON');
+                    function revise_password(req) {
+                        console.log(req);
+                        alt('修改成功',1);
+                        $('#edit_userPasswordBox').hide();
+                        var full_name = req.full_name;
+                        console.log(full_name);
+                        // delCookie('DS_'+full_name,null);  //清楚cookie缓存
+                        // delCookie(full_name,null);
+                        setTimeout(function () {
+                            window.open("login.html","_self");
+                        },3000);
+
+                    }
+				}else if(new1 != new2){
+				    alt('请确认新密码输入一致',1);
+				}
+            });
+
+			//关闭修改密码弹框
+			$('.close_editUserPassword').click(function () {
+                $('#edit_userPasswordBox').hide();
+            })
+
+
+
 		})
 	</script>
 	</body>
