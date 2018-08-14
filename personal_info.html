@@ -242,26 +242,32 @@
                     alt('请再次输入新密码',1);
                 }else if( new0!=''&&new1!=''&&new2!=''&&new0 == new1 ){
 			        alt('新密码不能与旧密码一致',1);
-				}else if( new1 == new2){
+				}else if( new0!=''&&new1!=''&&new2!=''&&new1 == new2 ){
                     //修改密码请求接口
                     var password = {
                         "old_password":$("input[name=old_password]").val(),
                         "new_password":$("input[name=new_password]").val()
                     };
-                    Ajax.call('/api/method/frappe.core.doctype.user.user.update_password',JSON.stringify(password), revise_password, 'POST', 'JSON', 'JSON');
-                    function revise_password(req) {
-                        console.log(req);
-                        alt('修改成功',1);
-                        $('#edit_userPasswordBox').hide();
-                        var full_name = req.full_name;
-                        console.log(full_name);
-                        // delCookie('DS_'+full_name,null);  //清楚cookie缓存
-                        // delCookie(full_name,null);
-                        setTimeout(function () {
-                            window.open("login.html","_self");
-                        },3000);
-
-                    }
+                    $.ajax({
+						url:'/api/method/frappe.core.doctype.user.user.update_password',
+						type:'POST',
+						data:JSON.stringify(password),
+						dataType:'JSON',
+						success:function (req) {
+                            alt('修改成功',1);
+                            $('#edit_userPasswordBox').hide();
+                            var full_name = req.full_name;
+                            console.log(full_name);
+                            // delCookie('DS_'+full_name,null);  //清楚cookie缓存
+                            // delCookie(full_name,null);
+                            setTimeout(function () {
+                                window.open("login.html","_self");
+                            },9000);
+                        },
+						error:function () {
+							alt('旧密码错误',2);
+                        }
+					})
 				}else if(new1 != new2){
 				    alt('请确认新密码输入一致',1);
 				}
@@ -271,9 +277,6 @@
 			$('.close_editUserPassword').click(function () {
                 $('#edit_userPasswordBox').hide();
             })
-
-
-
 		})
 	</script>
 	</body>
