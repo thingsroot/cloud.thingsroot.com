@@ -161,7 +161,7 @@
         columnDefs: [
             {
             //   指定第第一列   
-                targets: 0,
+                targets: [0],
                 searchable: false,
                 orderable: false,
                 width: '1%',
@@ -172,7 +172,7 @@
             },
             {
                 //   指定第第2列
-                targets: 1,
+                targets: [1],
                 width: '20%',
                 render: function(data, type, row, meta) {
                     // console.log(data)
@@ -181,22 +181,22 @@
             },
             {
                 //   指定第第3列
-                targets:  2,
+                targets:  [2],
                 width: '20%'
             },
             {
                 //   指定第第4列
-                targets:  3,
+                targets:  [3],
                 width: '10%'
             },
             {
                 //   指定第第5列
-                targets:  3,
+                targets:  [4],
                 width: '10%'
             },
             {
                 //   指定第第6列
-                targets: 5,
+                targets: [5],
                 render: function(data, type, row, meta) {
                     if(data=="ONLINE"){
                         // console.log(data, type, row, meta);
@@ -551,7 +551,7 @@
         });
 
 
-        
+
 
         setInterval('Ajax.call(\'\' + _gate_list_lenth_url, \'\', update_gate_list, \'GET\', \'JSON\', \'JSON\');table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();', 20000);
 

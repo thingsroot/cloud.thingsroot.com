@@ -148,13 +148,109 @@ table th{color:#A7A9B1;}
     cursor: pointer;
     margin-bottom: 10px;
 }
+/* 个人中心 > 个人信息 */
 .down-main {
     position: absolute;
     width: 100%;
     top: 50px;
-    bottom: 0px;
+    bottom: 0;
     z-index: 100;
 }
+
+/* 个人信息 cuicui start */
+
+.userinfo_main{
+	height: 150px;
+}
+.userinfo_main>p{
+	line-height: 30px;
+}
+.userinfo_main>p>span:nth-child(1){
+	color: #999999;
+	margin-right: 10px;
+}
+.edit_info{
+	width: 200px;
+	height: 100px;
+}
+.edit_info>button:nth-child(1){
+	width: 100px;
+	height: 34px;
+	color: #FFFFFF;
+	background-color: #354E78;
+	border: 0;
+	border-radius: 4px;
+	margin-right: 10px;
+}
+.edit_info>button:nth-child(2){
+	width: 80px;
+	height: 30px;
+	color: #354E78;
+	background-color: transparent;
+	border: 0;
+	border-radius: 4px;
+}
+#edit_userInfoBox,#edit_userPasswordBox{
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.3);
+	position: absolute;
+	top: 0;
+}
+#edit_userInfoBox>div,#edit_userPasswordBox>div{
+	width: 350px;
+	min-height: 350px;
+	padding: 10px 25px;
+	background-color: #FFFFFF;
+	margin-left: -175px;
+	margin-top: -175px;
+	position: absolute;
+	left: 50%;
+	top: 45%;
+	z-index: 99;
+}
+#edit_userInfoBox>div>.title,#edit_userPasswordBox>div>.title{
+	width: 100%;
+	height: 45px;
+	line-height: 45px;
+	font-size: 16px;
+	color: #354E78;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid #E6EAEF;
+}
+#edit_userInfoBox>div>.title>span,#edit_userPasswordBox>div>.title>span{
+	font-size: 28px;
+	color: #C1C4D0;
+	cursor:pointer;
+}
+#edit_userInfoBox>div>.info_main>p,#edit_userPasswordBox>div>.info_main>p{
+	line-height: 30px;
+	color: #C1C4D0;
+	margin-top: 10px;
+
+}
+#edit_userInfoBox>div>.info_main>input,
+#edit_userPasswordBox>div>.info_main>input{
+	width: 100%;
+	height: 34px;
+	border: 1px solid #E6EAEF;
+	border-radius: 4px;
+	padding-left: 10px;
+}
+#edit_userInfoBox>div>button,
+#edit_userPasswordBox>div>button{
+	width: 100px;
+	height: 34px;
+	background-color: #354E78;
+	border-radius: 4px;
+	border: 0;
+	color: #FFFFFF;
+	margin: 20px 100px;
+}
+
+/* cuicui end */
+
 .right-product {
     position: absolute;
     top: 0px;
@@ -312,7 +408,7 @@ input:checked + .slider::after {
 }
 .main tbody{
 	display: block;
-    max-height: 250px;
+    max-height: 270px;
     overflow-y: scroll;
 } 
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
@@ -326,7 +422,7 @@ input:checked + .slider::after {
 	width: 100%;
 	bottom: 0;
 	height: 30px;
-	line-height: 30px;
+	line-height: 45px;
 }
 .re_copy{
 	position: relative;
@@ -1415,7 +1511,7 @@ th .on{
 }
 /*成员管理*/
 .personal_main{
-	height:85%;
+	height:830px;
 }
 .personal_content{
 	height:87%;

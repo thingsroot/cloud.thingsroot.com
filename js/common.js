@@ -192,7 +192,7 @@ function parse_url(){
     .substring(url.indexOf('?') + 1)
     .split('&')
     .map((query) => query.split('='))
-    .reduce((params, pairs) => (params[pairs[0]] = pairs[1] || '', params), {});
+    .reduce((params, pairs) => (params[pairs[0]] = pairs[1] || '', params), {});new `   `
 	return querys;
 }
 // 函数将查询字符串解析到变量中 	parse_url 反向函数
