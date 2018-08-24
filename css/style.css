@@ -1822,13 +1822,14 @@ th .on{
 	right: 0;
 	bottom: 0;
 	background: url("../img/html_background.png") no-repeat center;
-	background-size: cover;
+	background-size: 100% 100%;
 }
          /*登录头部*/
 .logoin .header{
 	width: 100%;
-	height: 72px;
-	background-color: rgba(0,0,0,0.4);
+	height: 7.2%;
+	background-color: transparent;
+	border-bottom: 1px solid #606165;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -1852,18 +1853,38 @@ th .on{
 }
 .logoin .main{
 	display: flex;
-	width:800px;
+	width:1100px;
 	margin: 0 auto;
 	box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-	background: #fff;
+	background: transparent;
 }
 .logoin .logo{
-	width:300px;
+	width:1000px;
+	height: 340px;
+}
+.logoin .logo>div{
+	width: 100%;
+	height: 100%;
+}
+.logoin .logo>div>p:nth-child(1){
+	font-size: 50px;
+	color: #FFFFFF;
+	margin-top: 60px;
+	line-height: 90px;
+	font-family: "Times New Roman", Times, serif;
+}
+.logoin .logo>div>p:nth-child(2),
+.logoin .logo>div>p:nth-child(3),
+.logoin .logo>div>p:nth-child(4){
+	font-size: 30px;
+	color: #FFFFFF;
+	line-height: 50px;
+	font-family: "Times New Roman", Times, serif;
 }
 .logoin .logo img{float: left;}
 .logoin .top p{
 	display: inline-block;
-	margin: 20px 40px;
+	margin: 20px;
 	font-size: 18px;
 	padding: 8px 17px;
 	cursor: pointer;
@@ -1874,7 +1895,8 @@ th .on{
 .logoin .txt{
 	flex: 1;
 	text-align: center;
-	padding: 0 50px;
+	padding: 0 60px;
+	background-color: #ffffff;
 }
 .logoin .input input{
 	flex: 1;
@@ -2286,3 +2308,133 @@ th .on{
 	background: url(../img/star_00.png) no-repeat center;
 	background-size: contain;
 }
+
+/* 消息中心 start   cuicui */
+
+.mes_title{
+	margin: 15px;
+	height: 50px;
+	padding: 0 15px;
+	line-height: 50px;
+	font-size: 16px;
+	font-weight: 800;
+	color: #354E78;
+	background-color: #ffffff;
+	box-sizing:content-box;
+	border: 1px solid #E5E9EE;
+}
+.mes_title>span{
+	font-size: 14px;
+	color: #354E78;
+}
+.mes_content{
+	margin: 15px 15px 0 15px;
+	border: 1px solid #E5E9EE;
+
+}
+.mes_search{
+	padding: 0 15px;
+	background-color: #ffffff;
+	height: 60px;
+}
+.mes_search>button{
+	width: 120px;
+	height: 30px;
+	background-color: #FFFFFF;
+	border: 1px solid #E5E9EE;
+	margin-top:15px;
+	margin-right: 10px;
+	color: #4D5054;
+}
+.mes_search>div{
+	width: 38%;
+	padding: 14px 0;
+	float: right;
+	display: flex;
+	justify-items: center;
+}
+.mes_search>div>div{
+	margin-left: 14px;
+}
+#search_type{
+	border: 0;
+}
+#details_table tr td:nth-child(1){
+	color: #354E78;
+	border-right: 1px solid #ddd;
+}
+#details_table tr td:nth-child(2){
+	color: #999999;
+	padding-left: 30px;
+}
+.hide_column{
+	display: none;
+}
+
+/* 消息中心 end  */
+
+/*消息弹框*/
+#messageBox{
+	display: none;
+	width: 230px;
+	height: 250px;
+	background-color: #FFFFFF;
+	z-index: 999;
+	position: absolute;
+	top: 60px;
+	right: 20px;
+	border-radius: 2px;
+	box-shadow:-1px 0 2px #eeeeee, /*左边阴影*/
+	1px 0 2px #eeeeee, /*右边阴影*/
+	0 -1px 2px #eeeeee, /*顶部阴影*/
+	0 1px 2px #eeeeee; /*底边阴影*/
+	color: #354E78;
+}
+#messageBox .title{
+	line-height: 50px;
+	font-size: 18px;
+	padding-left: 15px;
+	font-weight: 400;
+	border-bottom: 1px solid #EDEDED;
+}
+#messageBox .title span{
+	position: absolute;
+	top: 0;
+	right: 15px;
+	cursor: pointer;
+}
+#messageBox>div{
+	padding: 0 15px;
+}
+#messageBox>div>p,#messageBox>div>ul>li{
+	line-height: 40px;
+	border-bottom: 1px solid #EDEDED;
+	cursor: pointer;
+}
+#messageBox>div>ul>li>span:nth-child(2){
+	position: absolute;
+	right: 10px;
+	color: #999999;
+	font-size: 12px;
+}
+#messageBox .GoCenter{
+	width: 120px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	text-align: center;
+	border: 1px solid #354E78;
+	border-radius: 4px;
+	background-color: #FFFFFF;
+	margin-left: -60px;
+	position: absolute;
+	left: 50%;
+	bottom: 20px;
+	box-shadow:-1px 0 1px #354E78, /*左边阴影*/
+	1px 0 1px #354E78, /*右边阴影*/
+	0 -1px 1px #354E78, /*顶部阴影*/
+	0 1px 1px #354E78; /*底边阴影*/
+	cursor: pointer;
+}
+
+/*消息弹框 end*/

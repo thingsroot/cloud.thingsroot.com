@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <title>信息详情</title>
+</head>
+<body>
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p onClick="javascript:alt('开发中',4);"><img src="img/top_news.png"/></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+
+
+<div class="down-main">
+
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='platform_message.html'">  <!-- 跳转页面 -->
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">平台消息</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='device_message.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">设备消息</p>
+        </div>
+    </div>
+    <!-- 左侧导航 end -->
+
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <p class="mes_title">平台消息 <span> > 信息详情</span></p>
+        <!-- 表格 -->
+        <div style="margin: 15px;border: 1px solid #E5E9EE;">
+            <table id="details_table" class="table dataTable no-footer "
+                   style="background-color:#FFFFFF;">
+                <tr>
+                    <td style="width: 12%;">标题</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>所属设备序列号</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>发生时刻设备所属公司</td>
+                    <td>冬笋科技</td>
+                </tr>
+                <tr>
+                    <td>触发用户用户名</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>发生时间</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>执行结果</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>记录类型</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>详细信息</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>记录ID</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>记录ID</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>记录ID</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<script src="js/jquery-1.11.3.min.js"></script>
+<script>
+    var sn =  decodeURI(window.location.href.split("=")[1]);
+    console.log(sn);
+    $.ajax({
+        url:'apis/api/method/iot.user_api.device_activity',
+        type:'GET',
+        data:JSON.stringify(sn),
+        dataType:'JSON',
+        success:function (req) {
+            console.log(req);
+        },
+        error:function () {
+           console.log('error')
+        }
+    })
+</script>
+
+</body>
+</html>

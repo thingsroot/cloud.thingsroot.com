@@ -1,0 +1,68 @@
+/* UI styles */
+body {
+	font: 14px Arial, Verdana, sans-serif;
+}
+.st-filter-row input {
+	min-width: 50px;
+}
+.st-btn {
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+	padding-top: 7px;
+	border: 1px solid gray;
+	margin-right: 2px;
+	width: 20px;
+	height: 20px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.st-btn.active {
+	border: 1px solid #41ff58;
+}
+.st-btn.st-sort-asc > span {
+	display: inline-block;
+	vertical-align: top;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-top: 5px solid darkgray;
+}
+.st-btn.st-sort-desc > span {
+	display: inline-block;
+	vertical-align: top;
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid darkgray;
+}
+.st-btn.st-close {
+	color: darkgray;
+	padding-top: 0;
+}
+.st-nav-bar {
+	text-align: right;
+}
+.st-nav-link {
+	display: inline-block;
+	vertical-align: middle;
+	cursor: pointer;
+	width: 17px;
+	height: 17px;
+	text-align: center;
+	border: 1px solid gray;
+	color: gray;
+	margin-left: 3px;
+}
+.st-nav-link.active {
+	border: 1px solid #41ff58;
+	color: lightgray;
+}
+.zebra-odd-bg {
+	background: #eee;
+}
+/* System styles, don't touch */
+.st-hide, .st-hide-col {display: none;}

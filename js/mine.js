@@ -14,42 +14,16 @@
         var $table             = table.table().node();
         var $chkbox_all        = $('tbody input[type="checkbox"]', $table);
         var $chkbox_checked    = $('tbody input[type="checkbox"]:checked', $table);
-        // var chkbox_select_all  = $('thead input[name="select_all"]', $table).get(0);
-        // var table_footer_select_all  = $('#table_footer input[name="select_all"]').get(0);
-
         var chkbox_select_all  = $('input[name="select_all"]');
-        // If none of the checkboxes are checked
         if($chkbox_checked.length === 0){
-            // console.log(1);
-        //    chkbox_select_all.checked = false;
-        //    table_footer_select_all.checked = false;
-        //    if('indeterminate' in chkbox_select_all){
-        //       chkbox_select_all.indeterminate = false;
-        //    }
         chkbox_select_all.each(function(i){
             this.checked = false;
         })
-     
-        // If all of the checkboxes are checked
         } else if ($chkbox_checked.length === $chkbox_all.length){
-            // console.log(2);
-        //    chkbox_select_all.checked = true;
-        //    table_footer_select_all.checked = true;
-        //    if('indeterminate' in chkbox_select_all){
-        //       chkbox_select_all.indeterminate = false;
-        //    }
         chkbox_select_all.each(function(i){
             this.checked = true;
         })
-        // If some of the checkboxes are checked
         } else {
-            // console.log(3);
-        //    chkbox_select_all.checked = false;
-        //    table_footer_select_all.checked = false;
-        //    //console.log(table.button()[0].node);
-        //    if('indeterminate' in chkbox_select_all){
-        //       chkbox_select_all.indeterminate = true;
-        //    }
         chkbox_select_all.each(function(i){
             this.checked = false;
         })
@@ -147,7 +121,7 @@
             "sSortAscending": ": 以升序排列此列",
             "sSortDescending": ": 以降序排列此列"
             }
-            },
+        },
         rowCallback: function(row, data, dataIndex){
             if(data.device_status=="ONLINE"){
                 $(row).addClass('on');
@@ -423,7 +397,7 @@
         }
         table_obj.dev_list
             .columns( colnum )
-            .search( key )
+            .search(key,true,false)
             .draw();
     } );
 

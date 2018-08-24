@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="css/scroller.dataTables.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+    <title>设备消息</title>
+    <style>
+        .table>tbody>tr td{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p><img src="img/top_news.png"/></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+
+
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='platform_message.html'">  <!-- 跳转页面 -->
+            <img src="img/platform1.png" style="width: 30px;" class="hd_img"/>
+            <img src="img/platform_select.png" style="width: 30px;" class="hover_img"/>
+            <p class="sublist-title">平台消息</p>
+        </div>
+        <div class="subNav  bg-color" onClick="location='device_message.html'">
+            <img src="img/device2.png" style="width: 30px;" class="hd_img"/>
+            <img src="img/device_select.png" style="width: 30px;" class="hover_img"/>
+            <p class="sublist-title">设备消息</p>
+        </div>
+    </div>
+    <!-- 左侧导航 end -->
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <p class="mes_title">设备消息 <span>（全部消息23条，其中未确定消息7条，金查看为确认消息）</span></p>
+
+        <div class="mes_content">
+            <!-- 功能栏 -->
+            <div class="mes_search">
+                <button>确认消息</button>
+                <button>确认所有消息</button>
+                <div style="width: 350px;">
+                    <div class="btn-group search_filter1" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword1" data-search_keyword="1">全部消息类型</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <li data-name=""><a style="cursor:pointer">全部消息类型</a></li>
+                            <li data-name=""><a style="cursor:pointer">设备离线</a></li>
+                            <li data-name=""><a style="cursor:pointer">设备操作</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group search_filter2" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword2" data-search_keyword="1">时间</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li data-name="device_time1"><a style="cursor:pointer">1小时</a></li>
+                            <li data-name="device_time2"><a style="cursor:pointer">24小时</a></li>
+                            <li data-name="device_time3"><a style="cursor:pointer">三天</a></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group search_filter3" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword3" data-search_keyword="1">等级</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li data-name="device_time1"><a style="cursor:pointer">常规</a></li>
+                            <li data-name="device_time2"><a style="cursor:pointer">警告</a></li>
+                            <li data-name="device_time3"><a style="cursor:pointer">错误</a></li>
+                            <li data-name="device_time4"><a style="cursor:pointer">致命</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 表格 -->
+        <div style="margin: 0 15px;border: 1px solid #E5E9EE;">
+            <table id="device_message" class="table dataTable no-footer " style="background-color:#FFFFFF;">
+                <thead>
+                <tr>
+                    <th><label class="checkbox"><input index="0" name="select_all" type="checkbox" class="box"><em></em></label></th>
+                    <th>消息内容</th>
+                    <th>发生时间</th>
+                    <th>消息类型</th>
+                    <th>序列号</th>
+                    <th>等级</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!--无内容状态-->
+    <div class="none hd">
+        <p><img src="img/photo_wdwg.png"/></p>
+        <p>很抱歉，您还没有消息，请先绑定新网关！</p>
+        <!--<button class="bind">绑定新网关</button>-->
+    </div>
+    <!--无内容状态end-->
+
+
+</div>
+
+<div style="position: fixed;bottom: 15px;z-index: 9999;" class="copyright">SymTech Application © 2008-2017</div>
+
+
+
+
+<!-- 加载script start -->
+<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/transport.js" type="text/javascript"></script>
+<script src="js/jQuery.cookie.js" type="text/javascript"></script>
+<script src="js/layui/layui.js" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="js/dataTables.buttons.js" type="text/javascript"></script>
+<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="js/dataTables.scroller.min.js" type="text/javascript"></script>
+<script src="js/arrayFun.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/user.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+
+
+<script>
+
+    //下拉框--- 时间
+    $('.search_filter2 li').on('click', function(){
+        $('.search_keyword2').text($(this).text());
+    });
+
+    $(document).ready(function() {
+        var table = $('#device_message').DataTable({
+            dom: 'rt<"#table_footer"Bp>',
+            buttons: [],
+            "bStateSave": false,
+            "bFilter": true,   //是否启动过滤，搜索功能
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "ajax": {
+                "url":"apis/api/method/iot.user_api.device_event",
+                dataSrc: 'message'
+            },
+            "columns": [
+                {"data": null},
+                {"data": "event_info"},
+                {"data": "event_time"},
+                {"data": "event_type"},
+                {"data": "device"},
+                {"data": "event_level"}
+            ],
+            "language": {
+                "sProcessing": "处理中...",
+                "sLengthMenu": "显示 _MENU_ 项结果",
+                "sZeroRecords": "没有匹配结果",
+                "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                "sInfoPostFix": "",
+                "sSearch": "搜索:",
+                "sUrl": "",
+                "sEmptyTable": "表中数据为空",
+                "sLoadingRecords": "载入中...",
+                "sInfoThousands": ",",
+                "oPaginate": {
+                    "sFirst": "首页",
+                    "sPrevious": "上页",
+                    "sNext": "下页",
+                    "sLast": "末页"
+                },
+                "oAria": {
+                    "sSortAscending": ": 以升序排列此列",
+                    "sSortDescending": ": 以降序排列此列"
+                }
+            },
+            rowCallback: function (row, data, dataIndex) {
+                //时间截取----- 毫秒
+                var timeText = $(row).children('td').eq(2).text();
+                console.log(timeText.substring(0,19));
+                $(row).children('td').eq(2).text(timeText.substring(0,19));
+            },
+            columnDefs: [
+                {
+                    //   指定第第一列
+                    targets: [0],
+                    searchable: false,
+                    orderable: false,
+                    width: '5%',
+                    render: function (data, type, row, meta) {
+                        var gen_html = '<label class="checkbox"><input index="0" name="select_single" type="checkbox" class="box"><em></em></label>';
+                        return gen_html;
+                    }
+                },
+                {
+                    //   指定第第2列
+                    targets: [1],
+                    width: '55%',
+                    render: function (data, type, row, meta) {
+                        return '<i class="on"></i>' + data;
+                    }
+                },
+                {
+                    //   指定第第3列
+                    targets: [2],
+                    width: '20%'
+                },
+                {
+                    //   指定第第4列
+                    targets: [3],
+                    width: '20%'
+                },
+                {
+                    //   指定第第5列
+                    className:"hide_column",
+                    targets: [4]
+
+                },
+                {
+                    //   指定第第6列
+                    className:"hide_column",
+                    targets: [5]
+                }
+
+            ],
+            "order" : [ [ 1, 'asc' ] ]
+        });
+        //点击行进入详情
+        $('#platform_message tbody').on('click','tr td:nth-child(2)',function() {
+            console.log($(this));
+            var device_sn = $(this).parent('tr').find('td:nth-child(5)').text();
+            console.log(device_sn);
+            location.href = 'details.html?device_sn=' + device_sn;
+        } );
+
+//下拉框--- 关键词
+        $('.search_filter3 li').on('click', function(){
+            $('.search_keyword3').text($(this).text());
+            console.log($('.search_keyword3').text());
+
+        });
+
+        //下拉框--- 消息类型
+        $('.search_filter1 li').on('click', function(){
+            $('.search_keyword1').text($(this).text());
+            var content = $('.search_keyword1').text();
+            if(content == "设备操作"){
+                table
+                    .column(3)
+                    .search("Action")
+                    .draw();
+            }else if(content == "设备离线"){
+                table
+                    .column(3)
+                    .search("Status")
+                    .draw();
+            }else if(content == "所有人变更"){
+                table
+                    .column(3)
+                    .search("Owner")
+                    .draw();
+            }else if(content != ""){
+                table
+                    .column(3)
+                    .search("")
+                    .draw()
+            }
+        });
+        //下拉框--- 消息类型
+        // $('.search_filter3 li').on('click', function(){
+        //     $('.search_keyword3').text($(this).text());
+        //     var content = $('.search_keyword3').text();
+        //     if(content == "常规"){
+        //         table
+        //             .column(3)
+        //             .search("")
+        //             .draw();
+        //     }else if(content == "警告"){
+        //         table
+        //             .column(3)
+        //             .search("")
+        //             .draw();
+        //     }else if(content == "错误"){
+        //         table
+        //             .column(3)
+        //             .search("")
+        //             .draw();
+        //     }else if(content == "致命"){
+        //         table
+        //             .column(3)
+        //             .search("")
+        //             .draw();
+        //     }else if(content != "等级"){
+        //         table
+        //             .column(3)
+        //             .search("")
+        //             .draw()
+        //     }
+        // });
+    });
+
+    //全选
+    var $selectAll = $('input[name=select_all]');
+    var $selectSingle = $('input[name=select_single]');
+    console.log($selectSingle);
+    $selectAll.click(function () {
+        console.log('全选');
+        if ($selectAll.prop("checked") == true) {
+            // 上面的复选框已被选中
+            $(":checkbox[name='select_single']").prop("checked", true);
+        } else {
+            // 上面的复选框没被选中
+            $(":checkbox[name='select_single']").prop("checked", false);
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

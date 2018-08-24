@@ -24,6 +24,7 @@
 		</style>
 
 		<title>我的网关</title>
+		<script src="js/mine.js"></script>
 	</head>
 	<body>
 
@@ -33,7 +34,7 @@
 			<div class="pull-right nav_right">
 				<!--<p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>-->
 				<p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-				<p onClick="location='message.html'"><img src="img/top_news.png"/></p><em>|</em>
+				<p onClick="javascript:$('#messageBox').show()"><img src="img/top_news.png"/></p><em>|</em>
 				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
 				<p><img src="img/top_quit.png" id="J_logout"/></p>
 			</div>
@@ -123,6 +124,7 @@
 					<!--内容区域end-->
 					
 					<!--无内容状态-->
+
 					<div class="none hd">
 						<p><img src="img/photo_wdwg.png"/></p>
 						<p>很抱歉，还没有网关，请先绑定新网关！</p>
@@ -165,6 +167,27 @@
 	  		</div>
 		</div>
 		<!--隐藏域 end-->
+		<!--消息弹框-->
+		<div id="messageBox">
+			<p class="title">最新消息
+				<span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
+			</p>
+			<div>
+				<p>通信设备</p>
+				<ul>
+					<li>
+						<span>uninstall software</span>
+						<span>13分钟前</span>
+					</li>
+					<li>
+						<span>uninstall software</span>
+						<span>13分钟前</span>
+					</li>
+				</ul>
+			</div>
+			<p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
+		</div>
+		<!--消息弹框 end-->
 	
 	<!-- 加载script start -->
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
