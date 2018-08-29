@@ -94,7 +94,7 @@ $(function(){
 			/* 临时获取最新应用版本号 */
 			var lastest_version = '';
 			var device_detail = JSON.parse(localStorage.getItem('device_detail_'+device_sn));
-			Ajax.call('/api/method/app_center.api.get_latest_version?app='+data[i].name+'&beta='+device_detail.basic.beta, "", get_latest_version ,'GET', 'JSON', 'FORM', false);
+			Ajax.call('/api/method/app_center.api.get_latest_version?app='+data[i].name+'&beta='+device_detail.basic.iot_beta, "", get_latest_version ,'GET', 'JSON', 'FORM', false);
 			function get_latest_version(d){
 				if(d && typeof d.message !== 'undefined') {
 					lastest_version = d.message;
