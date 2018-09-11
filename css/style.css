@@ -6,7 +6,7 @@ body{
     -ms-user-select: none; 
     -khtml-user-select: none; 
     user-select: none;*/
-    color:#232326;
+    color:#333333;
     font-family: "微软雅黑";
 }
 th{
@@ -421,8 +421,8 @@ input:checked + .slider::after {
 	position: relative;
 	width: 100%;
 	bottom: 0;
-	height: 30px;
-	line-height: 45px;
+	margin: 15px 0;
+	/*line-height: 20px;*/
 }
 .re_copy{
 	position: relative;
@@ -1830,36 +1830,51 @@ th .on{
 	height: 7.2%;
 	background-color: transparent;
 	border-bottom: 1px solid #606165;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 99;
 }
 .logoin .header span{
+	display: inline-block;
 	color: #fff;
 	font-size: 22px;
-	padding-left: 40px;
+	width: 200px;
+	height: 60px;
+	line-height: 60px;
+	position: absolute;
+	top: 0;
+	left: 30px;
+	z-index: 100;
 }
 .logoin .header span >img{
+	width: 60px;
+	height: 40px;
+	position: relative;
+	top: -5px;
 	margin-right: 10px;
 }
 .logoin .header a{
+	display: inline-block;
 	color: #fff;
+	width: 80px;
+	height: 100%;
+	line-height: 60px;
 	font-size: 14px;
-	margin-right: 40px;
+	position: absolute;
+	top: 0;
+	right: 30px;
+	z-index: 100;
 }
 .logoin .main{
 	display: flex;
-	width:1100px;
+	width:1000px;
 	margin: 0 auto;
 	box-shadow: 0 1px 1px rgba(0,0,0,0.15);
 	background: transparent;
 }
 .logoin .logo{
-	width:1000px;
+	width:500px;
 	height: 340px;
 }
 .logoin .logo>div{
@@ -1867,18 +1882,17 @@ th .on{
 	height: 100%;
 }
 .logoin .logo>div>p:nth-child(1){
-	font-size: 50px;
+	font-size: 32px;
 	color: #FFFFFF;
 	margin-top: 60px;
-	line-height: 90px;
+	line-height: 50px;
+	font-weight: 800;
 	font-family: "Times New Roman", Times, serif;
 }
-.logoin .logo>div>p:nth-child(2),
-.logoin .logo>div>p:nth-child(3),
-.logoin .logo>div>p:nth-child(4){
-	font-size: 30px;
+.logoin .logo>div>p{
+	font-size: 24px;
 	color: #FFFFFF;
-	line-height: 50px;
+	line-height: 40px;
 	font-family: "Times New Roman", Times, serif;
 }
 .logoin .logo img{float: left;}
@@ -1948,13 +1962,14 @@ th .on{
 	width: 60px;
 }
 .findcode{
-	margin:20px 0;
+	margin:10px 0;
 	text-align: left;
-	margin-top: 100px;
+	margin-top: 50px;
 }
 .findcode span{
 	padding-right: 20px;
 	margin-right: 10px;
+	line-height: 40px;
 	background: url(../img/login_password2.png) no-repeat center;
 	background-size: contain;
 }
@@ -2370,7 +2385,16 @@ th .on{
 .hide_column{
 	display: none;
 }
+.disposed{
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	margin:2px 5px;
+	line-height: 20px;
+	border-radius: 6px;
+	background-color: red;
 
+}
 /* 消息中心 end  */
 
 /*消息弹框*/
@@ -2380,7 +2404,7 @@ th .on{
 	height: 250px;
 	background-color: #FFFFFF;
 	z-index: 999;
-	position: absolute;
+	position: fixed;
 	top: 60px;
 	right: 20px;
 	border-radius: 2px;
@@ -2438,3 +2462,403 @@ th .on{
 }
 
 /*消息弹框 end*/
+
+/* 应用列表 */
+.list_search{
+	width: 500px;
+	padding: 10px;
+	position: absolute;
+	top: 14px;
+	right: 100px;
+	display: flex;
+	float: left;
+}
+.list_search>a{
+	display: inline-block;
+	width: 160px;
+	height: 34px;
+	text-decoration: none;
+	line-height: 34px;
+	text-align: center;
+	background-color: #364F78;
+	color: #FFFFFF;
+	border-radius: 4px;
+	margin: 0 10px;
+}
+.list_search>a:hover{
+	color: #FFFFFF;
+}
+.app_list{
+	min-height: 720px;
+	margin: 15px;
+	padding: 8px 15px;
+	background-color: #FFFFFF;
+
+}
+.app_list_li{
+	width: 100%;
+	margin: 7px 0;
+	border: 1px solid #E5E9EE;
+	height: 150px;
+	position: relative;
+}
+.app_image{
+	width: 150px;
+	height: 100%;
+	position: absolute;
+	left: 0;
+}
+.app_image>img{
+	width: 120px;
+	height: 120px;
+	margin: 15px;
+}
+.app_info{
+	padding: 10px 0 0 40px;
+	height: 100%;
+	position: absolute;
+	left: 150px;
+}
+.app_info>div{
+	line-height: 40px;
+}
+.app_info>div>p{
+	line-height: 40px;
+	display: inline-block;
+	min-width: 250px;
+	padding:0 15px;
+}
+.app_info>div:nth-child(1)>p:nth-child(1){
+	font-size: 20px;
+	font-weight: 700;
+}
+.app_info>div:nth-child(2)>p>span:nth-child(1){
+	color: #999999;
+}
+.app_info>div:nth-child(2)>p>span:nth-child(2){
+	color: #666666;
+}
+
+/*应用列表end*/
+
+/*应用详情start*/
+.details_title{
+	height: 50px;
+	line-height: 50px;
+	margin: 15px 15px 0 15px;
+	color: #364F78;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #E5E9EE;
+}
+.details_title>span:nth-child(1){
+	font-size: 18px;
+	padding-left: 20px;
+	color: #364F78;
+}
+.details_title>span:nth-child(2){
+	font-size: 14px;
+	color: #364F78;
+}
+.app_details{
+	margin: 0 15px 15px 15px;
+	background-color: #ffffff;
+}
+.app_infomation{
+	height: 150px;
+	margin: 0;
+	position: relative;
+}
+.app_infomation>img{
+	width: 120px;
+	height: 120px;
+	margin: 15px;
+	position: absolute;
+	left: 0;
+}
+.app_right{
+	width: 1320px;
+	height: 150px;
+	padding-left: 30px;
+	position: absolute;
+	right: 0;
+}
+.app_right_button{
+	position: absolute;
+	top: 42px;
+	right: 60px;
+}
+.app_right_button>span{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	border: 1px solid #364F78;
+	border-radius: 4px;
+	padding: 0 10px;
+	margin: 4px;
+}
+
+.app_right>p{
+	line-height: 50px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.app_right>div>p{
+	width: 250px;
+	line-height: 30px;
+	display: inline-block;
+	color: #999999;
+}
+.uploadNewVersion{
+	width: 140px;
+	height: 32px;
+	background-color: #364F78;
+	color: #FFFFFF;
+	border: 0;
+	border-radius: 4px;
+	margin: 20px 0 0 20px;
+}
+.app_version{
+	margin: 0 20px;
+	padding: 20px 0;
+
+}
+.app_version>li{
+	width: 100%;
+	height: 110px;
+	padding: 10px 0;
+	border-bottom: 1px solid #E5E9EE;
+}
+.app_version>li>p{
+	line-height: 30px;
+	color: #999999;
+}
+.app_version>li>p>span:nth-child(1){
+	color: #999999;
+	display: inline-block;
+	width: 100px;
+}
+.app_version>li>p>span:nth-child(2){
+	color: #364F78;
+}
+.no_comment,.no_version{
+	display: none;
+	width: 100%;
+	text-align: center;
+	color: #364F78;
+	font-size: 18px;
+	line-height: 300px;
+}
+.fade{
+	min-height: 600px;
+}
+.uploadVersion{
+	display: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: rgba(0,0,0,0.4);
+}
+.uploadBox{
+	width: 900px;
+	height: 380px;
+	background-color: #FFFFFF;
+	margin-left: -450px;
+	margin-top: -190px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+.version_title{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 10px;
+	color: #364F78;
+	border-bottom: 1px solid #E5E9EE;
+}
+.version_file{
+	width: 100%;
+	padding: 10px;
+}
+.version_file>input[type=text]{
+	display: inline-block;
+	width: 200px;
+	height: 30px;
+	border: 1px solid #E5E9EE;
+	border-radius: 5px;
+}
+.version_file>input[type=file]{
+	display: inline-block;
+}
+.version_desc{
+	width: 100%;
+	padding: 0 10px;
+}
+.version_desc>p:nth-child(1){
+	line-height: 35px;
+}
+.v_agree{
+	line-height: 20px;
+}
+.v_agree>span{
+	padding-left: 20px;
+	font-size: 12px;
+}
+.v_upload,.v_cancel{
+	width: 60px;
+	height: 25px;
+	margin: 10px;
+	border: 0;
+	border-radius: 5px;
+}
+.v_upload{
+	background-color: #364F78;
+	color: #FFFFFF;
+}
+.app_describe{
+	padding: 10px;
+	background-color: lightseagreen;
+}
+.app_describe>p{
+	padding: 5px 20px;
+}
+.app_describe>p:nth-child(1){
+	font-size: 18px;
+	font-weight: bold;
+}
+.app_describe>p:nth-child(2),.app_describe>p:nth-child(4){
+	font-size: 14px;
+	font-weight: bold;
+}
+.app_describe>p:nth-child(3){
+	color: #999999;
+}
+.app_edit_form{
+	margin: 0 15px;
+	height: 150px;
+	border-bottom: 1px solid #E5E9EE;
+	background-color: #FFFFFF;
+	position: relative;
+}
+.app_edit_form>img{
+	width: 120px;
+	height: 120px;
+	margin: 15px;
+	position: absolute;
+	left: 0;
+}
+.app_edit_form>div{
+	width: 1300px;
+	height: 150px;
+	position: absolute;
+	left: 150px;
+}
+.app_edit_form>div>div{
+	line-height: 75px;
+}
+.app_edit_form>div>div>span{
+	display: inline-block;
+	width: 100px;
+	margin-left: 20px;
+}
+.app_edit_form>div>div>span>i{
+	color: red;
+}
+.app_edit_form>div>div>input{
+	width: 180px;
+	height: 30px;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+}
+.myMarkdown{
+	margin: 0 15px;
+	padding-left: 20px;
+	padding-bottom: 40px;
+	background-color: #FFFFFF;
+}
+.myMarkdown>p{
+	line-height: 50px;
+	font-size: 16px;
+}
+.app_edit_submit{
+	width: 80px;
+	height: 30px;
+	margin-left: 40px;
+	line-height: 30px;
+	background-color: #364F78;
+	color: #FFFFFF;
+	border: 0;
+	border-radius: 4px;
+}
+.app_comment{
+    margin: 0 20px;
+    min-height: 300px;
+}
+.app_comment>div{
+    padding: 20px 0;
+}
+.comment_btn{
+    text-align: center;
+    line-height: 30px;
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    margin: 20px 0 0 0;
+	text-decoration: none;
+    background-color: #364F78;
+    color: #FFFFFF;
+    border: 0;
+    border-radius: 4px;
+}
+.comment_btn:hover{
+	color: #FFFFFF;
+	text-decoration: none;
+}
+.app_comment>button{
+    margin: 5px 0 20px 0;
+}
+
+.app_comment_list{
+    width: 100%;
+}
+.app_comment_list>li{
+    width: 100%;
+    padding: 15px 0;
+    border-bottom: 1px solid #E5E9EE;
+}
+.app_comment_list>li>p:nth-child(1){
+    width: 100%;
+    padding-right: 20px;
+    min-height: 30px;
+    line-height: 30px;
+    word-wrap:break-word ;
+}
+.app_comment_list>li>p:nth-child(2){
+    line-height: 30px;
+}
+.app_comment_list>li>p:nth-child(2)>span{
+    color: #999999;
+    line-height: 50px;
+
+}
+/*应用详情end*/
+
+
+/*下拉框样式*/
+.select_width, .boot_input{
+	width: 180px;
+	display: inline-block;
+}
+.select_text{
+	float: left;
+}
+.select_arrow{
+	float: right;
+	margin-top: 8px;
+}
+.select_menu{
+	width: 180px;
+}

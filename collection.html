@@ -712,6 +712,8 @@
 
 	<script src="js/transport.js" type="text/javascript"></script>
 	<script src="js/jQuery.cookie.js" type="text/javascript"></script>
+	<script src="js/jquery-1.11.3.min.js.js" type="text/javascript"></script>
+	<script src="js/jQuery.timeago.js" type="text/javascript"></script>
 	<script src="js/layui/layui.js" charset="utf-8"></script>
 	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="js/arrayFun.js" type="text/javascript"></script>
@@ -738,6 +740,27 @@
 				$('.running_time').hide();
 				$('.running_time').eq($(this).index()).show();
 			});
+            <!--消息弹框请求接口-->
+            var datas = {
+                "start": 0,
+                "limit": 2
+            };
+            Ajax.call('/apis/api/method/iot.user_api.device_activity', JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
+            function message(req){
+                console.log(req);
+                var list = req.message;
+                for (var i=0;i<2;i++){
+                    $('.message_name').eq(i).text(list[i].subject.substr(0,14));
+                    $('.message_id').eq(i).text(list[i].name);
+                    $('.message_ago').eq(i).attr("title",(list[i].creation));
+                    $('.message_ago').eq(i).timeago();
+                    $('.box_li')[i].index = i;
+                    $('.box_li')[i].onclick = function(){
+                        var name = $('.message_id').eq(this.index).text();
+                        location.href = 'platform_details.html?name=' + name;
+                    }
+                }
+            }
 		})
 	</script>
 	</body>

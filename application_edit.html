@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+    <!-- 加载script start -->
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/transport.js" type="text/javascript"></script>
+    <script src="js/jQuery.cookie.js" type="text/javascript"></script>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/arrayFun.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/user.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+    <!--markdown   css-->
+    <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
+    <script src="js/editor.md-master/editormd.min.js"></script>
+    <!--markdown   js -->
+    <title>应用评测列表</title>
+</head>
+<body>
+
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p><img src="img/top_news.png"/></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+
+
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='index.html'">
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">首页</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='mine.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">我的网关</p>
+        </div>
+    </div>
+    <!-- 左侧导航 start -->
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <div class="details_title"><span class="version_name">添加新应用</span></div>
+        <!-- 表单 -->
+        <div class="app_edit_form">
+            <img src="img/app.jpg" alt="">
+            <div>
+                <div>
+                    <span>应用名称 <i>*</i></span>
+                    <input type="text" class="form-control boot_input" placeholder="应用名称" aria-describedby="basic-addon2">
+                    <span>授权类型 <i>*</i></span>
+                    <div class="btn-group search_filter3" role="group">
+                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword3 select_text" data-search_keyword="1">授权类型</span>
+                            <span class="caret select_arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu select_menu">
+                            <li data-name=""><a style="cursor:pointer">1</a></li>
+                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        </ul>
+                    </div>
+                    <span>应用厂商 <i>*</i></span>
+                    <div class="btn-group search_filter3" role="group">
+                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword3 select_text" data-search_keyword="1">应用厂商</span>
+                            <span class="caret select_arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu select_menu">
+                            <li data-name=""><a style="cursor:pointer">1</a></li>
+                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <span>设备型号 <i>*</i></span>
+                    <input type="text" class="form-control boot_input" placeholder="设备型号" aria-describedby="basic-addon2">
+                    <span>协议 <i>*</i></span>
+                    <div class="btn-group search_filter3" role="group">
+                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword3 select_text" data-search_keyword="1">协议</span>
+                            <span class="caret select_arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu select_menu">
+                            <li data-name=""><a style="cursor:pointer">1</a></li>
+                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        </ul>
+                    </div>
+                    <span>类别 <i>*</i></span>
+                    <div class="btn-group search_filter3" role="group">
+                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="search_keyword3 select_text" data-search_keyword="1">类别</span>
+                            <span class="caret select_arrow"></span>
+                        </button>
+                        <ul class="dropdown-menu select_menu">
+                            <li data-name=""><a style="cursor:pointer">1</a></li>
+                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <!--markdown 编辑器-->
+        <div class="myMarkdown">
+            <p>描述</p>
+            <div class="editormd" id="test-editormd">
+                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
+                <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+                <textarea class="editormd-html-textarea" name="text"></textarea>
+            </div>
+            <p><button class="app_edit_submit">提交</button></p>
+        </div>
+
+        <p class="copyright">SymTech Application © 2008-2017</p>
+    </div>
+
+</div>
+
+<script>
+    $(function() {
+        editormd("test-editormd", {
+            width : "96%",
+            height : 520,
+            syncScrolling : "single",
+            //你的lib目录的路径，
+            path    : "js/editor.md-master/lib/",
+            //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+            saveHTMLToTextarea : true,
+            imageUpload : true,
+            imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL : "/upload/image"
+        });
+    });
+</script>
+
+</body>
+</html>

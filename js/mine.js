@@ -32,6 +32,26 @@
      }
 
     $(document).ready(function() {
+        var datas = {
+            "start": 0,
+            "limit": 2
+        };
+        Ajax.call('/apis/api/method/iot.user_api.device_activity', JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
+        function message(req){
+            console.log(req);
+            var list = req.message;
+            for (var i=0;i<2;i++){
+                $('.message_name').eq(i).text(list[i].subject.substr(0,14));
+                $('.message_id').eq(i).text(list[i].name);
+                $('.message_ago').eq(i).attr("title",(list[i].creation));
+                $('.message_ago').eq(i).timeago();
+                $('.box_li')[i].index = i;
+                $('.box_li')[i].onclick = function(){
+                    var name = $('.message_id').eq(this.index).text();
+                    location.href = 'platform_details.html?name=' + name;
+                }
+            }
+        }
 
         function update_gate_list(req){
             if(req.message){
@@ -56,11 +76,11 @@
                 $('table.table').show();
                 $('div#table_footer').show();
             }
-        }
+        } //列表条数为0
 
-        var filter = 'all';
-        var _gate_list_lenth = 0;
-        var _gate_list_url = "/api/method/iot_ui.iot_api.devices_list?filter="+filter;
+        var filter = 'all';    //过滤条件
+        var _gate_list_lenth = 0;  //列表条数
+        var _gate_list_url = "/api/method/iot_ui.iot_api.devices_list?filter="+filter;   //
         var _gate_list_lenth_url = "/api/method/iot_ui.iot_api.devices_list?filter=len_"+filter;
         table_obj.rtvalueurl = "/apis" + _gate_list_url;
         // console.log($("#example tfoot th:not(':first,:last')"));
@@ -72,10 +92,7 @@
             // scrollCollapse: true,
             // scroller:       true,
             // paging:         true,
-            buttons: [
-               
-
-             ],
+            buttons: [],
         //"bInfo" : false,
         //"pagingType": "full_numbers" ,
         "bStateSave": false,
@@ -195,7 +212,6 @@
             orderable: false,
             width: '25%',
             render: function(data, type, row, meta) {
-
                 if(data){
                     var status;
                     var manageUrl = '#';
@@ -377,7 +393,6 @@
 
 	});
 	$("div.refresh").click(function(){
-
         table_obj.dev_list.ajax.url(table_obj.rtvalueurl).load();
         $('input[name="select_all"]').each(function(i){
             this.checked = false;

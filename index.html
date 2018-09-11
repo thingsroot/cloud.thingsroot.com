@@ -153,6 +153,7 @@
 	  			<div class="copyright">SymTech Application © 2008-2017</div>
 	  		</div>
 		</div>
+
 		<!--消息弹框-->
 		<div id="messageBox">
 			<p class="title">最新消息
@@ -161,21 +162,23 @@
 			<div>
 				<p>通信设备</p>
 				<ul>
-					<li>
-						<span>uninstall software</span>
-						<span>13分钟前</span>
+					<li class="box_li">
+						<span class="message_name"></span>
+						<span style="display: none;" class="message_id"></span>
+						<span style="float: right;" class="message_ago"></span>
 					</li>
-					<li>
-						<span>uninstall software</span>
-						<span>13分钟前</span>
+					<li class="box_li">
+						<span class="message_name"></span>
+						<span style="display: none;" class="message_id"></span>
+						<span style="float: right;" class="message_ago"></span>
 					</li>
 				</ul>
 			</div>
 			<p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
 		</div>
 		<!--消息弹框 end-->
-
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>	
+	<script src="js/jquery.timeago.js" type="text/javascript"></script>
 	<script src="js/transport.js" type="text/javascript"></script>
 	<script src="js/jQuery.cookie.js" type="text/javascript"></script>	
 	<script src="js/layui/layui.js" charset="utf-8"></script>
@@ -191,5 +194,28 @@
 	
 	<script src="js/default.js" type="text/javascript"></script>
 	<script src="js/index.js" type="text/javascript"></script>
+	<!--消息弹框请求接口-->
+	<script>
+            var datas = {
+                "start": 0,
+                "limit": 2
+            };
+            Ajax.call('/apis/api/method/iot.user_api.device_activity', JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
+            function message(req){
+                console.log(req);
+                var list = req.message;
+                for (var i=0;i<2;i++){
+                    $('.message_name').eq(i).text(list[i].subject.substr(0,14));
+                    $('.message_id').eq(i).text(list[i].name);
+                    $('.message_ago').eq(i).attr("title",(list[i].creation));
+                    $('.message_ago').eq(i).timeago();
+                    $('.box_li')[i].index = i;
+                    $('.box_li')[i].onclick = function(){
+                        var name = $('.message_id').eq(this.index).text();
+                        location.href = 'platform_details.html?name=' + name;
+                    }
+                }
+            }
+		</script>
 	</body>
 </html>
