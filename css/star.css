@@ -1,0 +1,136 @@
+body,li,p,ul {
+    margin: 0;
+    padding: 0;
+    font: 12px/1 Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
+ul, li, ol { list-style: none; }
+
+/* 重置文本格式元素 */
+a {
+    text-decoration: none;
+    cursor: pointer;
+    color:#333333;
+    font-size:14px;
+}
+a:hover {
+    text-decoration: none;
+}
+.clearfix::after{
+    display:block;
+    content:'';
+    height:0;
+    overflow:hidden;
+    clear:both;
+}
+
+/*星星样式*/
+.content{
+    width:600px;
+    margin:0 auto;
+    padding-top:20px;
+}
+.title{
+    font-size:14px;
+    background:#dfdfdf;
+    padding:10px;
+    margin-bottom:10px;
+}
+.block{
+    display: inline-block;
+    width:160px;
+    margin:10px 0;
+
+    line-height:21px;
+}
+.block .star_score{
+    float:left;
+}
+.star_list{
+    height:21px;
+    margin:50px;
+    line-height:21px;
+}
+.block p,.block .attitude{
+    padding-left:20px;
+    line-height:21px;
+    display:inline-block;
+}
+.block p span{
+    color:#C00;
+    font-size:16px;
+    font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.star_score {
+    background:url(../img/star_link.png);
+    width:160px;
+    height:21px;
+    position:relative;
+}
+
+.star_score a{
+    height:21px;
+    display:block;
+    text-indent:-999em;
+    position:absolute;
+    left:0;
+}
+
+.star_score a:hover{
+    background:url(../img/star_hover.png);
+    left:0;
+}
+
+.star_score a.clibg{
+    background:url(../img/star_hover.png);
+    left:0;
+}
+
+#starttwo .star_score {
+    background:url(../img/star_link.png);
+}
+
+#starttwo .star_score a:hover{
+    background:url(../img/star_hover.png);
+    left:0;
+}
+
+#starttwo .star_score a.clibg{
+    background:url(../img/star_hover.png);
+    left:0;
+}
+
+/*星星样式*/
+
+.show_number{
+    float: left;
+    margin-top: 17px;
+}
+
+.show_number li{
+    width:60px;
+    border:0;
+}
+
+.atar_Show{
+    background:url(../img/star_link.png);
+    background-size: 12px 12px;
+    width:60px;
+    height:12px;
+    position:relative;
+    /*top: 16px;*/
+    float:left;
+}
+
+.atar_Show p{
+    background:url(../img/star_hover.png);
+    background-size: 12px 12px;
+    left:0;
+    height:12px;
+    width:60px;
+}
+
+.show_number li span{
+    display:inline-block;
+    line-height:21px;
+}

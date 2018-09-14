@@ -8,6 +8,7 @@
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/viccom.css" rel="stylesheet" />
     <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/star.css">
     <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
     <!-- 加载script start -->
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
@@ -23,16 +24,10 @@
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
     <script src="js/editor.md-master/editormd.min.js"></script>
     <!--markdown   js -->
+    <!--星星-->
+    <script src="js/starScore.js"></script>
+
     <title>应用详情</title>
-    <style>
-        /*.CodeMirror-scroll{*/
-            /*display: none;*/
-        /*}*/
-        /*.markdown-body{*/
-            /*position: relative;*/
-            /*left: -400px;*/
-        /*}*/
-    </style>
 </head>
 <body>
 
@@ -57,39 +52,44 @@
             <img src="img/nav_home_hover.png" class="hover_img"/>
             <p class="sublist-title">首页</p>
         </div>
-        <div class="subNav bg-color" onClick="location='mine.html'">
+        <div class="subNav" onClick="location='mine.html'">
             <img src="img/nav_equipment.png" class="hd_img"/>
             <img src="img/nav_equipment_hover.png" class="hover_img"/>
             <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='application_list.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
         </div>
     </div>
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
         <!-- 标题 -->
-        <div class="details_title"><span class="version_name">Dirk`s openwrt wbox</span>&nbsp;>&nbsp;<span class="version_option">描述</span></div>
+        <div class="details_title"><span class="version_name app_name"></span>&nbsp;>&nbsp;<span class="version_option">描述</span></div>
         <!--应用列表start-->
         <div class="app_details">
             <div class="app_infomation">
-                <img src="img/app.jpg" alt="">
+                <img class="app_img" src="img/app.jpg" alt="">
                 <div class="app_right">
-                    <p>Dirk`s openwrt wbox</p>
+                    <p class="app_name"></p>
                     <div>
-                        <p>发布者：<span>我</span></p>
-                        <p>分类：<span>其他</span></p>
+                        <p>发布者：<span class="app_owner">我</span></p>
+                        <p>分类：<span class="category"></span></p>
                     </div>
                     <div>
-                        <p>通讯类型：<span>MOTT</span></p>
-                        <p>设备厂家：<span>冬笋科技</span></p>
+                        <p>通讯协议：<span class="protocol"></span></p>
+                        <p>设备厂家：<span class="device_supplier"></span></p>
                     </div>
                     <div>
-                        <p>适配型号：<span>ANY</span></p>
-                        <p>应用价格：<span>免费</span></p>
+                        <p>适配型号：<span class="device_serial"></span></p>
+                        <p>应用价格：<span class="license_type"></span></p>
                     </div>
                     <div class="app_right_button">
-                        <span>edit</span>
-                        <span> >_Omline editor </span>
-                        <span>主分支</span>
-                        <span>删除</span>
+                        <button class="edit" value="">edit</button>
+                        <button class="app_editor"> >_Omline editor </button>
+                        <button class="fork_from" value="" >主分支</button>
+                        <button>删除</button>
                     </div>
                 </div>
             </div>
@@ -103,96 +103,54 @@
                     <!--描述-->
                     <div class="tab-pane fade in active" id="A">
                         <div class="app_describe">
-                            <p>appappappappappappappapp</p>
-                            <p>afhvbakdjvb</p>
-                            <p>
-                                <span>xx-xx</span>
-                            </p>
-                            <p>jdbvsbjv</p>
-                            <button class="bbb">dianji</button>
                             <div id="test-editormd" class="editormd-onlyread">
-                                <textarea style="display:block;">
-    ```javascript
-    {
-        readOnly        : true,
-        //styleActiveLine : false,       // disable active line
-        //watch           : false,       // disable watch
-        //lineNumbers     : false        // hide line numbers
-    }
-    ```
-                                </textarea>
+                                <textarea style="display:block;"></textarea>
                             </div>
                         </div>
-
-
                     </div>
                     <!--评论-->
                     <div class="tab-pane fade" id="B">
                         <div class="app_comment">
                             <a href="#comment" class="comment_btn">我要评论</a>
                             <ul class="app_comment_list">
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <p>12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG12345567787TGDFGSDFGFG</p>
-                                    <p>
-                                        <span>用户名：</span>
-                                        <span>冬笋科技</span>
-                                        <span>评论时间：</span>
-                                        <span>2018-08-31</span>
-                                    </p>
-                                </li>
+                                <!--<li>-->
+                                    <!--<p class="comment_title">123r34tgergvsadfbsdfb</p>-->
+                                    <!--<p class="comment_content"><span>132524363456734575</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>-->
+                                    <!--<div>-->
+                                        <!--<span>用户名：</span>-->
+                                        <!--<span>冬笋科技</span>-->
+                                        <!--<span>评论时间：</span>-->
+                                        <!--<span>2018-08-31</span>-->
+                                        <!--<ul class="show_number clearfix">-->
+                                            <!--<li>-->
+                                                <!--<div class="atar_Show">-->
+                                                    <!--<p tip="2.5"></p>-->
+                                                <!--</div>-->
+                                            <!--</li>-->
+                                        <!--</ul>-->
+                                        <!--<span class="delete_comment" style="" id="">删除</span>-->
+                                        <!--<a class="clearfix"></a>-->
+                                    <!--</div>-->
+                                    <!--<img class="comment_images" src="img/top_avatar.png" alt="">-->
+                                <!--</li>-->
                             </ul>
                             <a name="comment" style="display:none;"></a>
+                            <!--添加评论-->
                             <div>
-                                <textarea name="" id="" cols="120" rows="6"></textarea>
+                                <input type="text" id="comments_title" placeholder="标题">
                                 <br>
-                                <button style="margin-left: 0" class="app_edit_submit ">Comment</button>
+                                <br>
+                                <textarea placeholder="评测内容" name="" id="comments_content"></textarea>
+                                <div class="myStar">
+                                    <span>评星：</span>
+                                    <div id="starttwo"  class="block clearfix" >
+                                        <div class="star_score"></div>
+                                        <p style="float:left;"><span class="fenshu hd"></span></p>
+                                    </div>
+                                </div>
+                                <button style="margin-left: 0" class="app_edit_submit">Add Review</button>
                             </div>
-                            <p class="no_comment">暂时还没有评论！</p>
+                            <!--<p class="no_comment">暂时还没有评论！</p>-->
                         </div>
 
                     </div>
@@ -244,11 +202,279 @@
 
 </div>
 
-
-
-
-
 <script>
+
+    $(function() {
+        //Markdown
+        var testEditor = editormd("test-editormd", {
+            width           : "100%",
+            height          : 540,
+            path            : "js/editor.md-master/lib/",
+            watch           : true,           // disable watch
+            readOnly        : true,
+            styleActiveLine : false,   // disable active line
+            lineNumbers     : true,      // hide line numbers
+            previewing         : true
+        });
+
+        setTimeout(function(){
+            testEditor.previewing();
+        },1000);
+
+        //获取用户信息
+        var user = getCookie('usr');
+
+        //获取token
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+
+        //获取应用详情
+        // var data = {app:decodeURI(window.location.href.split("=")[1])};
+        var data = {
+            app : decodeURI(window.location.href.split("=")[1])
+        };
+        $.ajax({
+            url: "apis/api/method/app_center.api.app_detail",
+            type: "GET",
+            data: data,
+            success: function (data) {
+                // console.log(data);
+                $('.app_name').text(data.message.app_name); //应用名称
+                $('.app_owner').text(data.message.owner);
+                if(data.message.fork_from == null){      //主分支，判断是否有主分支
+                    $('.fork_from').css('display','none');
+                }else{
+                    $('.fork_from').css('display','inline-block');
+                    $('.fork_from').val(data.message.fork_from);
+                }
+                $('.edit').val(data.message.name);   //name
+                $('.category').text(data.message.category);   //应用类别
+                $('.device_supplier').text(data.message.device_supplier);   //设备厂家
+                if(data.message.license_type == "Open"){
+                    $('.license_type').text("免费")
+                }
+                $('.protocol').text(data.message.protocol);   //通讯协议
+                $('.device_serial').text(data.message.device_serial);   //适配型号
+                $('.app_img').src = data.message.icon_image;    //app图片
+                $('.editormd-onlyread>textarea').text(data.message.description)  //Markdown内容
+            },
+            error: function () {
+                console.log('no')
+            }
+        });
+
+        //获取应用版本列表
+        var data1 = {
+            app: decodeURI(window.location.href.split("=")[1]),
+            beta: 1
+        };
+        $.ajax({
+            url: "apis/api/method/app_center.api.get_versions",
+            type: "GET",
+            data: data1,
+            success: function (req) {
+                var data = req.message;
+                for(var i=0;i<data.length;i++){
+                    var datas = data[i];
+                    // console.log(datas)
+                    $('.app_version').append(
+                        '<li>'+
+                        '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
+                        '<p><span>更新时间：</span><span>'+ datas.creation +'</span></p>'+
+                        '<p><span>功能介绍：</span><span>'+ datas.comment +'</span></p>'+
+                        '</li>'
+                    )
+                }
+                //版本列表为空
+                if($('.app_version>li').length == 0){
+                    $('.app_list').addClass('hd');
+                    $('.no_version').css('display','block');
+                }
+            },
+            error: function (e) {
+                console.log('error')
+            }
+        })
+
+        //获取应用评论列表
+        var data2 = {
+            filters : '[["app","=","'+decodeURI(window.location.href.split("=")[1])+'"]]',
+            fields :'["app","title","content","owner","star","creation","name"]'
+        };
+        $.ajax({
+            url: "apis/api/resource/IOT%20Application%20Review",
+            type: "GET",
+            data: data2,
+            success: function (req) {
+                var data = req.data;
+                for(var i=0;i<data.length;i++){
+                    var datas = data[i];
+                    //渲染列表
+                    $('.app_comment_list').append(
+                        '<li>'+
+                        '<p class="comment_title">'+ datas.title +'</p>'+
+                        '<p class="comment_content"><span>'+ datas.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
+                        '<div>'+
+                        '<span>用户名：</span>'+
+                        '<span>'+ datas.owner +'</span>'+
+                        '<span>评论时间：</span>'+
+                        '<span>'+ datas.creation.substr(0,10) +'</span>'+
+                        '<ul class="show_number clearfix">'+
+                        '<li>'+
+                        '<div class="atar_Show">'+
+                        '<p tip="'+ datas.star +'"></p>'+
+                        '</div>'+
+                        '</li>'+
+                        '</ul>'+
+                        '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
+                        '<a class="clearfix"></a>'+
+                        '</div>'+
+                        '<img class="comment_images" src="img/top_avatar.png" alt="">'+
+                        '</li>'
+                    );
+                    //星星展示分数
+                    $(".show_number li p").each(function(index, element) {
+                        var num=$(this).attr("tip");
+                        var www=num*12;//
+                        $(this).css("width",www);
+                        $(this).parent(".atar_Show").siblings("span").text(num+"分");
+                    });
+                }
+                //我要评论按钮隐藏
+                var liLen = req.data.length;
+                if( liLen == 0 ){
+                    $('.app_comment>div').css('display','block');
+                    $('.app_comment>a').css('display','none');
+                    // $('.no_comment').css('display','block');   //没有评论提示语
+                } else if( liLen >= 5){
+                    $('.app_comment>a').css('display','block');
+                }else if( 0 < liLen < 5 ){
+                    $('.app_comment>a').css('display','none');
+                }
+            },
+            error: function () {
+                console.log('error')
+            },
+            complete: function () {
+                //删除评论
+                var delete_comment = $('.delete_comment');
+                for(var j=0;j<delete_comment.length;j++){
+                    delete_comment[j].index = j;
+                    delete_comment[j].onclick = function () {
+                        var parent = $(this).parent().parent();
+                        var data = {'name' : $(this).find('input').val()};
+                        $.ajax({
+                            url: "apis/api/method/app_center.appmgr.remove_review",
+                            type: "POST",
+                            data: data,
+                            success: function (req) {
+                                alt('已删除此条评论',1);
+                                parent.remove();
+                            },
+                            error: function () {
+                                console.log('error')
+                            }
+                        })
+                    }
+                }
+                //评论内容超出部分显示省略号
+                var comment_li = $('.app_comment_list>li');
+                var li_content = $('.comment_content>span');
+                var li_more = $('.comment_content>img');
+                comment_li.each(function (i) {
+                    var cContent = comment_li.eq(i).find(li_content).text();  //原始内容
+                    if(cContent.length > 200){
+                        comment_li.eq(i).find(li_content).text(cContent.substr(0,200)+'...');  //内容收缩
+                        comment_li.eq(i).find(li_more).css('display','inline-block');   //更多显示
+                        //点击更多显示全部内容
+                        comment_li.eq(i).find(li_more).click(function(){   //点击更多
+                            comment_li.eq(i).find(li_content).text(cContent);
+                            comment_li.eq(i).find(li_more).hide();
+                        })
+                    }else if(cContent.length < 200){
+                        comment_li.eq(i).find(li_more).hide();
+                        comment_li.eq(i).find(li_content).text(cContent);
+                    }
+                });
+
+            }
+        });
+
+        //星星 ---  评论星星，可点击评论
+        scoreFun($("#starttwo"),{
+            fen_d:22,//每一个a的宽度
+            ScoreGrade:5//a的个数 10或者
+        });
+
+        // 添加评论
+        $('.app_edit_submit').click(function () {
+            //获取当前时间
+            var date = new Date();
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            if (month < 10) {month = "0" + month;}
+            if (day < 10) {day = "0" + day;}
+            var nowDate = year + "-" + month + "-" + day;
+            var data3 = {
+                "app":$('.edit').val(),
+                "star":$('.fenshu').text(),
+                "title":$('#comments_title').val(),
+                "content":$('#comments_content').val()
+            };
+            if(data3.star == ""){
+                alt('请您为应用评分！',3);
+            }else if(data3.content == ""){
+                alt('请您添加评论内容',3);
+            }else if(data.title == ""){
+                alt('请您添加评论标题',3);
+            }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
+                $.ajax({
+                    url: "apis/api/method/app_center.appmgr.add_review",
+                    type: "POST",
+                    data: data3,
+                    success: function (req) {
+                        alt(req.message,1);   //提示评测已添加
+                        // 列表添加新加的评测
+                        $('.app_comment_list').prepend(
+                        '<li>'+
+                            '<p class="comment_title">'+ data3.title +'</p>'+
+                            '<p class="comment_content"><span>'+ data3.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
+                            '<div>'+
+                                '<span>用户名：</span>'+
+                                '<span>'+ user +'</span>'+
+                                '<span>评论时间：</span>'+
+                                '<span>'+ nowDate +'</span>'+
+                                '<ul class="show_number clearfix">'+
+                                    '<li>'+
+                                        '<div class="atar_Show">'+
+                                        '<p tip="'+ data3.star +'"></p>'+
+                                        '</div>'+
+                                    '</li>'+
+                                '</ul>'+
+                            // '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
+                            '<a class="clearfix"></a>'+
+                            '</div>'+
+                            '<img class="comment_images" src="img/top_avatar.png" alt="">'+
+                        '</li>'
+                        )
+                        $('#comments_title').val("");
+                        $('#comments_content').val("");
+                    },
+                    error: function () {
+                        console.log('error')
+                    }
+                })
+            }
+
+        });
+
+    }); //$(function)
+
     //title显示选项卡分类
     var aLi = $('#myTab>li');
     aLi.each(function (i) {
@@ -264,45 +490,30 @@
         $('.uploadVersion').css('display','block');
     });
 
-    //版本列表为空
-    if($('.app_version>li').length == 0){
-        $('.app_list').addClass('hd');
-        $('.no_version').css('display','block');
-    }
+    //上传新版本-取消
+    $('.v_cancel').click(function () {
+        $('.uploadVersion').css('display','none');
+    });
 
-    //我要评论按钮隐藏
-    var liLen = $('.app_comment_list>li').length;
-    if( liLen == 0 ){
-        $('.app_comment>div').css('display','block');
-        $('.app_comment>a').css('display','none');
-        $('.no_comment').css('display','block');
-    } else if( liLen >= 5){
-        $('.app_comment>a').css('display','block');
-    }else if( 0 < liLen < 5 ){
-        $('.app_comment>a').css('display','none');
-    }
-
-    //
-    $(function() {
-        var testEditor = editormd("test-editormd", {
-            width           : "100%",
-            height          : 540,
-            path            : "js/editor.md-master/lib/",
-            watch           : true,           // disable watch
-            readOnly        : true,
-            styleActiveLine : false,   // disable active line
-            lineNumbers     : true,      // hide line numbers
-            previewing         : true
-        });
-
-        setTimeout(function(){
-            testEditor.previewing();
-        },1000)
+    //上传新版本-提交
+    $('.v_upload').click(function () {
 
     });
 
+    //edit
+    $('.edit').click(function () {
+        location.href = 'application_edit.html?appId=' + decodeURI(window.location.href.split("=")[1]);
+    });
+    
+    //Omline editor
+    $('.app_editor').click(function () {
+        console.log(111);
+    });
 
-
+    //主分页
+    $('.fork_from').click(function () {
+        location.href = 'application_details.html?appId=' + $(this).val();
+    })
 
 </script>
 

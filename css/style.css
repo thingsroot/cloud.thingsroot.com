@@ -1244,7 +1244,11 @@ th .on{
 	text-align: center;
 	font-size: 18px;
 	color: #848689;
-	padding: 180px 0;
+	padding: 15% 0;
+}
+.none>p{
+	font-size: 16px;
+	color: #354E77;
 }
 .none button{
 	background: #354E77;
@@ -2489,11 +2493,10 @@ th .on{
 	color: #FFFFFF;
 }
 .app_list{
-	min-height: 720px;
 	margin: 15px;
 	padding: 8px 15px;
+	bottom: 30px;
 	background-color: #FFFFFF;
-
 }
 .app_list_li{
 	width: 100%;
@@ -2534,9 +2537,14 @@ th .on{
 }
 .app_info>div:nth-child(2)>p>span:nth-child(1){
 	color: #999999;
+	/*font-size: 14px;*/
 }
 .app_info>div:nth-child(2)>p>span:nth-child(2){
 	color: #666666;
+}
+.app_info>div>div{
+	display: inline-block;
+	padding:0 15px;
 }
 
 /*应用列表end*/
@@ -2583,11 +2591,12 @@ th .on{
 	right: 0;
 }
 .app_right_button{
+	width: 400px;
 	position: absolute;
 	top: 42px;
 	right: 60px;
 }
-.app_right_button>span{
+.app_right_button>button{
 	display: inline-block;
 	height: 30px;
 	line-height: 30px;
@@ -2595,6 +2604,7 @@ th .on{
 	border-radius: 4px;
 	padding: 0 10px;
 	margin: 4px;
+	background-color: #FFFFFF;
 }
 
 .app_right>p{
@@ -2718,24 +2728,7 @@ th .on{
 	background-color: #364F78;
 	color: #FFFFFF;
 }
-.app_describe{
-	padding: 10px;
-	background-color: lightseagreen;
-}
-.app_describe>p{
-	padding: 5px 20px;
-}
-.app_describe>p:nth-child(1){
-	font-size: 18px;
-	font-weight: bold;
-}
-.app_describe>p:nth-child(2),.app_describe>p:nth-child(4){
-	font-size: 14px;
-	font-weight: bold;
-}
-.app_describe>p:nth-child(3){
-	color: #999999;
-}
+
 .app_edit_form{
 	margin: 0 15px;
 	height: 150px;
@@ -2793,12 +2786,44 @@ th .on{
 	border: 0;
 	border-radius: 4px;
 }
+#comments_title{
+	width: 100%;
+	height: 32px;
+	border: 1px solid #E5E9EE;
+	border-radius: 4px;
+	padding-left: 10px;
+}
+#comments_content{
+	width: 100%;
+	margin: 0;
+	-webkit-appearance: none;
+	padding: 10px;
+	background: #fff;
+	border: 1px solid #E5E9EE;
+	outline: 0;
+	color: #333333;
+	border-radius: 4PX;
+	line-height: 30PX;
+	resize: vertical;
+}
+#comments_content:not([rows]) {
+	height: 12em;
+	min-height: 8em;
+	max-height: 24em;
+}
 .app_comment{
     margin: 0 20px;
     min-height: 300px;
 }
 .app_comment>div{
     padding: 20px 0;
+}
+#myComment_title{
+	width: 400px;
+	height: 32px;
+	border: 1px solid #E5E9EE;
+	border-radius: 4px;
+	padding-left: 10px;
 }
 .comment_btn{
     text-align: center;
@@ -2820,30 +2845,71 @@ th .on{
 .app_comment>button{
     margin: 5px 0 20px 0;
 }
-
 .app_comment_list{
     width: 100%;
 }
 .app_comment_list>li{
     width: 100%;
-    padding: 15px 0;
+    padding: 20px 0 10px 70px;
     border-bottom: 1px solid #E5E9EE;
+	position: relative;
 }
-.app_comment_list>li>p:nth-child(1){
+.app_comment_list>li>p:nth-child(1) {
+	width: 100%;
+	height: 30px;
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.app_comment_list>li>p:nth-child(2){
     width: 100%;
+	font-size: 16px;
     padding-right: 20px;
     min-height: 30px;
-    line-height: 30px;
+    line-height: 25px;
     word-wrap:break-word ;
 }
-.app_comment_list>li>p:nth-child(2){
+.app_comment_list>li>p:nth-child(3){
     line-height: 30px;
 }
-.app_comment_list>li>p:nth-child(2)>span{
+.app_comment_list>li>div>span{
     color: #999999;
-    line-height: 50px;
+    line-height: 48px;
+	float: left;
 
 }
+.app_comment_list>li>div>span:nth-child(even){
+	padding-right: 20px;
+}
+.comment_more{
+	display: none;
+	width: 14px;
+	height: 14px;
+	margin: 0 6px;
+	position: relative;
+	top: -2px;
+}
+.app_comment_list>li>div>.delete_comment{
+	padding:0 20px;
+	line-height:45px;
+	color:rgba(53,78,119,0.7);
+}
+.comment_images{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	position: absolute;
+	top: 20px;
+	left: 0;
+}
+.myStar{
+	margin-bottom: 10px;
+}
+.myStar>span{
+	position: relative;
+	top: -2px;
+}
+
 /*应用详情end*/
 
 
@@ -2861,4 +2927,16 @@ th .on{
 }
 .select_menu{
 	width: 180px;
+}
+
+.over{
+	max-height: 140px;
+	overflow-y: auto
+}
+
+
+.pos{
+	position: absolute;
+	left: 0;
+	bottom: 0;
 }

@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
     <script src="js/editor.md-master/editormd.min.js"></script>
     <!--markdown   js -->
-    <title>应用评测列表</title>
+    <title>修改应用详情</title>
 </head>
 <body>
 
@@ -40,8 +40,6 @@
 </nav>
 <!-- 顶部导航 end -->
 
-
-
 <div class="down-main">
     <!-- 左侧导航 start -->
     <div class="left-main left-full">
@@ -51,75 +49,74 @@
             <img src="img/nav_home_hover.png" class="hover_img"/>
             <p class="sublist-title">首页</p>
         </div>
-        <div class="subNav bg-color" onClick="location='mine.html'">
+        <div class="subNav" onClick="location='mine.html'">
             <img src="img/nav_equipment.png" class="hd_img"/>
             <img src="img/nav_equipment_hover.png" class="hover_img"/>
             <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='application_list.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
         </div>
     </div>
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
         <!-- 标题 -->
-        <div class="details_title"><span class="version_name">添加新应用</span></div>
+        <div class="details_title"><span class="version_name">修改应用详情</span></div>
         <!-- 表单 -->
         <div class="app_edit_form">
             <img src="img/app.jpg" alt="">
             <div>
                 <div>
                     <span>应用名称 <i>*</i></span>
-                    <input type="text" class="form-control boot_input" placeholder="应用名称" aria-describedby="basic-addon2">
+                    <input type="text" id="app_name" class="form-control boot_input" placeholder="应用名称" aria-describedby="basic-addon2">
                     <span>授权类型 <i>*</i></span>
-                    <div class="btn-group search_filter3" role="group">
+                    <div class="btn-group search_filter4" role="group">
                         <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword3 select_text" data-search_keyword="1">授权类型</span>
+                            <span class="search_keyword4 select_text" data-search_keyword="1">免费</span>
                             <span class="caret select_arrow"></span>
                         </button>
-                        <ul class="dropdown-menu select_menu">
-                            <li data-name=""><a style="cursor:pointer">1</a></li>
-                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        <ul class="dropdown-menu select_menu over"  >
+                            <li data-name=""><a style="cursor:pointer">免费</a></li>
                         </ul>
                     </div>
                     <span>应用厂商 <i>*</i></span>
-                    <div class="btn-group search_filter3" role="group">
+                    <div class="btn-group search_filter2" role="group">
                         <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword3 select_text" data-search_keyword="1">应用厂商</span>
+                            <span class="search_keyword2 select_text" data-search_keyword="1">应用厂商</span>
                             <span class="caret select_arrow"></span>
                         </button>
-                        <ul class="dropdown-menu select_menu">
-                            <li data-name=""><a style="cursor:pointer">1</a></li>
-                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        <ul class="dropdown-menu select_menu over" id="changshang">
+                            <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
                         </ul>
                     </div>
                 </div>
                 <div>
                     <span>设备型号 <i>*</i></span>
-                    <input type="text" class="form-control boot_input" placeholder="设备型号" aria-describedby="basic-addon2">
+                    <input type="text" id="shebeihao" class="form-control boot_input" placeholder="设备型号" aria-describedby="basic-addon2">
                     <span>协议 <i>*</i></span>
                     <div class="btn-group search_filter3" role="group">
                         <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="search_keyword3 select_text" data-search_keyword="1">协议</span>
                             <span class="caret select_arrow"></span>
                         </button>
-                        <ul class="dropdown-menu select_menu">
-                            <li data-name=""><a style="cursor:pointer">1</a></li>
-                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        <ul class="dropdown-menu select_menu  over" id="shouquan">
+                            <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
                         </ul>
                     </div>
                     <span>类别 <i>*</i></span>
-                    <div class="btn-group search_filter3" role="group">
+                    <div class="btn-group search_filter1" role="group">
                         <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword3 select_text" data-search_keyword="1">类别</span>
+                            <span class="search_keyword1 select_text" data-search_keyword="1">类别</span>
                             <span class="caret select_arrow"></span>
                         </button>
-                        <ul class="dropdown-menu select_menu">
-                            <li data-name=""><a style="cursor:pointer">1</a></li>
-                            <li data-name=""><a style="cursor:pointer">2</a></li>
+                        <ul class="dropdown-menu select_menu  over" id="leibie">
+                            <!--<li data-name=""><a style="cursor:pointer">2</a></li>-->
                         </ul>
                     </div>
                 </div>
-
             </div>
-
         </div>
         <!--markdown 编辑器-->
         <div class="myMarkdown">
@@ -151,6 +148,145 @@
             imageFormats : ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
             imageUploadURL : "/upload/image"
         });
+
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+
+        //获取应用详情信息
+        var appId = {'app':decodeURI(window.location.href.split("=")[1])};
+        $.ajax({
+            url: "apis/api/method/app_center.api.app_detail",
+            type: "GET",
+            data: appId,
+            success: function (data) {
+                console.log(data.message);
+                var datas = data.message;
+                $('#app_name').val(datas.app_name);   //应用名称
+                $('#shebeihao').val(datas.device_serial);   //设备型号
+                $('.search_keyword2').text(datas.device_supplier);   //设备厂商
+                $('.search_keyword3').text(datas.protocol);   //协议
+                $('.search_keyword1').text(datas.category);   //应用分类
+                if(datas.category == 'Open'){
+                    $('.search_keyword4').text("免费");   //授权类型  ---免费
+                }
+                $('#test-editormd>textarea').text(datas.description)   //markdown
+            },
+            error: function () {
+                console.log('no')
+            }
+        });
+
+
+
+        //获取设备厂商
+        var data1 = {'name':'冬笋科技'};
+        $.ajax({
+            url: "apis/api/method/app_center.api.app_suppliers",
+            type: "GET",
+            data: data1,
+            success: function (req) {
+                var data = req.message;
+                for(var i=0;i<data.length;i++){
+                    // console.log(data[i]);
+                    $('#changshang').append(
+                        '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
+                    )
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            complete: function () {
+                $('.search_filter2 li').on('click', function() {
+                    $('.search_keyword2').text($(this).text());
+                });
+            }
+        });
+
+        //获取协议
+        var data2 = {'name':'Redis'};
+        $.ajax({
+            url: "apis/api/method/app_center.api.app_protocols",
+            type: "GET",
+            data: data2,
+            success: function (req) {
+                // console.log(req);
+                var data = req.message;
+                for(var i=0;i<data.length;i++){
+                    $('#shouquan').append(
+                        '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
+                    )
+                }
+            },
+            error: function () {
+                console.log('error')
+            },
+            complete: function () {
+                $('.search_filter3 li').on('click', function() {
+                    $('.search_keyword3').text($(this).text());
+                });
+            }
+        });
+
+        //获取应用分类
+        var name = {'name':'General'};
+        $.ajax({
+            url:"apis/api/method/app_center.api.app_categories",
+            type:"GET",
+            data: name,
+            success: function(req){
+                var data = req.message;
+                for(var i=0;i<data.length;i++){
+                    $('#leibie').append(
+                        '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
+                    )
+                }
+            },
+            error: function () {
+                console.log('error')
+            },
+            complete: function () {
+                $('.search_filter1 li').on('click', function() {
+                    $('.search_keyword1').text($(this).text());
+                });
+            }
+        })
+
+
+        //提交修改
+        $('.app_edit_submit').click(function () {
+            var datas = {
+                app            : decodeURI(window.location.href.split("=")[1]),
+                app_name       : $('#app_name').val(),
+                category       : $('.search_keyword1').text(),
+                device_supplier: $('.search_keyword2').text(),
+                device_serial  : $('#shebeihao').val(),
+                description    :$('#test-editormd>textarea').text()
+            };
+            console.log(datas);
+            if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
+                $.ajax({
+                    url: "apis/api/method/app_center.appmgr.modify",
+                    type: "POST",
+                    data: JSON.stringify(datas),
+                    contentType:'application/json',
+                    success:function (req) {
+                        console.log(req);
+                        alt('修改成功',1);
+                    },
+                    error: function () {
+                        alt('修改失败',3);
+                    }
+                })
+            }else{
+                alt('修改信息不能为空',2);
+            }
+        })
+
     });
 </script>
 
