@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+		<link rel="shortcut icon" href="/img/favicon.ico" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/animate.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+		<script src="js/jstree/jstree.min.js" type="text/javascript"></script>
+		<script src="js/ace/ace.js" charset="utf-8" type="text/javascript"></script>
+		<script src="js/ace/ext-language_tools.js" type="text/javascript"></script>
+		<script src="js/transport.js" type="text/javascript"></script>
+		<script src="js/jQuery.cookie.js" type="text/javascript"></script>	
+		<script src="js/layui/layui.js" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/arrayFun.js" type="text/javascript"></script>
+	    <script src="js/common.js" type="text/javascript"></script>
+		<script src="js/user.js?v=20180709" type="text/javascript"></script>
+    	<script src="js/crontab.js" type="text/javascript"></script>
+	    <link rel="stylesheet" type="text/css" href="/js/jstree/themes/default/style.min.css">
+		<style>
+			.vakata-context,.vakata-context ul {
+				z-index:999;
+			}
+		</style>
+		<title>应用调试</title>
+	</head>
+	<body>
+		<nav class="nav_herder">
+			<div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+			<div class="pull-right nav_right">
+				<p class="J_appCenter hd" onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span><em>|</em></p>
+				<p class="J_getMembers hd"><img src="img/top_management.png"/><span><!--成员管理--></span><em>|</em></p>
+				<p onClick="location='message.html'"><img src="img/top_news.png"/><em>|</em></p>
+				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span><em>|</em></p>
+				<p><img src="img/top_quit.png" id="J_logout"/></p>
+			</div>
+		</nav>
+		<div class="down-main">
+			<div class="left-main left-full">
+				<div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+				<div class="subNav" onClick="location='index.html'">
+					<img src="img/nav_home.png" class="hd_img"/>
+					<img src="img/nav_home_hover.png" class="hover_img"/>
+					<p class="sublist-title">首页</p>
+				</div>
+				<div class="subNav bg-color" onClick="location='mine.html'">
+					<img src="img/nav_equipment.png" class="hd_img"/>
+					<img src="img/nav_equipment_hover.png" class="hover_img"/>
+					<p class="sublist-title">我的网关</p>
+				</div>
+	  		</div>
+			<div class="right-product my-index right-full" style="padding: 15px 60px 15px 0">
+				<ol class="breadcrumb">
+				    <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+				    <li class="active"><a href="mine.html">我的网关</a></li>
+				    <li class="active J_gate_name"><a href="#"></a></li>
+				    <li class="active J_current_inst"></li>
+				    <li class="active">应用调试</li>
+				</ol>
+				<div class="debug_top">
+					<div>
+						<span class="apply"><img src="img/icon_d_01.png" areaname="apply" title="打包并安装到应用"/></span><!--class off关闭-->
+						<span class="tag"><img src="img/icon_d_02.png" areaname="tag" title="发布新版本"/></span>
+						<span class="revert"><img src="img/icon_d_03.png" areaname="revert" title="重置工作区到指定版本"/></span>
+						<span class="folder"><img src="img/icon_d_04.png" areaname="folder" title="新目录"/></span>
+						<span class="file"><img src="img/icon_d_05.png" areaname="file" title="新文件"/></span>
+						<span class="rename"><img src="img/icon_d_06.png" areaname="rename" title="重命名"/></span>
+						<span class="delete"><img src="img/icon_d_07.png" areaname="delete" title="删除"/></span>
+						<span class="save off"><img src="img/icon_d_08.png" areaname="save" title="保存文件"/></span>
+						<span class="download"><img src="img/icon_d_09.png" areaname="download" title="获取文件"/></span>
+						<span class="undo"><img src="img/icon_d_10.png" areaname="undo" title="撤销"/></span>
+						<span class="redo"><img src="img/icon_d_11.png" areaname="redo" title="重置"/></span>
+						<span class="zoom"><img src="img/icon_d_12.png" areaname="zoom" title="放大字体"/></span>
+						<span class="zoom_out"><img src="img/icon_d_13.png" areaname="zoom_out" title="缩小字体"/></span>
+						<span class="debug"><img src="img/icon_d_14.png"title="调试工具"/></span>
+					</div>
+					<p class="fr"></p>
+				</div>
+				<div class="debug_main">
+					<div class="debug_content">
+						<div class="debug_left fl" id="jstree_tree">
+							<!--编辑器目录区-->
+						</div>
+						<div class="debug_right fl" id="editor_data">
+							<div id="editor_code"><!--编辑器代码区--></div>
+							<!--<div class="content folder" style="display:none;"></div>
+							<div class="content image" style="display:none; position:relative;">
+								<img src="" alt="" style="display:block; position:absolute; left:50%; top:50%; padding:0; max-height:90%; max-width:90%;" />
+							</div>-->
+							<div class="content default" style="text-align:center;display:none;">请从文件树中选择要编辑的文件。</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="shade J_apply">
+			<div class="debug_shade">
+				<div class="add_content">
+					<!--<div class="tit">打包修改内容并安装到</div>-->
+					<p>设备序列号</p>
+					<input type="text" class="J_apply_device" readonly="true" value="value_device_sn" />
+					<p>应用实例</p>
+					<input type="text" class="J_apply_inst" readonly="true" value="value_inst" />
+					<div class="checkbox"><label><input class="J_protocol" type="checkbox">我同意使用条款<em></em></label></div>
+					<div class="bottom">
+						<button id="J_apply_do">应用</button>
+						<button class="off J_content_close">取消</button>
+					</div>
+				</div>
+			</div>		
+		</div>
+		<div class="shade J_tag">
+			<div class="debug_shade">
+				<div class="add_content">
+					<!--<div class="tit">发布新版本</div>-->
+					<p>填写版本</p>
+					<input type="text" id="J_tag_version" value="0" />
+					<p>评论</p>
+					<textarea rows="5" id="J_tag_comment"></textarea>
+					<div class="checkbox"><label><input class="J_protocol" type="checkbox">我同意使用条款<em></em></label></div>
+					<div class="bottom">
+						<button id="J_tag_do">创建</button>
+						<button class="off J_content_close">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>	
+		<div class="shade J_revert">
+			<div class="debug_shade">
+				<div class="add_content">
+					<p>选择版本</p>
+					<select name="version" id="J_revert_version">
+						version_list
+	  				</select>
+					<div class="bottom">
+						<button id="J_revert_do">重置</button>
+						<button class="off J_content_close">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+    	<script src="js/debugger.js" type="text/javascript"></script>
+		<!--<script src="js/index.js?v=20180611" type="text/javascript"></script>-->
+		<input type="hidden" value="" id="J_current_inst"><!--当前应用的inst-->
+
+	</body>
+</html>

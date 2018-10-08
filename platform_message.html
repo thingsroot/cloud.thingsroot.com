@@ -247,7 +247,7 @@
                     }
                     //标题
                     var string = $(row).children('td').eq(8).text();
-                    console.log(string)
+                    console.log($.parseJSON(string));
                     if(string.indexOf('ONLINE')>-1){
                         $(row).children('td').eq(8).text('ONLINE')
                     }else if(string.indexOf('OFFLINE')>-1){

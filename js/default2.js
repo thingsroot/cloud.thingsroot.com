@@ -37,72 +37,85 @@ $(function(){
 		// console.log('device_event_count_statistics',items);
 		localStorage.list_device_event_count_statistics_original = JSON.stringify(items.message);
 		localStorage.list_current = JSON.stringify(items.message);
-		display_error('today',1);
-		display_error('total',1);
+		//当天
+		display_error_today();
+		//一周
+		display_error_total();
 		$('#J_gateErrorTotal').html(items.message.length);
 	}
 
     /**
-    *	按页码显示内容列表
-    *	page_num	页码
+    *	当天前10的网关
     */ 
-	function display_error(type,page_num){
+	function display_error_today(){
 		var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
-		var sort=new Array();
-		sort[type] = 'desc';
-		data = arrSort(data,sort);
 		var html='';
-		var html1='';
-		var arrLen = data.length;
-		console.log(data);
-
-        for (var i = 0; i < arrLen; i++) {
-			if(type=='today'){
-				var count = data[i].today;
-			}else if(type=='total'){
-				var count = data[i].total;
+        //创建新数组
+        var arr1 = [];
+        for (var i = 0; i < data.length; i++) {
+			//判断次数与时间
+			if(data[i].today != '0' && data[i].last_updated.indexOf(t) != -1){
+				arr1.push(data[i]);
 			}
-			var index = ((page_num-1)*pageSize)+i;
-			html += `
-			    <tr>
-			        <td>${i+1}</td>
-			        <td>${data[i].name}</td>
-			        <td>${data[i].position}</td>
-			        <td>${data[i].last_updated}</td>
-			        <td>${count}</td>
-			    </tr>`;
 	    }
-	    $('#J_error_'+type).html(html);
-
-        // //判断今天
-        // var aTr1 = $("#J_error_today>tr");
-        // for(var i=0;i<aTr1.length;i++){
-			// var time = aTr1.eq(i).find(':nth-child(4)');
-			// var error_count = aTr1.eq(i).find(':nth-child(5)');
-			// if(time.text().indexOf(t) == -1){
-        //         time.parent().css('display','none')
-			// }else if(error_count.text() == '0'){
-        //         error_count.parent().css('display','none')
-			// }
-        // }
-        //
-        // //判断一周
-        // var aTr2 = $("#J_error_total>tr");
-        // for(var i=0;i<aTr2.length;i++){
-        //     var time2 = aTr2.eq(i).find(':nth-child(4)');
-        //     var error_count2 = aTr2.eq(i).find(':nth-child(5)');
-        //     console.log()
-        //     // if(error_count2.text() == '0'){
-        //     //     error_count2.parent().css('display','none')
-        //     // }
-        //     // else
-        //     	if(time2.text().indexOf(t)){
-        //         time2.parent().css('display','none')
-        //     }
-        // }
-
-
+        //渲染表格
+        for(var j=0;j<arr1.length;j++){
+        	console.log(arr1[j].today)
+            html += `
+			    <tr class="myTr">
+			        <td>${j+1}</td>
+			        <td>${arr1[j].name}</td>
+			        <td>${arr1[j].position}</td>
+			        <td>${arr1[j].last_updated}</td>
+			        <td>${arr1[j].today}</td>
+			    </tr>`;
+        }
+	    $('#J_error_today').html(html);
+        if($('#J_error_today').children().length == 0){
+        	$('#one>table').hide();
+        	$('#one>p').show();
+		}
 	}
+
+    /**
+     *	一周内故障最多
+     */
+    function display_error_total(){
+        var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
+        var html1='';
+        //创建新数组
+        var arr2 = [];
+        for (var i = 0; i < data.length; i++) {
+            //判断次数与时间
+			if( data[i].last_updated.indexOf(t) != -1
+            || data[i].last_updated.indexOf(t1) != -1
+            || data[i].last_updated.indexOf(t2) != -1
+            || data[i].last_updated.indexOf(t3) != -1
+            || data[i].last_updated.indexOf(t4) != -1
+            || data[i].last_updated.indexOf(t5) != -1
+            || data[i].last_updated.indexOf(t6) != -1){
+                if(data[i].total != '0'){
+                    arr2.push(data[i]);
+                }
+			}
+        }
+        //渲染表格
+        for(var j=0;j<arr2.length;j++){
+            html1 += `
+			    <tr class="myTr">
+			        <td>${j+1} <input type="hidden" value='${arr2[j].sn}'></td>
+			        <td>${arr2[j].name}</td>
+			        <td>${arr2[j].position}</td>
+			        <td>${arr2[j].last_updated}</td>
+			        <td>${arr2[j].total}</td>
+			    </tr>`;
+        }
+        $('#J_error_total').html(html1);
+        if($('#J_error_total').children().length == 0){
+            $('#two>table').hide();
+            $('#two>p').show();
+        }
+    }
 
 	function device_online_statistics(chart_id, tag_name) {
 		// console.log(chart_id);
@@ -315,3 +328,7 @@ $(function(){
 		device_event_type_statistics('device_event_type_statistics', 'device_event_type_statistics');
 	}, 120000);
 })
+
+
+
+

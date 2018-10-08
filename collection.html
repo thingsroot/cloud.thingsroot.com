@@ -21,7 +21,7 @@
 			<div class="pull-right nav_right">
 				<p class="J_appCenter hd" onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span><em>|</em></p>
 				<p class="J_getMembers hd"><img src="img/top_management.png"/><span><!--成员管理--></span><em>|</em></p>
-				<p onClick="jacascript:$('#messageBox').show()"><img src="img/top_news.png"/><em>|</em></p>
+				<p onClick="jacascript:$('#messageBox').show()"><img src="img/top_news.png"/><span class="redDot"></span><em>|</em></p>
 				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span><em>|</em></p>
 				<p><img src="img/top_quit.png" id="J_logout"/></p>
 			</div>
@@ -695,20 +695,22 @@
 
 	<!--消息弹框-->
 	<div id="messageBox">
-		<p class="title">最新消息
+		<p id="messageBox_title">最新消息
 			<span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
 		</p>
 		<div>
 			<p>通信设备</p>
-			<ul>
-				<li>
-					<span>uninstall software</span>
-					<span>13分钟前</span>
-				</li>
-				<li>
-					<span>uninstall software</span>
-					<span>13分钟前</span>
-				</li>
+			<ul class="list_box">
+				<!--<li class="box_li">-->
+				<!--<span class="message_name"></span>-->
+				<!--<span style="display: none;" class="message_id"></span>-->
+				<!--<span style="float: right;" class="message_ago"></span>-->
+				<!--</li>-->
+				<!--<li class="box_li">-->
+				<!--<span class="message_name"></span>-->
+				<!--<span style="display: none;" class="message_id"></span>-->
+				<!--<span style="float: right;" class="message_ago"></span>-->
+				<!--</li>-->
 			</ul>
 		</div>
 		<p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
@@ -716,6 +718,7 @@
 	<!--消息弹框 end-->
 
 	<script src="js/transport.js" type="text/javascript"></script>
+	<script src="js/jquery.timeago.js"></script>
 	<script src="js/jQuery.cookie.js" type="text/javascript"></script>
 	<script src="js/jquery-1.11.3.min.js.js" type="text/javascript"></script>
 	<script src="js/jQuery.timeago.js" type="text/javascript"></script>
@@ -725,6 +728,7 @@
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/crontab.js?v=20180706" type="text/javascript"></script>
 	<script src="js/user.js" type="text/javascript"></script>
+	<script src="js/message.js"></script>
 	<!-- 引入 echarts vintage 主题 -->
 	<script type="text/javascript" src="assets/library/echarts.min.js"></script>
 	<script type="text/javascript" src="assets/library/theme/macarons.js"></script>

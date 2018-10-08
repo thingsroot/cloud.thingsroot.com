@@ -15,24 +15,20 @@
     <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
     <link rel="stylesheet" href="css/star.css">
     <title>应用列表</title>
-
 </head>
-<body>
+<body style="font-family: '微软雅黑';">
 
 <!-- 顶部导航 start -->
 <nav class="nav_herder">
     <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
     <div class="pull-right nav_right">
-        <p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>
         <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-        <p><img src="img/top_news.png"/></p><em>|</em>
+        <p onclick="javascript:$('#messageBox').show()"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
         <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
         <p><img src="img/top_quit.png" id="J_logout"/></p>
     </div>
 </nav>
 <!-- 顶部导航 end -->
-
-
 
 <div class="down-main">
     <!-- 左侧导航 start -->
@@ -57,9 +53,9 @@
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
         <!-- 标题 -->
-        <div class="mes_title">您的应用列表
+        <div class="mes_title">我的应用列表
             <div class="list_search">
-                <a href="application_edit.html">＋ 创建新应用</a>
+                <a class="create_new" href="application_edit.html?appId=1">＋ 创建新应用</a>
                 <div class="input-group"  style="width:240px;">
                     <input type="text" class="form-control J_keyword"  placeholder="输入关键词">
                     <span class="input-group-addon search"></span>
@@ -110,9 +106,34 @@
         <!--应用列表end-->
 
     </div>
+
+    <!--消息弹框-->
+    <div id="messageBox">
+        <p id="messageBox_title">最新消息
+            <span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
+        </p>
+        <div>
+            <p>通信设备</p>
+            <ul class="list_box">
+                <!--<li class="box_li">-->
+                <!--<span class="message_name"></span>-->
+                <!--<span style="display: none;" class="message_id"></span>-->
+                <!--<span style="float: right;" class="message_ago"></span>-->
+                <!--</li>-->
+                <!--<li class="box_li">-->
+                <!--<span class="message_name"></span>-->
+                <!--<span style="display: none;" class="message_id"></span>-->
+                <!--<span style="float: right;" class="message_ago"></span>-->
+                <!--</li>-->
+            </ul>
+        </div>
+        <p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
+    </div>
+    <!--消息弹框 end-->
 </div>
 <!-- 加载script start -->
 <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/jquery.timeago.js" type="text/javascript"></script>
 <script src="js/starScore.js"></script>
 <script src="js/transport.js" type="text/javascript"></script>
 <script src="js/jQuery.cookie.js" type="text/javascript"></script>
@@ -122,6 +143,7 @@
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/user.js" type="text/javascript"></script>
 <script src="js/index.js" type="text/javascript"></script>
+<script src="js/message.js"></script>
 <script>
 
     $(function(){
@@ -175,7 +197,7 @@
                 //星星显示分数
                 $(".show_number li p").each(function(index, element) {
                     var num=$(this).attr("tip");
-                    var www=num*12;
+                    var www=num*16;
                     $(this).css("width",www);
                     $(this).parent(".atar_Show").siblings("span").text(num+"分");
                 });

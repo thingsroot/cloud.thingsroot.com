@@ -12,20 +12,101 @@
     <script src="js/jstree/jstree.min.js" type="text/javascript"></script>
     <script src="js/ace/ace.js" charset="utf-8" type="text/javascript"></script>
     <script src="js/ace/ext-language_tools.js" type="text/javascript"></script>
-    <script src="js/transport.js" type="text/javascript"></script>
+    <!--<script src="js/transport.js" type="text/javascript"></script>-->
     <script src="js/jQuery.cookie.js" type="text/javascript"></script>
     <script src="js/layui/layui.js" charset="utf-8"></script>
     <script src="js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/arrayFun.js" type="text/javascript"></script>
     <script src="js/common.js" type="text/javascript"></script>
-    <script src="js/user.js?v=20180709" type="text/javascript"></script>
+
     <script src="js/crontab.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="/js/jstree/themes/default/style.min.css">
+    <link rel="stylesheet" type="text/css" href="js/jstree/themes/default/style.min.css">
     <style>
         .vakata-context,.vakata-context ul {
             z-index:999;
         }
     </style>
+    <script>
+        $(function(){
+
+            var token = $.cookie('DS_auth_token');
+            $.ajaxSetup({
+                headers: { // 默认添加请求头
+                    "X-Frappe-CSRF-Token": token
+                }
+            });
+
+            // 禁止点击
+            //$(".debug_top .off").unbind();
+            // 底部拖拽
+            var src_posi_Y = 0, dest_posi_Y = 0, move_Y = 0, is_mouse_down = false, destHeight = 300, bottomHeight = 200;
+            $("#expander").mousedown(function(e){
+                src_posi_Y = e.pageY;
+                is_mouse_down = true;
+            });
+            $(document).bind("click mouseup",function(e){
+                if(is_mouse_down){
+                    is_mouse_down = false;
+                }
+            }).mousemove(function(e){
+                dest_posi_Y = e.pageY;
+                move_Y = src_posi_Y - dest_posi_Y;
+                src_posi_Y = dest_posi_Y;
+                destHeight = $(".debug_bottom").height() + move_Y;
+                bottomHeight = $(".debug_bottom tbody").height() + move_Y;
+                if(is_mouse_down){
+                    $(".debug_bottom").css("height", destHeight > 300 ? destHeight : 300);
+                    $(".debug_bottom tbody").css("height", bottomHeight> 200 ? bottomHeight : 200);
+                    var h = $(".debug_main").height() - $(".debug_bottom").height();
+                    $('#jstree_tree').height(h);
+
+                    var code_editor = ace.edit("editor_code");
+                    code_editor.container.style.height = h + "px";
+                    code_editor.resize();
+                }
+            });
+
+            $(".right-full").css("min-width",1000)
+            //调试工具
+            $(".debug").click(function(){
+                if($(".debug_bottom").hasClass("hd")){
+                    $(".debug_bottom").removeClass("hd");
+                    $(this).css("color","#1E8AE0");
+                    var h = $(".debug_main").height() - $(".debug_bottom").height();
+
+                    $('#jstree_tree').height(h);
+                    var code_editor = ace.edit("editor_code");
+                    code_editor.container.style.height = h + "px";
+                    code_editor.resize();
+                }else{
+                    $(".debug_bottom").addClass("hd");
+                    $(this).css("color","");
+                    var h = $(".debug_main").height();
+                    $('#jstree_tree').height(h);
+
+                    var code_editor = ace.edit("editor_code");
+                    code_editor.container.style.height = h + "px";
+                    code_editor.resize();
+                }
+            });
+
+            $(window).resize(function () {
+                var h = Math.max($(window).height() - 160, 420);
+                $(".debug_main").height($(".right-full").height() - 100);
+                if($(".debug_bottom").hasClass("hd")){
+                    h = $(".debug_main").height();
+                } else {
+                    h = $(".debug_main").height() - $(".debug_bottom").height();
+                }
+                $('#jstree_tree').height(h);
+                var code_editor = ace.edit("editor_code");
+                code_editor.container.style.height = h + "px";
+                code_editor.resize();
+            }).resize();
+
+            $(".debug_main").height($(".right-full").height() - 100);
+        });
+    </script>
     <title>应用调试</title>
 </head>
 <body>
@@ -148,10 +229,10 @@
         </div>
     </div>
 </div>
-
-<script src="js/gatedebug.js?v=20180710" type="text/javascript"></script>
-<script src="js/index.js?v=20180611" type="text/javascript"></script>
-
+<script src="js/debugger.js"></script>
+<!--<script src="js/gatedebug.js?v=20180710" type="text/javascript"></script>-->
+<!--<script src="js/index.js?v=20180611" type="text/javascript"></script>-->
+<!---->
 <!-- 上传报文和上传日志 -->
 <!--<script src="js/paho-mqtt.js"></script>-->
 <!--<script src="js/mqtt_utility.js"></script>-->
@@ -159,6 +240,14 @@
 <input type="hidden" value="" id="J_current_inst"><!--当前应用的inst-->
 <script>
     $(function(){
+
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+
         // 禁止点击
         //$(".debug_top .off").unbind();
         // 底部拖拽

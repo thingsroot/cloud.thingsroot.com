@@ -89,7 +89,7 @@
                         <button class="edit" value="">edit</button>
                         <button class="app_editor"> >_Omline editor </button>
                         <button class="fork_from" value="" >主分支</button>
-                        <button>删除</button>
+                        <!--<button>删除</button>-->
                     </div>
                 </div>
             </div>
@@ -152,7 +152,6 @@
                             </div>
                             <!--<p class="no_comment">暂时还没有评论！</p>-->
                         </div>
-
                     </div>
                     <!--版本列表-->
                     <div class="tab-pane fade" id="C">
@@ -175,36 +174,48 @@
 
     <!--上传新版本弹窗-->
     <div class="uploadVersion">
-        <div class="uploadBox">
-            <p class="version_title">上传新版本</p>
-            <p class="version_file">版本
-                <span style="color:red;">*</span>
-                <input type="text" placeholder="Version">
-                <input type="file">
-            </p>
-            <div class="version_desc">
-                <p>版本说明</p>
-                <textarea cols="118" rows="8" style="padding: 5px;"></textarea>
-                <P class="v_agree">
-                    <label class="checkbox"><input type="checkbox" class="box"><em></em></label>
-                    <span>我同意使用条款</span>
-                </P>
-                <div style="width:875px;height: 6px;margin: 15px 0;" class="progress">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
-                         aria-valuemax="100" style="width:60%;height:6px;"></div>
-                </div>
+
+            <div class="uploadBox">
+                <p class="version_title">上传新版本</p>
+                <form id="myForm">
+                    <p class="version_file">版本
+                        <span style="color:red; ">*</span>
+                        <input type="text" placeholder="Version" id="version" name="version">
+                        <input type="file" id="app_file" name="app_file">
+                        <input value="" id="formAppId" readonly="true" name="app" type="hidden">
+                    </p>
+                    <div class="version_desc">
+                        <p>版本说明</p>
+                        <textarea id="explain" cols="118" rows="8" style="padding: 5px;" name="comment"></textarea>
+                        <P class="v_agree">
+                            <label class="checkbox"><input type="checkbox" name="terms" class="box"><em></em></label>
+                            <span>我同意使用条款</span>
+                        </P>
+                        <div style="width:875px;height: 6px;margin: 15px 0;" class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
+                                 aria-valuemax="100" style="width:1%;height:6px;"></div>
+                        </div>
+                    </div>
+                </form>
+                <button class="v_upload" id="upload">提交</button><button class="v_cancel">取消</button>
             </div>
-            <button class="v_upload">提交</button><button class="v_cancel">取消</button>
-        </div>
+
     </div>
     <!--上传新版本弹窗 end-->
 
-
 </div>
-
 <script>
 
     $(function() {
+
+        //获取token
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+
         //Markdown
         var testEditor = editormd("test-editormd", {
             width           : "100%",
@@ -224,13 +235,8 @@
         //获取用户信息
         var user = getCookie('usr');
 
-        //获取token
-        var token = $.cookie('DS_auth_token');
-        $.ajaxSetup({
-            headers: { // 默认添加请求头
-                "X-Frappe-CSRF-Token": token
-            }
-        });
+        //form 提交时候的APPID
+        $('#formAppId').text(decodeURI(window.location.href.split("=")[1]));
 
         //获取应用详情
         // var data = {app:decodeURI(window.location.href.split("=")[1])};
@@ -243,6 +249,7 @@
             data: data,
             success: function (data) {
                 // console.log(data);
+                $('#formAppId').val(data.message.name);
                 $('.app_name').text(data.message.app_name); //应用名称
                 $('.app_owner').text(data.message.owner);
                 if(data.message.fork_from == null){      //主分支，判断是否有主分支
@@ -261,6 +268,7 @@
                 $('.device_serial').text(data.message.device_serial);   //适配型号
                 $('.app_img').src = data.message.icon_image;    //app图片
                 $('.editormd-onlyread>textarea').text(data.message.description)  //Markdown内容
+
             },
             error: function () {
                 console.log('no')
@@ -284,7 +292,7 @@
                     $('.app_version').append(
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
-                        '<p><span>更新时间：</span><span>'+ datas.creation +'</span></p>'+
+                        '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,10) +'</span></p>'+
                         '<p><span>功能介绍：</span><span>'+ datas.comment +'</span></p>'+
                         '</li>'
                     )
@@ -336,14 +344,14 @@
                         '<img class="comment_images" src="img/top_avatar.png" alt="">'+
                         '</li>'
                     );
-                    //星星展示分数
-                    $(".show_number li p").each(function(index, element) {
-                        var num=$(this).attr("tip");
-                        var www=num*12;//
-                        $(this).css("width",www);
-                        $(this).parent(".atar_Show").siblings("span").text(num+"分");
-                    });
                 }
+                //星星展示分数
+                $(".show_number li p").each(function(index, element) {
+                    var num=$(this).attr("tip");
+                    var www=num*16;//
+                    $(this).css("width",www);
+                    $(this).parent(".atar_Show").siblings("span").text(num+"分");
+                });
                 //我要评论按钮隐藏
                 var liLen = req.data.length;
                 if( liLen == 0 ){
@@ -430,7 +438,7 @@
                 alt('请您为应用评分！',3);
             }else if(data3.content == ""){
                 alt('请您添加评论内容',3);
-            }else if(data.title == ""){
+            }else if(data3.title == ""){
                 alt('请您添加评论标题',3);
             }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
                 $.ajax({
@@ -461,7 +469,14 @@
                             '</div>'+
                             '<img class="comment_images" src="img/top_avatar.png" alt="">'+
                         '</li>'
-                        )
+                        );
+                        //星星展示分数
+                        $(".show_number li p").each(function(index, element) {
+                            var num=$(this).attr("tip");
+                            var www=num*16;//
+                            $(this).css("width",www);
+                            $(this).parent(".atar_Show").siblings("span").text(num+"分");
+                        });
                         $('#comments_title').val("");
                         $('#comments_content').val("");
                     },
@@ -474,7 +489,6 @@
         });
 
     }); //$(function)
-
     //title显示选项卡分类
     var aLi = $('#myTab>li');
     aLi.each(function (i) {
@@ -488,16 +502,94 @@
     //上传新版本
     $('.uploadNewVersion').click(function(){
         $('.uploadVersion').css('display','block');
+        document.body.style.overflow='hidden';
+        $('#version').val("");
+        $('#explain').val("");
+        $('#app_file').val("");
     });
 
     //上传新版本-取消
     $('.v_cancel').click(function () {
         $('.uploadVersion').css('display','none');
+        document.body.style.overflow='auto';
     });
 
-    //上传新版本-提交
-    $('.v_upload').click(function () {
+    //判断版本号是否大于旧版本号
+    $('#version').blur(function(){
+        var num1 = $('.app_version>li:last-child>p:nth-child(1)>span:nth-child(2)').text();
+        console.log(num1);
+        if($(this).val() == ""){
+            alt('版本号不能为空',2);
+        }else if($(this).val() == num1){
+            alt('此版本号已存在',2);
+        }else if($(this).val() < num1){
+            alt('版本号应大于之前版本',2);
+        }else if($(this).val() > num1){
+            alt('ok',1);
+        }
+    });
 
+    //上传新版本-确定
+    $('#upload').click(function () {
+        var num = $('#version').val();
+        var desc = $('#explain').val();
+        //获取当前时间
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        if (month < 10) {month = "0" + month;}
+        if (day < 10) {day = "0" + day;}
+        var nowDate = year + "-" + month + "-" + day;
+        var form1 = new FormData(document.getElementById("myForm"));
+        console.log(form1)
+        if(!$('#version').val()){
+            alt('请填写版本号',3);
+        }else if(!$('#explain').val()){
+            alt('请填写版本说明',3);
+        }else if(!$('#app_file').val()){
+            alt('请选择文件',3);
+        }else if($("input[type='checkbox']").is(':checked') == false){
+            alt('请您同意使用条款',3);
+        }else{
+            $.ajax({
+                url: "apis/api/method/app_center.appmgr.upload",
+                type: "POST",
+                data: form1,
+                processData:false,
+                contentType:false,
+                xhr: function() { //ajax进度条
+                    var xhr = $.ajaxSettings.xhr();
+                    if (xhr.upload) {
+                        xhr.upload.addEventListener("progress", function (e) {
+                            var loaded = e.loaded; //已经上传大小情况
+                            var tot = e.total; //附件总大小
+                            var per = Math.floor(100 * loaded / tot); //已经上传的百分比
+                            console.log(per)
+                            $('.progress-bar').css('width',per+'%');
+                            // $.fn.progressInit.draw(per + '%'); //绘制经度条
+                        }, false);
+                        return xhr;
+                    }
+                },
+                success: function () {
+                    $('.app_version').append(
+                        '<li>'+
+                        '<p><span>版本号：</span><span>'+ num +'</span></p>'+
+                        '<p><span>更新时间：</span><span>'+ nowDate +'</span></p>'+
+                        '<p><span>功能介绍：</span><span>'+ desc +'</span></p>'+
+                        '</li>'
+                    );
+                    $('#version').val("");
+                    $('#explain').val("");
+                    $('#app_file').val("");
+                    // $('.uploadVersion').hide();
+                },
+                error: function () {
+                    console.log('no');
+                }
+            })
+        }
     });
 
     //edit
@@ -508,6 +600,7 @@
     //Omline editor
     $('.app_editor').click(function () {
         console.log(111);
+        location.href = 'debug1.html?app=' + decodeURI(window.location.href.split("=")[1]);
     });
 
     //主分页

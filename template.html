@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="css/scroller.dataTables.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+    <title>我的模板</title>
+    <style>
+        .table>tbody>tr td,.table>thead>tr th{
+            cursor: pointer;
+            text-align: center;
+        }
+        #template_name{
+            width: 300px;
+            height: 34px;
+            border: 1px solid #CCCCCC;
+        }
+        .ib{
+            display: inline-block;
+            margin: 0 20px 0 20px;
+            position: relative;
+            top: -2px;
+        }
+        .ib1{
+            position: relative;
+            top:-2px;
+            display:inline-block;
+            margin-right: 20px;
+        }
+        .version_file{
+            position: relative;
+        }
+        .version_file>span{
+            position: absolute;
+            top: 10px;
+
+        }
+        .version_file>textarea{
+            margin-left: 46px;
+            padding: 5px 8px;
+            border: 1px solid #CCCCCC;
+        }
+        .is_open{
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p><img src="img/top_news.png"/></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='index.html'">
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">首页</p>
+        </div>
+        <div class="subNav" onClick="location='mine.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav" onClick="location='application_list.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='template.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的模板</p>
+        </div>
+    </div>
+    <!-- 左侧导航 start -->
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <div class="mes_title">我的模板
+            <div class="list_search">
+                <a class="create_new" id="createTemplate">＋ 创建新模板</a>
+                <div class="input-group"  style="width:240px;">
+                    <input type="text" class="form-control J_keyword"  placeholder="输入关键词">
+                    <span class="input-group-addon search"></span>
+                </div>
+            </div>
+        </div>
+        <!-- 表格 -->
+        <div style="margin: 0 15px;">
+            <table id="myTemplate" class="table dataTable no-footer " style="background-color:#FFFFFF;">
+                <thead>
+                    <tr>
+                        <th>模板名称</th>
+                        <th>描述</th>
+                        <th>关联应用</th>
+                        <th>访问权限</th>
+                        <th>修改时间</th>
+                        <th>操作</th>
+                        <th>ID</th>
+                        <th>APPID</th>
+                        <th>版本</th>
+                    </tr>
+                </thead>
+                <!--<tbody>-->
+                    <!--<tr>-->
+                        <!--<td>11111111111111</td>-->
+                        <!--<td>1.0</td>-->
+                        <!--<td>app1</td>-->
+                        <!--<td>仅自己</td>-->
+                        <!--<td>2018.08.08</td>-->
+                        <!--<td>-->
+                            <!--<span class="temp_btn">查看</span>-->
+                            <!--<span class="temp_btn">复制</span>-->
+                            <!--<span class="temp_btn">删除</span>-->
+                        <!--</td>-->
+                        <!--<td>1234123874610</td>-->
+                    <!--</tr>-->
+                <!--</tbody>-->
+            </table>
+        </div>
+        <!--创建新模板-->
+        <div id="newTemplate">
+            <div class="newBox">
+                <form id="myForm">
+                    <p class="version_title" style="border-bottom: 1px solid #CCCCCC;">创建新的模板 <span>×</span></p>
+                    <p class="version_file">名称：
+                        <input type="text" id="template_name" name="template_name">
+                    </p>
+                    <div class="template_select">
+                        <span>应用：</span>
+                        <div class="btn-group search_filter1" role="group">
+                            <button name="app" style="width: 300px;" type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="search_keyword1 select_text" data-search_keyword="1">请选择应用...</span>
+                                <input type="hidden" value="" id="appId">
+                                <span class="caret select_arrow"></span>
+                            </button>
+                            <ul class="dropdown-menu select_menu over" style="width: 300px;height: 400px;" id="yingyong">
+                                <!--<li data-name=""><a style="cursor:pointer">免费</a></li>-->
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="version_file"><span>描述：</span>
+                        <textarea id="miaoshu" name="miaoshu" cols="37" rows="6"></textarea>
+                    </p>
+                    <p class="version_file">权限：
+                        <label class="checkbox ib1"><input id="one" name="belong" value="User" type="radio" class="box"><em></em></label>个人
+                        <label class="checkbox ib"><input id="two" name="belong" value="Cloud Company Group" type="radio" class="box"><em></em></label>公司
+                        <input type="hidden" value="" id="owner_type">
+                    </p>
+                    <p class="version_file">是否公开：
+                        <label class="checkbox" style="display: inline-block;position: relative;top: -14px;"><input name="isOpen" type="checkBox" class="box"><em></em></label><span class="is_open">不公开</span>
+                        <input type="hidden" value="" id="checkNum">
+                    </p>
+                </form>
+                <p style="padding: 10px 0;text-align: right">
+                    <button class="v_upload">确定</button>
+                    <button class="v_cancel">取消</button>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!--无内容状态-->
+    <div class="none hd">
+        <p><img src="img/photo_wdwg.png"/></p>
+        <p>很抱歉，您还没有模板，请先创建新模板！</p>
+    </div>
+    <!--无内容状态end-->
+
+</div>
+
+<!--<div style="position: fixed;bottom: 15px;z-index: 9999;" class="copyright">SymTech Application © 2008-2017</div>-->
+
+<!-- 加载script start -->
+<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="js/jQuery.cookie.js" type="text/javascript"></script>
+<script src="js/transport.js"></script>
+<script src="js/layui/layui.js" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<!--<script src="js/jquery.dataTables.min.js" type="text/javascript"></script>-->
+<script src="js/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<script src="js/dataTables.buttons.js" type="text/javascript"></script>
+<script src="js/dataTables.select.min.js" type="text/javascript"></script>
+<script src="js/dataTables.scroller.min.js" type="text/javascript"></script>
+<script src="js/arrayFun.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/user.js" type="text/javascript"></script>
+<script src="js/index.js" type="text/javascript"></script>
+
+
+<script>
+
+    $(document).ready(function() {
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+
+        //获取用户信息
+        var user = getCookie('usr');
+        // console.log(user);
+
+        //请求模板列表
+        var dataSet = [];
+        var data = {
+            start: 0,
+            limit: 100
+        };
+        $.ajax({
+            url: "apis/api/method/conf_center.api.list_private_conf",
+            type: "GET",
+            data:data,
+            async:false,
+            success: function (data) {
+                var a = data.message.company;
+                var b = data.message.private;
+                dataSet = a.concat(b);
+                // console.log(dataSet);
+            }
+        });
+
+        //datatables配置
+        var table = $('#myTemplate').DataTable({
+                dom: 'rt<"#table_footer"Bp>',
+                buttons: [],
+                "bStateSave":true,
+                "stateSave": true,
+                "bFilter": true,   //是否启动过滤，搜索功能
+                "sPaginationType": "full_numbers",
+                "iDisplayLength": 10,
+                destroy:true,
+                data: dataSet,
+                "columns": [
+                    {"data": "conf_name"},
+                    {"data": "description"},
+                    {"data": "app_name"},
+                    {"data": "owner_type"},
+                    {"data": "latest_version_creation"},
+                    {"data": null},
+                    {"data": "name"},
+                    {"data": "app"},
+                    {"data": "latest_version"}
+                ],
+                "language": {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                },
+                rowCallback: function (row, data, dataIndex) {
+                    //时间截取----- 毫秒
+                    var timeText = $(row).children('td').eq(4).text();
+                    $(row).children('td').eq(4).text(timeText.substring(0,19));
+                    //访问权限
+                    var string = $(row).children('td').eq(3).text();
+                    if(string == "User"){
+                        $(row).children('td').eq(3).text('个人');
+                    }else if(string == "Cloud Company Group"){
+                        $(row).children('td').eq(3).text('公司');
+                    }
+                },
+                columnDefs: [
+                    {
+                        //   指定第第一列
+                        targets: [0],
+                        width: '20%'
+                    },
+                    {
+                        //   指定第第2列
+                        targets: [1],
+                        width: '25%'
+                    },
+                    {
+                        //   指定第第3列
+                        targets: [2],
+                        width: '10%'
+                    },
+                    {
+                        //   指定第第4列
+                        targets: [3],
+                        width: '10%'
+                    },
+                    {
+                        //   指定第第5列
+                        targets: [4],
+                        width: '15%'
+                    },
+                    {
+                        //   指定第第6列
+                        targets: [5],
+                        width: '20%',
+                        render: function (data, type, row, meta) {
+                            var btn = '<span class="temp_btn look">查看</span><span class="temp_btn copy">复制</span><span class="temp_btn delete">删除</span>';
+                            return btn;
+                        }
+                    },
+                    {
+                        targets: [6],
+                        width: '10%',
+                        className:"hide_column"
+                    },
+                    {
+                        targets: [7],
+                        width: '10%',
+                        className:"hide_column"
+                    },
+                    {
+                        targets: [8],
+                        width: '10%',
+                        className:"hide_column"
+                    }
+                ]
+            });
+
+        //点击行进入详情
+        $('#myTemplate tbody').on('click','.look',function() {
+            var tempId = $(this).parent('td').parent('tr').find('td:nth-child(7)').text();
+            var appId = $(this).parent('td').parent('tr').find('td:nth-child(8)').text();
+            var version = $(this).parent('td').parent('tr').find('td:nth-child(9)').text();
+            location.href = 'template_content.html?tempId='+tempId+'&appId='+appId+'&version='+version;
+        });
+
+        function initradio(rName,rValue){
+            var rObj = document.getElementsByName(rName);
+            for(var i = 0;i < rObj.length;i++){
+                if(rObj[i].value == rValue){
+                    rObj[i].checked =  'checked';
+                }
+            }
+        }
+
+        //点击复制
+        $('#myTemplate tbody').on('click','.copy',function() {
+            var temp_name = $(this).parent('td').parent('tr').find('td:nth-child(1)').text();
+            var miaoshu = $(this).parent('td').parent('tr').find('td:nth-child(2)').text();
+            var belong = $(this).parent('td').parent('tr').find('td:nth-child(4)').text();
+            var app = $(this).parent('td').parent('tr').find('td:nth-child(3)').text();
+            var appId1 = $(this).parent('td').parent('tr').find('td:nth-child(8)').text();
+            $('#newTemplate').show();
+            $('#template_name').val(temp_name);
+            $('.search_keyword1').text(app);
+            $('#miaoshu').val(miaoshu);
+            $('#appId').val(appId1);
+            if(belong == "个人"){
+                initradio('belong','User');
+            }else if(belong == "公司"){
+                initradio('belong','Cloud Company Group');
+            }
+
+        });
+
+    });
+
+
+    // 获取应用
+    var data1 = {
+        "category": "",
+        "protocol": "",
+        "user"    : "",
+        "name"    : ""
+    };
+    Ajax.call("apis/api/method/iot_ui.iot_api.appstore_applist",JSON.stringify(data1),getName, 'POST', 'JSON', 'JSON',false)
+    function getName(data){
+        var arr = data.message;
+        for(var i=0;i<arr.length;i++){
+            $('#yingyong').append('<li data-name=""><a style="cursor:pointer">'+ arr[i].app_name +'</a><input type="hidden" value="'+ arr[i].name +'"></li>')
+        }
+    }
+
+    $('.search_filter1 li').on('click', function() {
+        $('.search_keyword1').text($(this).text());
+        $('#appId').val($(this).find($('input')).val());
+    });
+
+
+    //创建新模板--打开
+    $('#createTemplate').click(function () {
+        $('#newTemplate').show();
+        document.body.style.overflow='hidden';
+        $('#appId').val(""),
+        $('#template_name').val(""),
+        $('#miaoshu').val(""),
+        $("input[name='belong']:checked").val(""),
+        $('#checkNum').val("")
+    });
+
+    //创建新模板--关闭
+    $('.version_title>span').click(function () {
+        $('#newTemplate').hide();
+        document.body.style.overflow='auto';
+    });
+
+    //创建新模板--取消
+    $('.v_cancel').click(function () {
+        $('#newTemplate').hide();
+        document.body.style.overflow='auto';
+    });
+
+    //创建新模板--确定
+    $('.v_upload').click(function () {
+        var data2 = {
+            app: $('#appId').val(),
+            conf_name: $('#template_name').val(),
+            description: $('#miaoshu').val(),
+            owner_type: $("input[name='belong']:checked").val(),
+            public: $('#checkNum').val()
+        };
+        $.ajax({
+            url: "apis/api/method/conf_center.api.create_app_conf",
+            type: "POST",
+            data: data2,
+            success: function (req) {
+                alt('创建成功',1);
+                setTimeout(function () {
+                    $('#newTemplate').hide();
+                    history.go(0)
+                },1000)
+            },
+            error: function (res) {
+                alt('模板名称不能重复',2);
+            }
+        })
+    });
+
+    function isOpen() {
+        if($('input[name=isOpen]').is(':checked')){
+            $('.is_open').text('公开');
+            $('#checkNum').val(1);
+        }else{
+            $('.is_open').text('不公开');
+            $('#checkNum').val(0);
+        }
+    }
+    isOpen();
+    $('input[name=isOpen]').change(function () {
+        isOpen();
+    })
+
+</script>
+
+</body>
+</html>

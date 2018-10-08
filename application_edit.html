@@ -126,7 +126,7 @@
                 <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
                 <textarea class="editormd-html-textarea" name="text"></textarea>
             </div>
-            <p><button class="app_edit_submit">提交</button></p>
+            <p><button class="app_edit_submit">提交</button><button class="app_add">创建</button></p>
         </div>
 
         <p class="copyright">SymTech Application © 2008-2017</p>
@@ -136,6 +136,41 @@
 
 <script>
     $(function() {
+        if(window.location.href.split("=")[1] == 1){
+            document.title = "创建新应用";
+            $('.version_name').text('创建新应用');
+            $('.app_add').show();
+            $('.app_edit_submit').hide();
+        }else{
+            document.title = "修改应用详情";
+            $('.version_name').text('修改应用详情');
+            $('.app_add').hide();
+            $('.app_edit_submit').show();
+            //获取应用详情信息
+            var appId = {'app':decodeURI(window.location.href.split("=")[1])};
+            $.ajax({
+                url: "apis/api/method/app_center.api.app_detail",
+                type: "GET",
+                data: appId,
+                success: function (data) {
+                    console.log(data.message);
+                    var datas = data.message;
+                    $('#app_name').val(datas.app_name);   //应用名称
+                    $('#shebeihao').val(datas.device_serial);   //设备型号
+                    $('.search_keyword2').text(datas.device_supplier);   //设备厂商
+                    $('.search_keyword3').text(datas.protocol);   //协议
+                    $('.search_keyword1').text(datas.category);   //应用分类
+                    if(datas.category == 'Open'){
+                        $('.search_keyword4').text("免费");   //授权类型  ---免费
+                    }
+                    $('#test-editormd>textarea').text(datas.description)   //markdown
+                },
+                error: function () {
+                    console.log('no');
+                }
+            });
+        }
+
         editormd("test-editormd", {
             width : "96%",
             height : 520,
@@ -156,29 +191,7 @@
             }
         });
 
-        //获取应用详情信息
-        var appId = {'app':decodeURI(window.location.href.split("=")[1])};
-        $.ajax({
-            url: "apis/api/method/app_center.api.app_detail",
-            type: "GET",
-            data: appId,
-            success: function (data) {
-                console.log(data.message);
-                var datas = data.message;
-                $('#app_name').val(datas.app_name);   //应用名称
-                $('#shebeihao').val(datas.device_serial);   //设备型号
-                $('.search_keyword2').text(datas.device_supplier);   //设备厂商
-                $('.search_keyword3').text(datas.protocol);   //协议
-                $('.search_keyword1').text(datas.category);   //应用分类
-                if(datas.category == 'Open'){
-                    $('.search_keyword4').text("免费");   //授权类型  ---免费
-                }
-                $('#test-editormd>textarea').text(datas.description)   //markdown
-            },
-            error: function () {
-                console.log('no')
-            }
-        });
+
 
 
 
@@ -280,6 +293,46 @@
                     },
                     error: function () {
                         alt('修改失败',3);
+                    }
+                })
+            }else{
+                alt('修改信息不能为空',2);
+            }
+        });
+
+        //创建新应用
+        $('.app_add').click(function () {
+            var datas = {
+                app_name       : $('#app_name').val(),
+                category       : $('.search_keyword1').text(),
+                license_type   : 'Open',
+                device_supplier: $('.search_keyword2').text(),
+                protocol       : $('.search_keyword3').text(),  //协议
+                device_serial  : $('#shebeihao').val(),
+                description    :$('#test-editormd>textarea').val()
+            };
+            console.log(datas);
+            if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
+                $.ajax({
+                    url: "apis/api/method/app_center.appmgr.new",
+                    type: "POST",
+                    data: JSON.stringify(datas),
+                    contentType:'application/json',
+                    success:function (req) {
+                        $('#app_name').val("");
+                        $('.search_keyword1').text("类别");
+                        $('.search_keyword2').text("应用厂商");
+                        $('.search_keyword3').text("协议");
+                        $('.search_keyword4').text("免费");
+                        $('#shebeihao').val("");
+                        $('#test-editormd>textarea').val("");
+                        alt('创建成功',1);
+                        setTimeout(function () {
+                            window.location = "application_list.html";
+                        },1000)
+                    },
+                    error: function () {
+                        alt('创建失败',3);
                     }
                 })
             }else{
