@@ -369,7 +369,7 @@
                         targets: [5],
                         width: '20%',
                         render: function (data, type, row, meta) {
-                            var btn = '<button class="temp_btn look">查看</button><button class="temp_btn copy">复制</button><button disabled class="temp_btn delete">删除</button>';
+                            var btn = '<button class="temp_btn look">查看</button><button class="temp_btn copy">复制</button><button disabled="disabled" class="temp_btn" style="color: #CCCCCC; border-color: #CCCCCC;">删除</button>';
                             return btn;
                         }
                     },
@@ -426,10 +426,7 @@
                     .search(key)
                     .draw();
             }
-        })
-
-        //禁用删除按钮
-        $('.delete').css({"border":"1px solid #cccccc","color":"#cccccc"});
+        });
 
         //点击行进入详情
         $('#myTemplate tbody').on('click','.look',function() {
