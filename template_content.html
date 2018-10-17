@@ -6,39 +6,174 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
     <title>信息详情</title>
+    <style>
+        body{
+            overflow: hidden;
+        }
+        table{
+            min-width: 100%;
+            max-width: 200%;
+            margin: 0;
+            background-color: #FFFFFF;
+        }
+        tr{
+            line-height: 40px;
+        }
+        td{
+            padding: 0 10px;
+        }
+        .table{
+            width: 92%;
+            /*height: 590px;*/
+            position: fixed;
+            top: 120px;
+            right: 100px;
+            left: 100px;
+            bottom: 28px;
+            background-color: #FFFFFF;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+        .mes_title{width: 92%;}
+        @media screen and (min-width:1920px){
+            .mes_title{width: 96%;}
+            .table{width: 93%;}
+        }
+        h3{
+            text-align: center;
+            width: 100%;
+            line-height: 500px;
+        }
+        .template_select{
+            position: absolute;
+            top: -10px;
+            right: 170px;
+        }
+        .temp_title{
+            color: #333d53;
+            font-size: 16px;
+            font-weight: normal;
+        }
+        .create_ver_btn{
+            width: 100px;
+            height: 34px;
+            background-color: #354E77;
+            color: #FFFFFF;
+            border-radius: 4px;
+            border: 0;
+            position: absolute;
+            top: 10px;
+            right: 50px;
+            font-weight: normal;
+            line-height: 34px;
+            outline: none;
+        }
+
+    </style>
 </head>
 <body>
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p><img src="img/top_news.png"/></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='index.html'">
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">首页</p>
+        </div>
+        <div class="subNav" onClick="location='mine.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav" onClick="location='application_list.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
+        </div>
+        <div class="subNav bg-color" onClick="location='template.html'">
+            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/myAPPs.png" class="hover_img"/>
+            <p class="sublist-title">我的模板</p>
+        </div>
+    </div>
+    <!-- 左侧导航 start -->
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <div class="mes_title" style="position: relative;">模板详情 > <span class="temp_name"></span>
+            <div class="template_select">
+                <span class="temp_title">版本：</span>
+                <div class="btn-group search_filter2" role="group">
+                    <button name="app" style="width: 150px;" type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="search_keyword2 select_text" data-search_keyword="">请选择版本...</span>
+                        <input type="hidden" value="" id="tempId">
+                        <span class="caret select_arrow"></span>
+                    </button>
+                    <ul class="dropdown-menu select_menu over" style="width: 150px;max-height: 400px;" id="muban">
+                        <!--<li data-name=""><a style="cursor:pointer">免费</a></li>-->
+                    </ul>
+                </div>
+            </div>
+            <button class="create_ver_btn">上传新版本</button>
+        </div>
+        <!-- 表格 -->
+        <div class="table" style="margin: 15px;border: 1px solid #E5E9EE;">
 
+        </div>
+    </div>
+    <p class="copyright" style="position: fixed;bottom: -6px;">SymTech Application © 2008-2017</p>
+</div>
 
-<input id="string" type="hidden" value="">
-<input id="json" type="hidden" value="">
+<!--上传新版本-->
+<div class="newTemp_version" style="display: none;">
+    <div class="newTemp">
+        <div class="version_title">上传模板新版本</div>
+        <div class="version_file">版本：<input id="ver_num" type="text" style="width:300px" placeholder="Version"><input id="csv_file" type="file"></div>
+        <input type="hidden" id="csv_data" value="">
+        <div class="csv_content">
+            <!--新版本内容展示-->
+        </div>
+        <p style="padding: 15px 0;text-align: right">
+            <button class="v_upload">确定</button>
+            <button class="v_cancel">取消</button>
+        </p>
+    </div>
+</div>
 
-
-<table>
-    <thead>
-        <tr>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
-
-<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script src="js/jQuery.cookie.js" type="text/javascript"></script>
+<script src="js/layui/layui.js" charset="utf-8"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<script src="js/arrayFun.js" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<script src="js/user.js" type="text/javascript"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.4.0/papaparse.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.4.0/papaparse.min.js"></script>
+
 <script>
+
     var token = $.cookie('DS_auth_token');
     $.ajaxSetup({
         headers: { // 默认添加请求头
             "X-Frappe-CSRF-Token": token
         }
     });
+    //清空文件
+    $('#csv_file').val("");
 
     (function ($) {
         $.getUrlParam = function (name) {
@@ -52,50 +187,185 @@
     var appId = $.getUrlParam('appId');
     var version = $.getUrlParam('version');
 
-    //获取模板内容
-    var data = {
-        app     : appId,
-        conf    : tempId,
-        version : version
+    if(version == "undefined"){
+        $('#ver_num').val(0);
+    }
+
+    $('.temp_name').text($.getUrlParam('name'));
+
+    function getVersion (v){
+        //获取模板内容
+        var data = {
+            app     : appId,
+            conf    : tempId,
+            version : v
+        };
+        console.log("当前版本"+v);
+        //模板数据
+        $.ajax({
+            url:"apis/api/method/conf_center.api.app_conf_data",
+            type:"GET",
+            data: data,
+            async: false,
+            success: function(req){
+                console.log('ok');
+                var dataSet = Papa.parse(req.message.data);
+                //创建表格
+                var tab = "<table border='1'>";
+                for (var i=0;i<dataSet.data.length;i++){
+                    tab += "<tr>";
+                    for (var j=0;j<dataSet.data[i].length;j++){
+                        tab += "<td>"+ dataSet.data[i][j] +"</td>";
+                    }
+                    tab += "</tr>";
+                }
+                tab += "</table>";
+                $('.table').html(tab);
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+    }
+
+    if(version == "" || version == "undefined"){
+        $('.table').html("<H3>还没有上传版本!</H3>");
+    }else{
+        //获取当前data
+        getVersion(version);
     };
 
-    $.ajax({
-        url:"apis/api/method/conf_center.api.app_conf_data",
-        type:"GET",
-        data: data,
-        async: false,
-        success: function(data){
-            // console.log(data.message.data);
-            if( typeof data.message.data){
-                console.log('字符串')
-                $('#string').val(data.message.data);
-                var data = Papa.parse($('#string').val());
-                console.log(data);
-                var head = data.data[0];
-                // for(var i=0;i<head.length;i++){
-                //
-                // }
-
+    //获取版本列表
+    getVerList();
+    function getVerList(){
+        $('#muban').html("");
+        $.ajax({
+            url: "apis/api/method/conf_center.api.get_versions",
+            type: "GET",
+            data: {conf: tempId},
+            success: function (req) {
+                for (var i=0;i<req.message.length;i++){
+                    $('#muban').append('<li data-name=""><a style="cursor:pointer">'+ req.message[i].version +'</a></li>')
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+            complete: function () {
+                //切换版本  --数据
+                $('.search_filter2 li').on('click', function() {
+                    $('.search_keyword2').text($(this).text());
+                    var vs = $('.search_keyword2').text();
+                    getVersion(vs);
+                });
             }
-        },
-        error: function () {
-            console.log('error')
+        });
+    }
+
+    //上传新版本
+    $('.create_ver_btn').click(function () {
+        $('.newTemp_version').show();
+        $('#ver_num').val("");
+        $('#csv_file').val("");
+        $('.csv_content').html("");
+    });
+
+    //查看新版本csv数据
+    function csvData(results){
+        var tableData = Papa.parse(results);
+        var tables = "<table border='1'>";
+        for(var i=0;i<tableData.data.length;i++){
+            tables += "<tr>";
+            for(var j=0;j<tableData.data[i].length;j++){
+                tables += "<td>"+ tableData.data[i][j] +"</td>";
+            }
+            tables += "</tr>";
+        }
+        tables += "</table>";
+        $('.csv_content').append(tables);
+        $('.csv_content').css("overflow","auto");
+    }
+
+    function upload(input) {
+        //支持chrome IE10
+        if (window.FileReader) {
+            var file = input.files[0];
+            filename = file.name.split(".")[0];
+            var reader = new FileReader();
+            reader.onload = function() {
+                var data1 = this.result;
+                $('#csv_data').val(data1);
+                csvData(data1);
+            };
+            reader.readAsText(file);
+        }
+        // //支持IE 7 8 9 10
+        // else if (typeof window.ActiveXObject != 'undefined'){
+        //     var xmlDoc;
+        //     xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        //     xmlDoc.async = false;
+        //     xmlDoc.load(input.value);
+        //     console.log(xmlDoc.xml);
+        // }
+        //支持FF
+        // else if (document.implementation && document.implementation.createDocument) {
+        //     var xmlDoc;
+        //     xmlDoc = document.implementation.createDocument("", "", null);
+        //     xmlDoc.async = false;
+        //     xmlDoc.load(input.value);
+        //     console.log(xmlDoc.xml);
+        // }
+        else {
+            alert('error');
+        }
+    }
+
+    //选择文件
+    $('#csv_file').change(function(){
+        upload(this);
+    });
+
+    //上传新版本 -- 取消
+    $('.v_cancel').click(function () {
+        $('.newTemp_version').hide();
+    });
+
+    //上传新版本 -- 确定
+    $('.v_upload').click(function () {
+        var formData = {
+            app: appId,
+            conf: tempId,
+            version: $('#ver_num').val(),
+            data: $('#csv_data').val()
+        };
+        if(formData.version == ""){
+            alt('新版本号不能为空',2)
+        }else if(formData.version <= parseInt(version)){
+            console.log()
+            alt('新版本号应大于旧版本号',2)
+        }else if(formData.data == ""){
+            alt('上传文件不能为空',2)
+        }else {
+            $.ajax({
+                url: "apis/api/method/conf_center.api.upload_conf_version",
+                type: "POST",
+                data: formData,
+                success: function (req) {
+                    alt("新版本已上传",1);
+                    getVerList();
+                },
+                error: function () {
+                    console.log('error');
+                },
+                complete: function () {
+                    $('.newTemp_version').hide();
+                }
+            })
         }
     });
 
-
-
-    // Papa.parse($('#string').val(), {
-    //     download: true,
-    //                           //
-    //     complete: function(results) {    //csv分析结束要执行的函数，除了complete还可以加before，error等情况的分析函数
-    //         console.log(results)
-    //     }
-    //
-    // });
-
-
 </script>
+
 
 </body>
 </html>

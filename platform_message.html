@@ -94,11 +94,9 @@
                                     <span class="search_keyword3" data-search_keyword="1">名称</span>
                                     <span class="caret"></span>
                                 </button>
-                                <ul class="dropdown-menu">
-                                    <li data-name="device_desc1"><a style="cursor:pointer">名称</a></li>
-                                    <li data-name="device_desc2"><a style="cursor:pointer">用户</a></li>
-                                    <li data-name="device_desc3"><a style="cursor:pointer">序列号</a></li>
-                                </ul>
+                                <ul class="dropdown-menu" id="version">
+                                    <li data-name=""><a style="cursor:pointer">名称</a></li>
+                                </ul>·
                             </div><!-- /btn-group -->
                             <input type="text" class="form-control J_keyword"  placeholder="输入关键词">
                             <span class="input-group-addon search"></span>
@@ -348,12 +346,6 @@
                     }
                 }
                 $('.disposed_message').text(a);
-                //平台消息标题
-                for(var i=0;i<list.length;i++){
-                    var device_status = $.parseJSON( list[i].message );
-                    // console.log( device_status.device_status)
-                }
-
             },
             error: function (error) {
                 console.log(error)

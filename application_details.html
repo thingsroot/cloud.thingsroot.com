@@ -19,15 +19,25 @@
     <script src="js/arrayFun.js" type="text/javascript"></script>
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/user.js" type="text/javascript"></script>
-    <script src="js/index.js" type="text/javascript"></script>
+    <!--<script src="js/index.js" type="text/javascript"></script>-->
     <!--markdown   css-->
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
     <script src="js/editor.md-master/editormd.min.js"></script>
     <!--markdown   js -->
     <!--星星-->
     <script src="js/starScore.js"></script>
-
     <title>应用详情</title>
+    <style>
+        .version{
+            display: inline-block;
+            width: 80px;
+        }
+        .temp_list>li>p:nth-child(3)>span:nth-child(3),.temp_list>li>p:nth-child(3)>span:nth-child(4){
+            position: relative;
+            left: 1000px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -98,6 +108,7 @@
                     <li class="active"><a href="#A" data-toggle="tab">描述</a></li>
                     <li><a href="#B" data-toggle="tab">评论</a></li>
                     <li><a href="#C" data-toggle="tab">版本列表</a></li>
+                    <li><a href="#D" data-toggle="tab">模板列表</a></li>
                 </ul>
                 <div id="myTabContent" class="tab-content">
                     <!--描述-->
@@ -157,6 +168,17 @@
                     <div class="tab-pane fade" id="C">
                         <button class="uploadNewVersion">上传新版本</button>
                         <ul class="app_version">
+                            <!--<li>-->
+                            <!--<p><span>版本号：</span><span>1764</span></p>-->
+                            <!--<p><span>更新时间：</span><span>2018-09-09</span></p>-->
+                            <!--<p><span>功能介绍：</span><span>去问问而为丰富大V上档次地方</span></p>-->
+                            <!--</li>-->
+                        </ul>
+                        <p class="no_version">暂时还没有更新版本！</p>
+                    </div>
+                    <!--模板列表-->
+                    <div class="tab-pane fade" id="D">
+                        <ul class="temp_list">
                             <!--<li>-->
                             <!--<p><span>版本号：</span><span>1764</span></p>-->
                             <!--<p><span>更新时间：</span><span>2018-09-09</span></p>-->
@@ -488,7 +510,84 @@
 
         });
 
+        //请求模板列表
+        $.ajax({
+            url: "apis/api/method/conf_center.api.list_app_conf",
+            type: "GET",
+            data: {app: decodeURI(window.location.href.split("=")[1]),start:0,limit:100},
+            success: function (req) {
+                console.log(req);
+                if(JSON.stringify(req) == "{}"){
+                    $('.app_list').addClass('hd');
+                    $('.no_version').css('display','block');
+                }else{
+                    for(var i=0;i<req.message.length;i++){
+                        $('.temp_list').append(
+                            '<li>'+
+                            '<p><span>模板名称text：</span><span class="t_name">'+ req.message[i].conf_name +'</span></p>'+
+                            '<p><span>模板描述：</span><span>'+ req.message[i].description +'</span></p>'+
+                            '<p><span>版本号：</span><span class="version">'+ req.message[i].latest_version +'</span><span class="temp_btn look_btn">查看</span>' +
+                            '       <span class="temp_btn copy_btn">复制</span></p>'+
+                            '<input type="hidden" name="tempId" value="'+req.message[i].name+'">' +
+                            '<input type="hidden" name="b+banben " value="'+ req.message[i].latest_version +'">'+
+                                '<input type="hidden" value="" id="txtarea">'+
+                            '</li>'
+                        );
+                    }
+                }
+            },
+            error: function () {
+                console.log('error')
+            },
+            complete: function () {
+                var ver_list = $('.version');
+                for(var i=0;i<ver_list.length;i++){
+                    if(ver_list.eq(i).text() == "null"){
+                        ver_list.eq(i).text("暂无版本");
+                        ver_list.eq(i).parent().find('.temp_btn').hide();
+                    }else{
+                        ver_list.eq(i).parent().find('.temp_btn').show();
+                    }
+                    ver_list[i].index = i;
+                    $('.look_btn').eq(i).click(function () {
+                        var name = $(this).parent().parent().find('>p:nth-child(1)>span:nth-child(2)').text();
+                        var tempId = $(this).parent().parent().find('input[name=tempId]').val();
+                        var appId =  decodeURI(window.location.href.split("=")[1]);
+                        var version = $(this).parent().find('.version').text();
+                        location.href = 'template_content.html?name='+ name +'&tempId='+tempId+'&appId='+appId+'&version='+version;
+                    })
+                    $('.copy_btn').eq(i).click(function () {
+                        var tempId = $(this).parent().parent().find('input[name=tempId]').val();
+                        var appId =  decodeURI(window.location.href.split("=")[1]);
+                        var version = $(this).parent().find('.version').text();
+                        var dataTextarea = $(this).parent().parent().find('#txtarea');
+                        console.log(dataTextarea);
+                        $.ajax({
+                            url:"apis/api/method/conf_center.api.app_conf_data",
+                            type:"GET",
+                            data: {app:appId,conf:tempId,version:version},
+                            async: false,
+                            success: function(req){
+                                var data = req.message.data;
+                                console.log(data);
+                                dataTextarea.val(data);
+                                console.log(dataTextarea.val());
+                                dataTextarea.select(); // 选择对象
+                                document.execCommand("Copy"); // 执行浏览器复制命令
+                                alt("已复制好，可贴粘。",1);
+                            },
+                            error: function () {
+                                console.log('error');
+                            }
+                        });
+                    })
+                }
+            }
+        });
+
+
     }); //$(function)
+
     //title显示选项卡分类
     var aLi = $('#myTab>li');
     aLi.each(function (i) {
@@ -591,7 +690,7 @@
             })
         }
     });
-
+    
     //edit
     $('.edit').click(function () {
         location.href = 'application_edit.html?appId=' + decodeURI(window.location.href.split("=")[1]);
@@ -607,6 +706,7 @@
     $('.fork_from').click(function () {
         location.href = 'application_details.html?appId=' + $(this).val();
     })
+    
 
 </script>
 

@@ -2467,7 +2467,7 @@ th .on{
 
 /* 应用列表 */
 .list_search{
-	width: 500px;
+	width: 400px;
 	padding: 10px;
 	position: absolute;
 	top: 14px;
@@ -2475,9 +2475,9 @@ th .on{
 	display: flex;
 	float: left;
 }
-.list_search>a{
+.create_new{
 	display: inline-block;
-	width: 160px;
+	width: 140px;
 	height: 34px;
 	text-decoration: none;
 	line-height: 34px;
@@ -2487,8 +2487,9 @@ th .on{
 	border-radius: 4px;
 	margin: 0 10px;
 }
-.list_search>a:hover{
+.create_new:hover{
 	color: #FFFFFF;
+	text-decoration: none;
 }
 .app_list{
 	margin: 15px;
@@ -2630,28 +2631,29 @@ th .on{
 	border-radius: 4px;
 	margin: 20px 0 0 20px;
 }
-.app_version{
+.app_version,.temp_list{
 	margin: 0 20px;
 	padding: 20px 0;
 
 }
-.app_version>li{
+.app_version>li,.temp_list>li{
 	width: 100%;
 	height: 110px;
 	padding: 10px 0;
 	border-bottom: 1px solid #E5E9EE;
 }
-.app_version>li>p{
+.app_version>li>p,.temp_list>li>p{
 	line-height: 30px;
 	color: #999999;
 }
-.app_version>li>p>span:nth-child(1){
+.app_version>li>p>span:nth-child(1),.temp_list>li>p>span:nth-child(1){
 	color: #999999;
 	display: inline-block;
 	width: 100px;
 }
-.app_version>li>p>span:nth-child(2){
+.app_version>li>p>span:nth-child(2),.temp_list>li>p>span:nth-child(2){
 	color: #364F78;
+
 }
 .no_comment,.no_version{
 	display: none;
@@ -2692,6 +2694,7 @@ th .on{
 	border-bottom: 1px solid #E5E9EE;
 }
 .version_title>span{
+	cursor: pointer;
 	float: right;
 	font-size: 20px;
 }
@@ -2942,8 +2945,6 @@ th .on{
 	max-height: 140px;
 	overflow-y: auto
 }
-
-
 .pos{
 	position: absolute;
 	left: 0;
@@ -2996,16 +2997,84 @@ th .on{
 	z-index: 999;
 }
 .newBox{
-	width: 400px;
-	height: 440px;
+	width: 600px;
+	max-height: 500px;
 	padding: 10px 15px;
 	background-color: #ffffff;
-	margin-top: -220px;
-	margin-left: -200px;
+	margin-top: -250px;
+	margin-left: -300px;
 	position: absolute;
 	left: 45%;
 	top: 50%;
 }
 .template_select{
 	padding: 10px;
+}
+
+
+/* 模板上传新版本 */
+.newTemp_version{
+	display: none;
+	z-index: 99999;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.4);
+}
+.newTemp_version .newTemp{
+	width: 800px;
+	height: 600px;
+	padding: 0 10px;
+	background-color: #FFFFFF;
+	margin-left: -400px;
+	margin-top: -300px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}
+#csv_file{
+	margin-left: 10px;
+}
+.csv_content{
+	width: 100%;
+	height: 74%;
+	overflow: auto;
+	background-color: lightseagreen;
+}
+.csv_content div{
+
+	width: 120%;
+	height: 100px;
+	margin: 10px;
+	background-color: #FFFFFF;
+}
+
+.temp_title{
+	margin: 15px;
+	background-color: #ffffff;
+	height: 50px;
+}
+.temp_title>span{
+	padding: 0 20px;
+	line-height: 50px;
+	font-size: 16px;
+	font-weight: 800;
+	color: #354E78;
+}
+.temp_title>div>span{
+	display: inline-block;
+	font-size: 18px;
+	color: #CCCCCC;
+	padding: 8px;
+	margin-left: 10px;
+}
+.temp_title>div{
+	width: 42%;
+	padding: 8px 0;
+	float: right;
+	display: flex;
+	justify-items: center;
+}
+.temp_title>div>div{
+	margin-left: 14px;
 }
