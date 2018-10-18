@@ -110,7 +110,7 @@
     };
 
     $.ajax({
-        url:"apis/api/method/iot.user_api.dispose_device_event",
+        url:"/apis/api/method/iot.user_api.dispose_device_event",
         type:"POST",
         data:JSON.stringify(dataS),
         contentType:"application/json",
@@ -120,7 +120,7 @@
             console.log('success')
             var data = {name:decodeURI(window.location.href.split("=")[1])};
             $.ajax({
-                url: 'apis/api/method/iot.user_api.device_event_detail',
+                url: '/apis/api/method/iot.user_api.device_event_detail',
                 type: 'GET',
                 data:data,
                 dataType: 'json',

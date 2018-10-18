@@ -29,9 +29,9 @@ $(function(){
 	var pageSize = 7; // 每页条数
 	
 	// 故障统计里的 前十的网关/一周内故障最多
-	Ajax.call('/api/method/iot_ui.iot_api.device_event_count_statistics', "", device_event_count_statistics, 'GET', 'JSON', 'FORM');
+	Ajax.call('/apis/api/method/iot_ui.iot_api.device_event_count_statistics', "", device_event_count_statistics, 'GET', 'JSON', 'FORM');
 	setInterval(function(){
-			Ajax.call('/api/method/iot_ui.iot_api.device_event_count_statistics', "", device_event_count_statistics, 'GET', 'JSON', 'FORM');
+			Ajax.call('/apis/api/method/iot_ui.iot_api.device_event_count_statistics', "", device_event_count_statistics, 'GET', 'JSON', 'FORM');
 		}, 120000);
 	function device_event_count_statistics(items){
 		// console.log('device_event_count_statistics',items);
@@ -108,7 +108,7 @@ $(function(){
 		// console.log(chart_id);
 		var myChart = echarts.init(document.getElementById(chart_id), 'light');
 		//var url = 'http://iot.symgrid.com/api/method/iot_ui.iot_api.device_status_statistics';
-		var url = '/apis/api/method/iot_ui.iot_api.device_status_statistics';
+		var url = '/apis/apis/api/method/iot_ui.iot_api.device_status_statistics';
 		//$.get('assets/'+chart_id+'.json', function (json_data) {
 		$.get(url, function (json_data) {
 			//json_data = JSON.parse(json_data);

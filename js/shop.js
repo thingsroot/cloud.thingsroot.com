@@ -9,7 +9,7 @@ $(function(){
 	var device_sn = getParam('device_sn');// 以当前网关id身份进入应用中心
 	var deviceInfo;
 	// 当前网关信息
-	Ajax.call('/api/method/iot_ui.iot_api.gate_info', {sn:device_sn}, deviceInfo, 'GET', 'JSON', 'FORM');
+	Ajax.call('/apis/api/method/iot_ui.iot_api.gate_info', {sn:device_sn}, deviceInfo, 'GET', 'JSON', 'FORM');
 	function deviceInfo(req){
 		deviceInfo = req.message;
 		//console.log('deviceInfo',deviceInfo);
@@ -34,7 +34,7 @@ $(function(){
 			'app_name':'',
 		};
 		//console.log('appstore_applist_data',data);
-		Ajax.call('/api/method/iot_ui.iot_api.appstore_applist', JSON.stringify(data), getList, 'POST', 'JSON', 'JSON',false);
+		Ajax.call('/apis/api/method/iot_ui.iot_api.appstore_applist', JSON.stringify(data), getList, 'POST', 'JSON', 'JSON',false);
 		// 主动请求列表数据
 		function getList(items){
 			if(items.message && typeof items.message!=='undefined'){
@@ -94,7 +94,7 @@ $(function(){
 			/* 临时获取最新应用版本号 */
 			var lastest_version = '';
 			var device_detail = JSON.parse(localStorage.getItem('device_detail_'+device_sn));
-			Ajax.call('/api/method/app_center.api.get_latest_version?app='+data[i].name+'&beta='+device_detail.basic.iot_beta, "", get_latest_version ,'GET', 'JSON', 'FORM', false);
+			Ajax.call('/apis/api/method/app_center.api.get_latest_version?app='+data[i].name+'&beta='+device_detail.basic.iot_beta, "", get_latest_version ,'GET', 'JSON', 'FORM', false);
 			function get_latest_version(d){
 				if(d && typeof d.message !== 'undefined') {
 					lastest_version = d.message;
@@ -138,7 +138,7 @@ $(function(){
 	//  筛选条件
 	getFilter();
 	function getFilter(){
-		Ajax.call('/api/resource/App Category', "", getFilter1, 'GET', 'JSON', 'FORM');
+		Ajax.call('/apis/api/resource/App Category', "", getFilter1, 'GET', 'JSON', 'FORM');
 		function getFilter1(req){
 			var html="<span class='all'>全部</span>";
 			$.each(req.data,function(i,v){
@@ -146,7 +146,7 @@ $(function(){
 			});
 			$('.center .line').eq(0).find('p').html(html);
 		}
-		Ajax.call('/api/resource/App Device Protocol', "", getFilter2, 'GET', 'JSON', 'FORM');
+		Ajax.call('/apis/api/resource/App Device Protocol', "", getFilter2, 'GET', 'JSON', 'FORM');
 		function getFilter2(req){
 			var html="<span class='all'>全部</span>";
 			$.each(req.data,function(i,v){
@@ -154,7 +154,7 @@ $(function(){
 			});
 			$('.center .line').eq(1).find('p').html(html);
 		}
-		Ajax.call('/api/resource/App Device Supplier', "", getFilter3, 'GET', 'JSON', 'FORM');
+		Ajax.call('/apis/api/resource/App Device Supplier', "", getFilter3, 'GET', 'JSON', 'FORM');
 		function getFilter3(req){
 			var html="<span class='all'>全部</span>";
 			$.each(req.data,function(i,v){
@@ -248,7 +248,7 @@ $(function(){
 		var data  = {
 			app_name:app_name
 		}
-		Ajax.call('/api/method/iot_ui.iot_api.app_details', JSON.stringify(data), app_details, 'POST', 'JSON', 'JSON',false);
+		Ajax.call('/apis/api/method/iot_ui.iot_api.app_details', JSON.stringify(data), app_details, 'POST', 'JSON', 'JSON',false);
 		function app_details(req){
 			localStorage.setItem('app_details_'+req.message.name,JSON.stringify(req.message));
 			$('.J_app').val(req.message.name); // 当前查看的appid
@@ -295,7 +295,7 @@ $(function(){
 	*	获取评论列表
 	*/
 	function getCommentList(app){//filters:'[["app","=","APP00000014"]]'
-		Ajax.call('/api/resource/IOT Application Review?filters=[["app","=","'+app+'"]]&fields="*"', "", displayCommentList, 'GET', 'JSON', 'FORM');
+		Ajax.call('/apis/api/resource/IOT Application Review?filters=[["app","=","'+app+'"]]&fields="*"', "", displayCommentList, 'GET', 'JSON', 'FORM');
 		function displayCommentList(req){
 			data = req.data;
 			var arrLen = data.length;
@@ -332,7 +332,7 @@ $(function(){
 		if(data.title==''){err('标题不能为空');return false;}
 		if(data.content==''){err('内容不能为空');return false;}
 		if(data.star=='0'){err('请选择评分');return false;}
-		Ajax.call('/api/method/app_center.appmgr.add_review', JSON.stringify(data), add_review, 'POST', 'JSON', 'JSON');
+		Ajax.call('/apis/api/method/app_center.appmgr.add_review', JSON.stringify(data), add_review, 'POST', 'JSON', 'JSON');
 		function add_review(req){
 			if(typeof req.message!=='undefined'){
 				alt('评论成功',1);

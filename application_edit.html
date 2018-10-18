@@ -180,7 +180,7 @@
             //获取应用详情信息
             var appId = {'app':decodeURI(window.location.href.split("=")[1])};
             $.ajax({
-                url: "apis/api/method/app_center.api.app_detail",
+                url: "/apis/api/method/app_center.api.app_detail",
                 type: "GET",
                 data: appId,
                 success: function (data) {
@@ -229,7 +229,7 @@
         //获取设备厂商
         var data1 = {'name':'冬笋科技'};
         $.ajax({
-            url: "apis/api/method/app_center.api.app_suppliers",
+            url: "/apis/api/method/app_center.api.app_suppliers",
             type: "GET",
             data: data1,
             success: function (req) {
@@ -254,7 +254,7 @@
         //获取协议
         var data2 = {'name':'Redis'};
         $.ajax({
-            url: "apis/api/method/app_center.api.app_protocols",
+            url: "/apis/api/method/app_center.api.app_protocols",
             type: "GET",
             data: data2,
             success: function (req) {
@@ -279,7 +279,7 @@
         //获取应用分类
         var name = {'name':'General'};
         $.ajax({
-            url:"apis/api/method/app_center.api.app_categories",
+            url:"/apis/api/method/app_center.api.app_categories",
             type:"GET",
             data: name,
             success: function(req){
@@ -314,7 +314,7 @@
             console.log(datas);
             if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
                 $.ajax({
-                    url: "apis/api/method/app_center.appmgr.modify",
+                    url: "/apis/api/method/app_center.appmgr.modify",
                     type: "POST",
                     data: JSON.stringify(datas),
                     contentType:'application/json',
@@ -345,7 +345,7 @@
             console.log(datas);
             if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
                 $.ajax({
-                    url: "apis/api/method/app_center.appmgr.new",
+                    url: "/apis/api/method/app_center.appmgr.new",
                     type: "POST",
                     data: JSON.stringify(datas),
                     contentType:'application/json',

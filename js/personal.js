@@ -25,7 +25,7 @@ $(function(){
 	*/
 	function getUserList(){
 		console.log(company);
-		Ajax.call('/api/method/iot_ui.iot_api.list_company_member', {company:company}, displayUserListFun, 'POST', 'JSON', 'FORM');
+		Ajax.call('/apis/api/method/iot_ui.iot_api.list_company_member', {company:company}, displayUserListFun, 'POST', 'JSON', 'FORM');
 		function displayUserListFun(req){
 			console.log(req);
 			var html='';
@@ -90,7 +90,7 @@ $(function(){
 				company:company
 			}
 			console.log(data);
-			Ajax.call('/api/method/iot_ui.iot_api.add_newuser2company', JSON.stringify(data), displayUserFun, 'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot_ui.iot_api.add_newuser2company', JSON.stringify(data), displayUserFun, 'POST', 'JSON', 'JSON');
 			function displayUserFun(req){
 				if(req.message.userid==email){
 					var html = `<div class="block" user="${email}">
@@ -113,7 +113,7 @@ $(function(){
 			if(mobile_no==''){err('手机号码不能为空');return false;}
 			var data = {userid:email,first_name:first_name,last_name:last_name,phone:phone,mobile_no:mobile_no,new_password:new_password
 			}
-			Ajax.call('/api/method/iot_ui.iot_api.update_userinfo', JSON.stringify(data), editUserFun, 'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot_ui.iot_api.update_userinfo', JSON.stringify(data), editUserFun, 'POST', 'JSON', 'JSON');
 			function editUserFun(req){
 				if(req.message.userid==email){
 					$('.personal_content .block').eq(index-1).find('span').text(first_name+" "+last_name);
@@ -140,7 +140,7 @@ $(function(){
 				users:[username],
 				company:company
 			};
-			Ajax.call('/api/method/iot_ui.iot_api.del_userfromcompany', JSON.stringify(data), displayUserListFun, 'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot_ui.iot_api.del_userfromcompany', JSON.stringify(data), displayUserListFun, 'POST', 'JSON', 'JSON');
 			function displayUserListFun(req){
 				if(req.message.deleted.length==1){
 					alt('删除成功',1);
@@ -167,7 +167,7 @@ $(function(){
 		var data = {
 				user:_this.parent().attr('user'),
 			}
-		Ajax.call('/api/method/iot_ui.iot_api.userinfo_all?user='+_this.parent().attr('user'),"", displayUserFun, 'GET','JSON');
+		Ajax.call('/apis/api/method/iot_ui.iot_api.userinfo_all?user='+_this.parent().attr('user'),"", displayUserFun, 'GET','JSON');
 		function displayUserFun(req) {
 			console.log('displayUserFun',req);
 			$("input[name=email]").val(req.message.name);

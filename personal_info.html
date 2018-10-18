@@ -174,7 +174,7 @@
             var timer;
             //获取用户信息
             var usr = getCookie('usr');
-            Ajax.call('/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
+            Ajax.call('/apis/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
             function displayUserFun(req) {
                 console.log(req)
                 var name = req.data.first_name+req.data.last_name;
@@ -216,7 +216,7 @@
 			    $('#edit_userInfoBox').show();
 			    //用户信息回显
                 var usr = getCookie('usr');
-                Ajax.call('/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
+                Ajax.call('/apis/api/resource/User/'+usr,'', displayUserFun, 'GET', 'JSON', 'FORM');
                 function displayUserFun(req) {
                     $("input[name=first_name]").val(req.data.first_name);
                     $("input[name=last_name]").val(req.data.last_name);
@@ -234,7 +234,7 @@
                     "email":$("input[name=email]").val(),
                     "phone":$("input[name=phone]").val()
                 };
-                Ajax.call('/api/resource/User/'+usr,JSON.stringify(userInfo), update_userinfoFun, 'PUT', 'JSON', 'JSON');
+                Ajax.call('/apis/api/resource/User/'+usr,JSON.stringify(userInfo), update_userinfoFun, 'PUT', 'JSON', 'JSON');
                 function update_userinfoFun(req) {
                     console.log(req);
                     alt('保存成功',1);
@@ -278,7 +278,7 @@
                         "new_password":$("input[name=new_password]").val()
                     };
                     $.ajax({
-						url:'/api/method/frappe.core.doctype.user.user.update_password',
+						url:'/apis/api/method/frappe.core.doctype.user.user.update_password',
 						type:'POST',
 						data:JSON.stringify(password),
 						dataType:'JSON',

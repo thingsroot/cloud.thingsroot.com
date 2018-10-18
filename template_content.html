@@ -204,7 +204,7 @@
         console.log("当前版本"+v);
         //模板数据
         $.ajax({
-            url:"apis/api/method/conf_center.api.app_conf_data",
+            url:"/apis/api/method/conf_center.api.app_conf_data",
             type:"GET",
             data: data,
             async: false,
@@ -241,7 +241,7 @@
     function getVerList(){
         $('#muban').html("");
         $.ajax({
-            url: "apis/api/method/conf_center.api.get_versions",
+            url: "/apis/api/method/conf_center.api.get_versions",
             type: "GET",
             data: {conf: tempId},
             success: function (req) {
@@ -348,7 +348,7 @@
             alt('上传文件不能为空',2)
         }else {
             $.ajax({
-                url: "apis/api/method/conf_center.api.upload_conf_version",
+                url: "/apis/api/method/conf_center.api.upload_conf_version",
                 type: "POST",
                 data: formData,
                 success: function (req) {

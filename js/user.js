@@ -63,7 +63,7 @@ $(function(){
 			return false;
 		}
 		var data = {usr:usr,pwd:pwd};
-		Ajax.call('/api/method/login', {usr:usr,pwd:pwd}, loginfun, 'POST', 'JSON', "");//, 'FORM'
+		Ajax.call('/apis/api/method/login', {usr:usr,pwd:pwd}, loginfun, 'POST', 'JSON', "");//, 'FORM'
 		var index = loading();
 		function loginfun(req){
 			if(req.message == 'Logged In'){
@@ -72,7 +72,7 @@ $(function(){
 				setCookie('full_name',req.full_name);
 				getToken();
 				// 检测是否为管理员		
-				Ajax.call('/api/method/iot_ui.iot_api.company_admin', {user:usr}, checkAdminFun, 'POST', 'JSON');
+				Ajax.call('/apis/api/method/iot_ui.iot_api.company_admin', {user:usr}, checkAdminFun, 'POST', 'JSON');
 				alt('登录成功,页面跳转中',1);
 				setTimeout("redirect('index.html')", 2000);
 			}else{
@@ -182,7 +182,7 @@ $(function(){
 		auth_token = getCookie('auth_token');
 		//console.log('getToken-----------------------------------------auth_token',auth_token);
 		//if(auth_token==null){
-			Ajax.call('/api/method/iot_ui.iot_api.get_token', '', getTokened, 'GET', 'JSON', 'FORM');
+			Ajax.call('/apis/api/method/iot_ui.iot_api.get_token', '', getTokened, 'GET', 'JSON', 'FORM');
 		//}
 	}
 	function getTokened(req){

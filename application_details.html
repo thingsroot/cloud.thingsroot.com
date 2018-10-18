@@ -296,7 +296,7 @@
             app : decodeURI(window.location.href.split("=")[1])
         };
         $.ajax({
-            url: "apis/api/method/app_center.api.app_detail",
+            url: "/apis/api/method/app_center.api.app_detail",
             type: "GET",
             data: data,
             success: function (data) {
@@ -333,7 +333,7 @@
             beta: 1
         };
         $.ajax({
-            url: "apis/api/method/app_center.api.get_versions",
+            url: "/apis/api/method/app_center.api.get_versions",
             type: "GET",
             data: data1,
             success: function (req) {
@@ -366,7 +366,7 @@
             fields :'["app","title","content","owner","star","creation","name"]'
         };
         $.ajax({
-            url: "apis/api/resource/IOT%20Application%20Review",
+            url: "/apis/api/resource/IOT%20Application%20Review",
             type: "GET",
             data: data2,
             success: function (req) {
@@ -428,7 +428,7 @@
                         var parent = $(this).parent().parent();
                         var data = {'name' : $(this).find('input').val()};
                         $.ajax({
-                            url: "apis/api/method/app_center.appmgr.remove_review",
+                            url: "/apis/api/method/app_center.appmgr.remove_review",
                             type: "POST",
                             data: data,
                             success: function (req) {
@@ -494,7 +494,7 @@
                 alt('请您添加评论标题',3);
             }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
                 $.ajax({
-                    url: "apis/api/method/app_center.appmgr.add_review",
+                    url: "/apis/api/method/app_center.appmgr.add_review",
                     type: "POST",
                     data: data3,
                     success: function (req) {
@@ -542,7 +542,7 @@
 
         //请求模板列表
         $.ajax({
-            url: "apis/api/method/conf_center.api.list_app_conf",
+            url: "/apis/api/method/conf_center.api.list_app_conf",
             type: "GET",
             data: {app: decodeURI(window.location.href.split("=")[1]),start:0,limit:100},
             success: function (req) {
@@ -593,7 +593,7 @@
                         var dataTextarea = $(this).parent().parent().find('#txtarea');
                         console.log(dataTextarea);
                         $.ajax({
-                            url:"apis/api/method/conf_center.api.app_conf_data",
+                            url:"/apis/api/method/conf_center.api.app_conf_data",
                             type:"GET",
                             data: {app:appId,conf:tempId,version:version},
                             async: false,
@@ -682,7 +682,7 @@
             alt('请您同意使用条款',3);
         }else{
             $.ajax({
-                url: "apis/api/method/app_center.appmgr.upload",
+                url: "/apis/api/method/app_center.appmgr.upload",
                 type: "POST",
                 data: form1,
                 processData:false,

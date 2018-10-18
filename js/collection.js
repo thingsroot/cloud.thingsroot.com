@@ -20,7 +20,7 @@ $(function(){
 	
 	setCookie('device_sn_current',device_sn);// 传递信息，当前网关id
 	/*网关信息---------------------------------------------------*/
-	Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+	Ajax.call('/apis/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
 	// 网关信息详情显示
 	function displayGateInfo(req){
 		req = req.message;
@@ -109,7 +109,7 @@ $(function(){
 
 		localStorage.setItem('device_detail_'+device_sn,JSON.stringify(req));
         /*网关固件版本---------------------------------------------------*/
-        Ajax.call('/api/method/iot_ui.iot_api.query_firmware_lastver', {'sn':device_sn, "beta": req.basic.beta}, Gatefirmware_lastver, 'GET', 'JSON', 'FORM');
+        Ajax.call('/apis/api/method/iot_ui.iot_api.query_firmware_lastver', {'sn':device_sn, "beta": req.basic.beta}, Gatefirmware_lastver, 'GET', 'JSON', 'FORM');
         function Gatefirmware_lastver(req){
             req = req.message;
             $('.J_basic_sn').attr('data-firmware_lastver',req.firmware_lastver);
@@ -143,7 +143,7 @@ $(function(){
             }
         }
 
-        Ajax.call('/api/method/iot.device_api.sys_upgrade', JSON.stringify(data), gate_sys_upgrade, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.sys_upgrade', JSON.stringify(data), gate_sys_upgrade, 'POST', 'JSON', 'JSON');
 
         function gate_sys_upgrade(req){
             if(req.message!=''){
@@ -158,7 +158,7 @@ $(function(){
                 addCrontab(idarr);
                 alt('命令已发送，等待结果返回',1);
                 setTimeout(function(){
-                    Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+                    Ajax.call('/apis/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
                 }, 20000);
             }else{
                 err('命令执行失败');
@@ -172,7 +172,7 @@ $(function(){
     $('.J_app_gate_enablebeta').click(function(){
 
         var id = device_sn + " gate_enable_beta "+ Date.parse(new Date());
-        Ajax.call('/api/method/iot_ui.iot_api.enable_beta', JSON.stringify({"sn": device_sn }), gate_enable_beta, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot_ui.iot_api.enable_beta', JSON.stringify({"sn": device_sn }), gate_enable_beta, 'POST', 'JSON', 'JSON');
 
         function gate_enable_beta(req){
             if(req.message!=''){
@@ -194,7 +194,7 @@ $(function(){
 
         var id = device_sn +" gate_disable_beta "+ Date.parse(new Date());
 
-        Ajax.call('/api/method/iot.device_api.sys_enable_beta', JSON.stringify({"device": device_sn , "data": 0}), gate_disablebeta, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.sys_enable_beta', JSON.stringify({"device": device_sn , "data": 0}), gate_disablebeta, 'POST', 'JSON', 'JSON');
 		// console.log(id);
         function gate_disablebeta(req){
             if(req.message!=''){
@@ -236,7 +236,7 @@ $(function(){
     $('.J_webmapping').click(function(){
         var _frpc_visitors;
         var _frpc_run;
-        Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,'vsn':device_sn + '.ioe_frpc'}, check_frpc_visitors, 'GET', 'JSON', 'JSON', false);
+        Ajax.call('/apis/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,'vsn':device_sn + '.ioe_frpc'}, check_frpc_visitors, 'GET', 'JSON', 'JSON', false);
         function check_frpc_visitors(req){
             if(req.message!=''){
                 for(x in req.message){
@@ -271,7 +271,7 @@ $(function(){
                 }
             };
 
-            Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
+            Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), ioe_frpc_config, 'POST', 'JSON', 'JSON');
             function ioe_frpc_config(req){
                 if(req.message!=''){
                     alt('正在设置，等待10秒后重试',1);
@@ -297,7 +297,7 @@ $(function(){
 		        "inst": "bms" //应用名称
 		    }
 		}
-		Ajax.call('/api/method/iot.device_api.app_upgrade', data, getList, 'app_upgrade', 'JSON', 'JSON');
+		Ajax.call('/apis/api/method/iot.device_api.app_upgrade', data, getList, 'app_upgrade', 'JSON', 'JSON');
 		function app_upgrade(req){
 			console.log(req);
 		}
@@ -328,7 +328,7 @@ $(function(){
 		    "data": {"inst": inst,'option':'auto','value':value},
 		    "id": id
 		};
-		Ajax.call('/api/method/iot.device_api.app_option', JSON.stringify(data), set_app_option, 'POST', 'JSON', 'JSON');
+		Ajax.call('/apis/api/method/iot.device_api.app_option', JSON.stringify(data), set_app_option, 'POST', 'JSON', 'JSON');
 		function set_app_option(req){
 			if(req.message!=''){
 				var idarr = {
@@ -364,7 +364,7 @@ $(function(){
 				    "id": id,
 				    "data": {"inst": inst}
 				};
-				Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(param), app_uninstall,'POST', 'JSON', 'JSON',false);
+				Ajax.call('/apis/api/method/iot.device_api.app_uninstall', JSON.stringify(param), app_uninstall,'POST', 'JSON', 'JSON',false);
 				function app_uninstall(req){
 			  		layer.closeAll();
 					// console.log(req);
@@ -410,7 +410,7 @@ $(function(){
 		};
 		// console.log(param);
 		if(isRunning=='已停止'){//去关闭
-			Ajax.call('/api/method/iot.device_api.app_start', JSON.stringify(param), app_start,'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot.device_api.app_start', JSON.stringify(param), app_start,'POST', 'JSON', 'JSON');
 			function app_start(req){
 				// console.log('app_start',req);
 				if(req.message!=''){
@@ -429,7 +429,7 @@ $(function(){
 				}				
 			}
 		}else if(isRunning=='运行中'){
-			Ajax.call('/api/method/iot.device_api.app_stop', JSON.stringify(param), app_stop,'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot.device_api.app_stop', JSON.stringify(param), app_stop,'POST', 'JSON', 'JSON');
 			function app_stop(req){
 				// console.log('app_stop',req);
 				if(req.message!=''){
@@ -448,7 +448,7 @@ $(function(){
 				}
 			}
 		}else if(isRunning=='restart'){// 启动重启
-			Ajax.call('/api/method/iot.device_api.app_restart', JSON.stringify(param), app_restart,'POST', 'JSON', 'JSON');
+			Ajax.call('/apis/api/method/iot.device_api.app_restart', JSON.stringify(param), app_restart,'POST', 'JSON', 'JSON');
 			function app_restart(req){
 				// console.log('app_restart',req);
 				if(req.message!=''){
@@ -477,7 +477,7 @@ $(function(){
 //========================================================================================================
 //========================================================================================================
     function requestAppList(){
-        Ajax.call('/api/method/iot.device_api.app_list', JSON.stringify({'device':device_sn,'id': 'request ' + device_sn + ' app_list '+Date.parse(new Date())}), request_AppList,'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_list', JSON.stringify({'device':device_sn,'id': 'request ' + device_sn + ' app_list '+Date.parse(new Date())}), request_AppList,'POST', 'JSON', 'JSON');
 
         function request_AppList(req){
             if(req.message!=''){
@@ -495,7 +495,7 @@ $(function(){
 			return false;
 		}
         // Ajax.call('/api/method/iot.device_api.app_list', JSON.stringify({'device':device_sn,'id': 'request ' + device_sn + ' app_list '+Date.parse(new Date())}), '','POST', 'JSON', 'JSON');
-		Ajax.call('/api/method/iot_ui.iot_api.gate_applist', {'sn':device_sn}, getList, 'GET', 'JSON', 'FORM');
+		Ajax.call('/apis/api/method/iot_ui.iot_api.gate_applist', {'sn':device_sn}, getList, 'GET', 'JSON', 'FORM');
 		// 主动请求列表数据
 		function getList(items){//0050562F49F7
 			//console.log('gate_applist',items);
@@ -773,7 +773,7 @@ $(function(){
             }
         }
 
-        Ajax.call('/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
 
         function app_config(req){
             $('div.useinfo_main').removeClass('hd');
@@ -823,7 +823,7 @@ $(function(){
                 }
              }
 
-        Ajax.call('/api/method/iot.device_api.app_upgrade', JSON.stringify(data), app_upgrade, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_upgrade', JSON.stringify(data), app_upgrade, 'POST', 'JSON', 'JSON');
 
         function app_upgrade(req){
             if(req.message!=''){
@@ -862,7 +862,7 @@ $(function(){
         var data = {"app": app_name, "version": version };
 
 
-        Ajax.call('/api/method/app_center.appmgr.get_fork', {'app':app_name, "version":version}, app_get_fork, 'GET', 'JSON', 'FORM');
+        Ajax.call('/apis/api/method/app_center.appmgr.get_fork', {'app':app_name, "version":version}, app_get_fork, 'GET', 'JSON', 'FORM');
         function app_get_fork(req){
             console.log(req);
             if(req.message instanceof Array && req.message[0]!=null){
@@ -871,7 +871,7 @@ $(function(){
                 window.location.href=url;
 
             }else{
-                Ajax.call('/api/method/app_center.appmgr.fork', JSON.stringify(data), app_fork, 'POST', 'JSON', 'JSON');
+                Ajax.call('/apis/api/method/app_center.appmgr.fork', JSON.stringify(data), app_fork, 'POST', 'JSON', 'JSON');
             }
         }
         function app_fork(req){
@@ -901,7 +901,7 @@ $(function(){
 
 //采集设备部分start//////////////////////////////////////////////////////////////////////////////////////////////////
 	/* 应用与设备列表（左菜单 ok） */
-	Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
+	Ajax.call('/apis/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
 	// 设备列表显示
 	function gate_app_dev_tree(items){
 		var data;
@@ -961,7 +961,7 @@ $(function(){
     *	vsn	设备号
     */ 
 	function getlist_gate_device_cfg(vsn){
-		Ajax.call('/api/method/iot_ui.iot_api.gate_device_cfg', {'sn':device_sn,vsn:vsn}, gate_device_cfg, 'GET', 'JSON', 'JSON', false);
+		Ajax.call('/apis/api/method/iot_ui.iot_api.gate_device_cfg', {'sn':device_sn,vsn:vsn}, gate_device_cfg, 'GET', 'JSON', 'JSON', false);
 	    function gate_device_cfg(items){
 		    var deviceitem = items.message.inputs;
 			localStorage.setItem('gate_device_cfg_current',JSON.stringify(deviceitem));
@@ -973,7 +973,7 @@ $(function(){
     *	vsn	设备号
     */ 
 	function getlist_gate_device_data_array(vsn){
-	    Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:vsn}, gate_device_data_array, 'GET', 'JSON', 'JSON', false);
+	    Ajax.call('/apis/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:vsn}, gate_device_data_array, 'GET', 'JSON', 'JSON', false);
 		function gate_device_data_array(items){
 			localStorage.setItem('gate_device_data_array_current',JSON.stringify(items.message)); // 临时存放起来
 		}
@@ -1213,7 +1213,7 @@ $(function(){
 		}
 		var myChart = echarts.init(document.getElementById(chart_id), 'light');
 		var dev = device_sn;
-		var url = API_HOST + '/api/method/iot_ui.iot_api.taghisdata?';
+		var url = API_HOST + '/apis/api/method/iot_ui.iot_api.taghisdata?';
 		url = url + 'sn=' + dev + '&tag=' + tag_name + '&condition=iot=%27'+ dev + '%27+and+device=%27' + dev + '%27+and+time%3Enow()+-+10m';
 		if (vt_int == 1) {
 			url = url + "&vt=int";
@@ -1365,7 +1365,7 @@ $(function(){
             $('.data_upload').removeClass('hd');// 数据上送
 	        $("#J_device_pagination_nav").css('opacity',1);
 	        $("#J_app_pagination_nav").css('opacity',0);
-            Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
+            Ajax.call('/apis/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
         }else if(num==1){
 	        $('.top .datasearch').hide();
             $('.applistrefresh').removeClass('hd');// 刷新按钮
@@ -1392,7 +1392,7 @@ $(function(){
             $("#J_app_pagination_nav").css('opacity',0);
             // 为了让容器先显示，然后在加载数据， 否在图表显示有问题。
 
-            Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON', false);
+            Ajax.call('/apis/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON', false);
 
         }
 
@@ -1429,7 +1429,7 @@ $(function(){
 
     $('.btn.applistrefresh').on("click", function(){
         if(tab_num==0){
-            Ajax.call('/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
+            Ajax.call('/apis/api/method/iot_ui.iot_api.gate_app_dev_tree', {'sn':device_sn}, gate_app_dev_tree, 'GET', 'JSON', 'JSON');
 		}
 		else if(tab_num==1){
         	requestAppList();
@@ -1444,7 +1444,7 @@ $(function(){
             "id": id,
             "data": 1
         };
-        Ajax.call('/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), gate_data_upload , 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), gate_data_upload , 'POST', 'JSON', 'JSON');
 
 
         function gate_data_upload(req) {
@@ -1490,7 +1490,7 @@ $(function(){
             "id": id,
             "data": 0
         };
-        Ajax.call('/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), disable_gate_data_upload , 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.sys_enable_data', JSON.stringify(data), disable_gate_data_upload , 'POST', 'JSON', 'JSON');
 
 
         function disable_gate_data_upload(req) {
@@ -1538,7 +1538,7 @@ $(function(){
         };
 
 
-        Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
 
         setTimeout(function(){
             requestAppList();
@@ -1583,7 +1583,7 @@ $(function(){
             "id": id,
             "data": {"inst": "Network"}
         };
-        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
         // setTimeout(function(){
         //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
         // }, 10000);
@@ -1632,7 +1632,7 @@ $(function(){
         };
 
 
-        Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
 
         setTimeout(function(){
             requestAppList();
@@ -1669,7 +1669,7 @@ $(function(){
             "id": id,
             "data": {"inst": "ioe_frpc"}
         };
-        Ajax.call('/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.app_uninstall', JSON.stringify(data), app_uninstall,'POST', 'JSON', 'JSON');
         // setTimeout(function(){
         //     Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
         // }, 10000);
@@ -1733,7 +1733,7 @@ $(function(){
             }
         }
 
-        Ajax.call('/api/method/iot.device_api.send_output', JSON.stringify(data), gate_lan_set, 'POST', 'JSON', 'JSON');
+        Ajax.call('/apis/api/method/iot.device_api.send_output', JSON.stringify(data), gate_lan_set, 'POST', 'JSON', 'JSON');
 
         function gate_lan_set(req){
             if(req.message!=''){
@@ -1753,7 +1753,7 @@ $(function(){
                 $('.N_laninetmask_ input.form-control').attr('readonly', 'readonly');
 
                 setTimeout(function(){
-                    Ajax.call('/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON');
+                    Ajax.call('/apis/api/method/iot_ui.iot_api.gate_device_data_array', {'sn':device_sn,vsn:device_sn + '.Network' }, gate_netcfg, 'GET', 'JSON', 'JSON');
                 }, 4000);
             }else{
                 err('命令执行失败');
@@ -1798,7 +1798,7 @@ $(function(){
 
     // 周期获取网关状态信息
     setInterval(function(){
-        Ajax.call('/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
+        Ajax.call('/apis/api/method/iot_ui.iot_api.gate_info', {'sn':device_sn}, displayGateInfo, 'GET', 'JSON', 'FORM');
     }, 15000);
 
 	/* 定时刷新采集设备数据 */

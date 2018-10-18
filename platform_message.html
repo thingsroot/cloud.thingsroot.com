@@ -321,7 +321,7 @@
 
         // 获取全部消息条数 ---- 平台
         $.ajax({
-            url:"apis/api/method/iot.user_api.count_device_activity",
+            url:"/apis/api/method/iot.user_api.count_device_activity",
             type:"GET",
             success:function (req) {
                 console.log(req.message);
@@ -578,7 +578,7 @@
         console.log(dataS);
         if( arr != 0 ){
             $.ajax({
-                url:"apis/api/method/iot.user_api.dispose_device_activities",
+                url:"/apis/api/method/iot.user_api.dispose_device_activities",
                 type:"POST",
                 data:JSON.stringify(dataS),
                 contentType:"application/json",
@@ -683,7 +683,7 @@
                         "activities": aList
                     };
                     $.ajax({
-                        url:"apis/api/method/iot.user_api.dispose_device_activities",
+                        url:"/apis/api/method/iot.user_api.dispose_device_activities",
                         type:"POST",
                         data:JSON.stringify(dataS),
                         contentType:"application/json",

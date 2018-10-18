@@ -74,7 +74,7 @@
 					alt('错误的链接',5);
 					return false;
 		        }
-				Ajax.call('/api/method/frappe.core.doctype.user.user.update_password',{key:key,new_password:newpwd}, update_password, 'POST', 'JSON', 'FORM');
+				Ajax.call('/apis/api/method/frappe.core.doctype.user.user.update_password',{key:key,new_password:newpwd}, update_password, 'POST', 'JSON', 'FORM');
 				function update_password(req) {
 					alert(typeof(req.home_page));
 					if(typeof(req.home_page)!='undefined'){

@@ -290,7 +290,7 @@
             limit: 100
         };
         $.ajax({
-            url: "apis/api/method/conf_center.api.list_private_conf",
+            url: "/apis/api/method/conf_center.api.list_private_conf",
             type: "GET",
             data:data,
             async:false,
@@ -456,7 +456,7 @@
             var appId = $(this).parent('td').parent('tr').find('td:nth-child(8)').text();
             var version = "";
             $.ajax({
-                url: "apis/api/method/conf_center.api.get_latest_version",
+                url: "/apis/api/method/conf_center.api.get_latest_version",
                 type: "GET",
                 async: false,
                 data: {conf:tempId},
@@ -524,7 +524,7 @@
         }
         //创建新模板
         $.ajax({
-            url: "apis/api/method/conf_center.api.create_app_conf",
+            url: "/apis/api/method/conf_center.api.create_app_conf",
             type: "POST",
             data: data2,
             success: function (req) {
@@ -544,7 +544,7 @@
                     console.log('可以复制其他模板')
                     //获取所选模板版本的数据
                     $.ajax({
-                        url: "apis/api/method/conf_center.api.app_conf_data",
+                        url: "/apis/api/method/conf_center.api.app_conf_data",
                         type: "GET",
                         data: data3,
                         success: function (data) {
@@ -559,7 +559,7 @@
                             };
                             console.log(data4);
                             $.ajax({
-                                url: "apis/api/method/conf_center.api.upload_conf_version",
+                                url: "/apis/api/method/conf_center.api.upload_conf_version",
                                 type: "POST",
                                 data: data4,
                                 success: function (req) {
@@ -596,7 +596,7 @@
         "user"    : "",
         "name"    : ""
     };
-    Ajax.call("apis/api/method/iot_ui.iot_api.appstore_applist",JSON.stringify(data1),getName, 'POST', 'JSON', 'JSON',false)
+    Ajax.call("/apis/api/method/iot_ui.iot_api.appstore_applist",JSON.stringify(data1),getName, 'POST', 'JSON', 'JSON',false)
     function getName(data){
         var arr = data.message;
         for(var i=0;i<arr.length;i++){
@@ -614,7 +614,7 @@
     //应用下的源模板
     function formTemp(app){
         $.ajax({
-            url: "apis/api/method/conf_center.api.list_app_conf",
+            url: "/apis/api/method/conf_center.api.list_app_conf",
             type: "GET",
             data: {app: app,start:0,limit:100},
             success: function (req) {
@@ -652,7 +652,7 @@
     //得到当前源模板的所有版本
     function getVerList(temp){
         $.ajax({
-            url: "apis/api/method/conf_center.api.get_versions",
+            url: "/apis/api/method/conf_center.api.get_versions",
             type: "GET",
             data: {conf: temp},
             success: function (req) {
