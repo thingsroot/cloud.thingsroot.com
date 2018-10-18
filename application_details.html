@@ -24,6 +24,13 @@
     <script src="js/message.js"></script>
     <!--markdown   css-->
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
+    <script src="js/editor.md-master/lib/marked.min.js"></script>
+    <script src="js/editor.md-master/lib/prettify.min.js"></script>
+    <script src="js/editor.md-master/lib/raphael.min.js"></script>
+    <script src="js/editor.md-master/lib/underscore.min.js"></script>
+    <script src="js/editor.md-master/lib/sequence-diagram.min.js"></script>
+    <script src="js/editor.md-master/lib/flowchart.min.js"></script>
+    <script src="js/editor.md-master/lib/jquery.flowchart.min.js"></script>
     <script src="js/editor.md-master/editormd.min.js"></script>
     <!--markdown   js -->
     <!--星星-->
@@ -34,11 +41,7 @@
             display: inline-block;
             width: 80px;
         }
-        .temp_list>li>p:nth-child(3)>span:nth-child(3),.temp_list>li>p:nth-child(3)>span:nth-child(4){
-            position: relative;
-            left: 1000px;
-            cursor: pointer;
-        }
+
     </style>
 </head>
 <body>
@@ -121,14 +124,14 @@
                     <div class="tab-pane fade in active" id="A">
                         <div class="app_describe">
                             <div id="test-editormd" class="editormd-onlyread">
-                                <textarea style="display:block;"></textarea>
+                                <textarea style="display:none;"  name="test-editormd-markdown-doc">###我的描述</textarea>
                             </div>
                         </div>
                     </div>
                     <!--评论-->
                     <div class="tab-pane fade" id="B">
                         <div class="app_comment">
-                            <a href="#comment" class="comment_btn">我要评论</a>
+                            <a class="comment_btn">我要评论</a>
                             <ul class="app_comment_list">
                                 <!--<li>-->
                                     <!--<p class="comment_title">123r34tgergvsadfbsdfb</p>-->
@@ -256,7 +259,7 @@
     <!--消息弹框 end-->
 </div>
 <script>
-
+    var testEditor;
     $(function() {
 
         //获取token
@@ -266,23 +269,6 @@
                 "X-Frappe-CSRF-Token": token
             }
         });
-
-
-        //Markdown
-        var testEditor = editormd("test-editormd", {
-            width           : "100%",
-            height          : 540,
-            path            : "js/editor.md-master/lib/",
-            watch           : true,           // disable watch
-            readOnly        : true,
-            styleActiveLine : false,   // disable active line
-            lineNumbers     : true,      // hide line numbers
-            previewing         : true
-        });
-
-        setTimeout(function(){
-            testEditor.previewing();
-        },1000);
 
         //获取用户信息
         var user = getCookie('usr');
@@ -319,13 +305,25 @@
                 $('.protocol').text(data.message.protocol);   //通讯协议
                 $('.device_serial').text(data.message.device_serial);   //适配型号
                 $('.app_img').src = data.message.icon_image;    //app图片
-                $('.editormd-onlyread>textarea').text(data.message.description)  //Markdown内容
-
+                $('#test-editormd>textarea').val(data.message.description);  //Markdown内容
             },
             error: function () {
                 console.log('no')
+            },
+            complete: function () {
+                //Markdown
+                testEditor = editormd.markdownToHTML("test-editormd", {
+                    htmlDecode: "style,script,iframe",  // you can filter tags decode
+                    emoji: true,
+                    taskList: true,
+                    tex: true,  // 默认不解析
+                    flowChart: true,  // 默认不解析
+                    sequenceDiagram: true  // 默认不解析
+                });
             }
         });
+
+
 
         //获取应用版本列表
         var data1 = {
@@ -344,7 +342,7 @@
                     $('.app_version').append(
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
-                        '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,10) +'</span></p>'+
+                        '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,19) +'</span></p>'+
                         '<p><span>功能介绍：</span><span>'+ datas.comment +'</span></p>'+
                         '</li>'
                     )
@@ -486,12 +484,12 @@
                 "title":$('#comments_title').val(),
                 "content":$('#comments_content').val()
             };
-            if(data3.star == ""){
-                alt('请您为应用评分！',3);
-            }else if(data3.content == ""){
-                alt('请您添加评论内容',3);
-            }else if(data3.title == ""){
-                alt('请您添加评论标题',3);
+            if(data3.title == "" || data3.title.length < 10){
+                alt('评论标题应不少于10个字符',3)
+            }else if(data3.content == "" || data3.content.length < 20){
+                alt('评论内容应不少于20个字符',3);
+            }else if(data3.star == ""){
+                alt('请您为应用评分',3);
             }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
                 $.ajax({
                     url: "/apis/api/method/app_center.appmgr.add_review",
@@ -604,7 +602,7 @@
                                 console.log(dataTextarea.val());
                                 dataTextarea.select(); // 选择对象
                                 document.execCommand("Copy"); // 执行浏览器复制命令
-                                alt("已复制好，可贴粘。",1);
+                                alt("已复制好，可贴粘",1);
                             },
                             error: function () {
                                 console.log('error');
@@ -654,7 +652,7 @@
         }else if($(this).val() < num1){
             alt('版本号应大于之前版本',2);
         }else if($(this).val() > num1){
-            alt('ok',1);
+            // console.log('ok');
         }
     });
 
@@ -735,6 +733,12 @@
     //主分页
     $('.fork_from').click(function () {
         location.href = 'application_details.html?appId=' + $(this).val();
+    })
+
+    //我要评论
+    $('.comment_btn').click(function () {
+        console.log('我要评论');
+        $(".app_edit_submit")[0].scrollIntoView();
     })
     
 

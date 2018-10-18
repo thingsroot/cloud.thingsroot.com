@@ -2653,7 +2653,19 @@ th .on{
 }
 .app_version>li>p>span:nth-child(2),.temp_list>li>p>span:nth-child(2){
 	color: #364F78;
-
+}
+.temp_list>li>p:nth-child(3){
+	position: relative;
+}
+.temp_list>li>p:nth-child(3)>span:nth-child(3){
+	position: absolute;
+	right: 180px;
+	cursor: pointer;
+}
+.temp_list>li>p:nth-child(3)>span:nth-child(4){
+	position: absolute;
+	right: 100px;
+	cursor: pointer;
 }
 .no_comment,.no_version{
 	display: none;
@@ -2977,13 +2989,12 @@ th .on{
 /*我的模板*/
 .temp_btn{
 	display: inline-block;
-	padding: 0 10px;
+	padding: 0 20px;
 	height: 25px;
 	border-radius: 4px;
-	border: 1px solid #354E77;
-	background-color: #FFFFFF;
+	background-color: #354E77;
 	margin: 0 4px;
-	color: #354E77;
+	color: #FFFFFF;
 	line-height: 25px;
 }
 #newTemplate{
