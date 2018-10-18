@@ -79,8 +79,8 @@
 <nav class="nav_herder">
     <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
     <div class="pull-right nav_right">
-        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-        <p><img src="img/top_news.png"/></p><em>|</em>
+        <!--<p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>-->
+        <!--<p><img src="img/top_news.png"/></p><em>|</em>-->
         <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
         <p><img src="img/top_quit.png" id="J_logout"/></p>
     </div>
@@ -101,12 +101,12 @@
             <p class="sublist-title">我的网关</p>
         </div>
         <div class="subNav" onClick="location='application_list.html'">
-            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/my_app.png" class="hd_img"/>
             <img src="img/myAPPs.png" class="hover_img"/>
             <p class="sublist-title">我的应用</p>
         </div>
         <div class="subNav" onClick="location='template.html'">
-            <img src="img/myApp.png" class="hd_img"/>
+            <img src="img/my_app.png" class="hd_img"/>
             <img src="img/myAPPs.png" class="hover_img"/>
             <p class="sublist-title">我的模板</p>
         </div>
@@ -165,6 +165,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.4.0/papaparse.min.js"></script>
 
 <script>
+    $('.J_nickname').text(getCookie('full_name'));
 
     var token = $.cookie('DS_auth_token');
     $.ajaxSetup({

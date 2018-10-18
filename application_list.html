@@ -23,7 +23,7 @@
     <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
     <div class="pull-right nav_right">
         <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-        <p onclick="javascript:$('#messageBox').show()"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
+        <p onclick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
         <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
         <p><img src="img/top_quit.png" id="J_logout"/></p>
     </div>
@@ -45,13 +45,13 @@
             <p class="sublist-title">我的网关</p>
         </div>
         <div class="subNav bg-color" onClick="location='application_list.html'">
-            <img src="img/myApp.png" class="hd_img"/>
-            <img src="img/myAPPs.png" class="hover_img"/>
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
             <p class="sublist-title">我的应用</p>
         </div>
         <div class="subNav" onClick="location='template.html'">
-            <img src="img/myApp.png" class="hd_img"/>
-            <img src="img/myAPPs.png" class="hover_img"/>
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
             <p class="sublist-title">我的模板</p>
         </div>
     </div>
@@ -155,9 +155,6 @@
 
         //获取用户信息
         var usr = getCookie('usr');
-
-
-
         //获取列表
         var userName = {
             'user':usr
