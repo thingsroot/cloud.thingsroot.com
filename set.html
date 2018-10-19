@@ -15,7 +15,7 @@
 		<div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
 		<div class="pull-right nav_right">
 			<p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-			<p onclick="javascript:$('#messageBox').show()"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
+			<p style="position: relative;" onclick="javascript:$('#messageBox').show()"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
 			<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
 			<p><img src="img/top_quit.png" id="J_logout"/></p>
 		</div>
@@ -23,7 +23,7 @@
 	<!-- 顶部导航 end -->
 		<div class="down-main">
 			<div class="left-main left-full">
-				<div class="sidebar-fold">个人中心</div>
+				<div class="sidebar-fold"><img src="img/nav_shrink.png"></div>
 				<div class="subNav" onClick="location='personal_info.html'">
 					<img src="img/personal_info.png" class="hd_img"/>
 					<img src="img/personal_info_hover.png" class="hover_img"/>
@@ -79,13 +79,9 @@
 					<span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
 				</p>
 				<div>
-					<p>通信设备</p>
+					<p class="have">通信设备</p>
+					<p class="no_have" style="line-height: 100px;text-align: center;font-size: 18px">暂时没有最新信息</p>
 					<ul class="list_box">
-						<!--<li class="box_li">-->
-						<!--<span class="message_name"></span>-->
-						<!--<span style="display: none;" class="message_id"></span>-->
-						<!--<span style="float: right;" class="message_ago"></span>-->
-						<!--</li>-->
 						<!--<li class="box_li">-->
 						<!--<span class="message_name"></span>-->
 						<!--<span style="display: none;" class="message_id"></span>-->
@@ -96,6 +92,7 @@
 				<p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
 			</div>
 			<!--消息弹框 end-->
+
 	  	</div>    
 	<script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
 	<script src="js/jquery.timeago.js"></script>

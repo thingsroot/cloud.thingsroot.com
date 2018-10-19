@@ -34,7 +34,7 @@
 			<div class="pull-right nav_right">
 				<!--<p onClick="location='shop.html'"><img src="img/top_appstore.png"/><span>应用商店</span></p><em>|</em>-->
 				<p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-				<p onClick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
+				<p onClick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span style="display: none;" class="redDot"></span></p><em>|</em>
 				<p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
 				<p><img src="img/top_quit.png" id="J_logout"/></p>
 			</div>
@@ -176,13 +176,9 @@
 				<span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
 			</p>
 			<div>
-				<p>通信设备</p>
+				<p class="have">通信设备</p>
+				<p class="no_have" style="line-height: 100px;text-align: center;font-size: 18px">暂时没有最新信息</p>
 				<ul class="list_box">
-					<!--<li class="box_li">-->
-					<!--<span class="message_name"></span>-->
-					<!--<span style="display: none;" class="message_id"></span>-->
-					<!--<span style="float: right;" class="message_ago"></span>-->
-					<!--</li>-->
 					<!--<li class="box_li">-->
 					<!--<span class="message_name"></span>-->
 					<!--<span style="display: none;" class="message_id"></span>-->

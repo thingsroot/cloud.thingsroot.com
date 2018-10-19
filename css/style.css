@@ -2435,9 +2435,14 @@ th .on{
 #messageBox>div{
 	padding: 0 15px;
 }
-#messageBox>div>p,#messageBox>div>ul>li{
+#messageBox>div>p:nth-child(1),#messageBox>div>ul>li{
 	line-height: 40px;
 	border-bottom: 1px solid #EDEDED;
+	cursor: pointer;
+}
+#messageBox>div>p:nth-child(2){
+	line-height: 100px;
+	text-align: center;
 	cursor: pointer;
 }
 #messageBox>div>ul>li>span:nth-child(2){
@@ -2455,7 +2460,7 @@ th .on{
 	border: 1px solid #354E78;
 	border-radius: 4px;
 	background-color: #FFFFFF;
-	margin: 20px 100px;
+	margin: 20px 105px;
 	box-shadow:-1px 0 1px #354E78, /*左边阴影*/
 	1px 0 1px #354E78, /*右边阴影*/
 	0 -1px 1px #354E78, /*顶部阴影*/
@@ -2656,6 +2661,16 @@ th .on{
 }
 .temp_list>li>p:nth-child(3){
 	position: relative;
+}
+.temp_btn1{
+	display: inline-block;
+	padding: 0 20px;
+	height: 25px;
+	border-radius: 4px;
+	background-color: #354E77;
+	margin: 0 4px;
+	color: #FFFFFF;
+	line-height: 25px;
 }
 .temp_list>li>p:nth-child(3)>span:nth-child(3){
 	position: absolute;
@@ -2968,8 +2983,6 @@ th .on{
 	display: inline-block;
 
 }
-
-
 /*消息提示红点*/
 .redDot{
 	position: absolute;
@@ -2989,12 +3002,13 @@ th .on{
 /*我的模板*/
 .temp_btn{
 	display: inline-block;
-	padding: 0 20px;
+	padding: 0 10px;
 	height: 25px;
 	border-radius: 4px;
-	background-color: #354E77;
+	border: 1px solid #354E77;
+	background-color: #FFFFFF;
 	margin: 0 4px;
-	color: #FFFFFF;
+	color: #354E77;
 	line-height: 25px;
 }
 #newTemplate{

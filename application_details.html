@@ -21,7 +21,7 @@
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/user.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
-    <script src="js/message.js"></script>
+
     <!--markdown   css-->
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
     <script src="js/editor.md-master/lib/marked.min.js"></script>
@@ -35,6 +35,7 @@
     <!--markdown   js -->
     <!--星星-->
     <script src="js/starScore.js"></script>
+    <!--<script src="js/message.js"></script>-->
     <title>应用详情</title>
     <style>
         .version{
@@ -51,7 +52,7 @@
     <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
     <div class="pull-right nav_right">
         <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
-        <p onclick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span class="redDot"></span></p><em>|</em>
+        <p onclick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span style="display:none" class="redDot"></span></p><em>|</em>
         <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
         <p><img src="img/top_quit.png" id="J_logout"/></p>
     </div>
@@ -213,7 +214,7 @@
                         <span style="color:red; ">*</span>
                         <input type="text" placeholder="Version" id="version" name="version">
                         <input type="file" id="app_file" name="app_file">
-                        <input value="" id="formAppId" readonly="true" name="app" type="hidden">
+                        <input value="" id="formAppId" readonly="true" name="app" type="hidden">   <!--appid-->
                     </p>
                     <div class="version_desc">
                         <p>版本说明</p>
@@ -240,13 +241,9 @@
             <span class="messageBox_close" onClick="javascript:$('#messageBox').hide();">×</span>
         </p>
         <div>
-            <p>通信设备</p>
+            <p class="have">通信设备</p>
+            <p class="no_have" style="line-height: 100px;text-align: center;font-size: 18px">暂时没有最新信息</p>
             <ul class="list_box">
-                <!--<li class="box_li">-->
-                <!--<span class="message_name"></span>-->
-                <!--<span style="display: none;" class="message_id"></span>-->
-                <!--<span style="float: right;" class="message_ago"></span>-->
-                <!--</li>-->
                 <!--<li class="box_li">-->
                 <!--<span class="message_name"></span>-->
                 <!--<span style="display: none;" class="message_id"></span>-->
@@ -322,8 +319,6 @@
                 });
             }
         });
-
-
 
         //获取应用版本列表
         var data1 = {
@@ -544,7 +539,7 @@
             type: "GET",
             data: {app: decodeURI(window.location.href.split("=")[1]),start:0,limit:100},
             success: function (req) {
-                console.log(req);
+                // console.log(req);
                 if(JSON.stringify(req) == "{}"){
                     $('.app_list').addClass('hd');
                     $('.no_version').css('display','block');
@@ -554,8 +549,8 @@
                             '<li>'+
                             '<p><span>模板名称text：</span><span class="t_name">'+ req.message[i].conf_name +'</span></p>'+
                             '<p><span>模板描述：</span><span>'+ req.message[i].description +'</span></p>'+
-                            '<p><span>版本号：</span><span class="version">'+ req.message[i].latest_version +'</span><span class="temp_btn look_btn">查看</span>' +
-                            '       <span class="temp_btn copy_btn">复制</span></p>'+
+                            '<p><span>版本号：</span><span class="version">'+ req.message[i].latest_version +'</span><span class="temp_btn1 look_btn">查看</span>' +
+                            '       <span class="temp_btn1 copy_btn">复制</span></p>'+
                             '<input type="hidden" name="tempId" value="'+req.message[i].name+'">' +
                             '<input type="hidden" name="b+banben " value="'+ req.message[i].latest_version +'">'+
                                 '<input type="hidden" value="" id="txtarea">'+
@@ -572,9 +567,9 @@
                 for(var i=0;i<ver_list.length;i++){
                     if(ver_list.eq(i).text() == "null"){
                         ver_list.eq(i).text("暂无版本");
-                        ver_list.eq(i).parent().find('.temp_btn').hide();
+                        ver_list.eq(i).parent().find('.temp_btn1').hide();
                     }else{
-                        ver_list.eq(i).parent().find('.temp_btn').show();
+                        ver_list.eq(i).parent().find('.temp_btn1').show();
                     }
                     ver_list[i].index = i;
                     $('.look_btn').eq(i).click(function () {
@@ -612,7 +607,6 @@
                 }
             }
         });
-
 
     }); //$(function)
 
@@ -669,7 +663,7 @@
         if (day < 10) {day = "0" + day;}
         var nowDate = year + "-" + month + "-" + day;
         var form1 = new FormData(document.getElementById("myForm"));
-        console.log(form1)
+        console.log(form1);
         if(!$('#version').val()){
             alt('请填写版本号',3);
         }else if(!$('#explain').val()){
@@ -700,7 +694,8 @@
                     }
                 },
                 success: function () {
-                    $('.app_version').append(
+                    alt('新版本上传成功',1);
+                    $('.app_version').prepend(
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ num +'</span></p>'+
                         '<p><span>更新时间：</span><span>'+ nowDate +'</span></p>'+
@@ -710,10 +705,11 @@
                     $('#version').val("");
                     $('#explain').val("");
                     $('#app_file').val("");
-                    // $('.uploadVersion').hide();
+                    $('.uploadVersion').hide();
+                    document.body.style.overflow='auto';
                 },
                 error: function () {
-                    console.log('no');
+                    alt('新版本上传失败',2);
                 }
             })
         }
@@ -740,6 +736,58 @@
         console.log('我要评论');
         $(".app_edit_submit")[0].scrollIntoView();
     })
+
+    //message
+    var datas = {
+        "start": 0,
+        "limit": 12
+    };
+    Ajax.call('/apis/api/method/iot.user_api.device_activity',JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
+    function message(req){
+        console.log(req.message)
+        var list = req.message;
+        var posed = [];
+        for (var j=0;j<list.length;j++){
+            console.log(list[j].disposed);
+            if(list[j].disposed == 0){
+                posed.push(list[j]);
+            }
+        }  //把所有未读消息集合
+        // console.log(posed);
+        if(posed.length == 0){
+            console.log('暂时没有未读信息');
+            $('.have').hide();
+            $('.no_have').show();
+            $('.redDot').hide();
+        }else{
+            console.log('有未读信息');
+            $('.have').show();
+            $('.no_have').hide();
+            $('.redDot').show();
+            //渲染列表
+            for (var i=0;i<12;i++){
+                $('.list_box').append(
+                    '<li class="box_li">' +
+                    '<span>'+posed[i].subject.substr(0,18)+'...'+ $.parseJSON(posed[i].message).device_status +'!</span>' +
+                    '<span class="message_id" style="display: none;">'+posed[i].name+'</span>' +
+                    '<span class="message_ago" title="'+posed[i].creation+'"></span>' +
+                    '</li>'
+                );
+                $('.message_ago').eq(i).timeago();
+                $('.box_li')[i].index = i;
+                $('.box_li')[i].onclick = function(){
+                    var name = $('.message_id').eq(this.index).text();
+                    location.href = 'platform_details.html?name=' + name;
+                }
+            }
+            var ago = $('.message_ago');
+            console.log(ago);
+            for(var i=0;i<ago.length;i++){
+                console.log(ago[i])
+            }
+            $('.message_ago').eq(i).timeago();
+        }
+    }
     
 
 </script>

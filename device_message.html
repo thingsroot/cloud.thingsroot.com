@@ -106,10 +106,10 @@
                 <thead>
                 <tr>
                     <th><label class="checkbox"><input index="0" name="select_all" type="checkbox" class="box"><em></em></label></th>
-                    <th>消息内容</th>
+                    <th>标题</th>
+                    <th>序列号</th>
                     <th>发生时间</th>
                     <th>消息类型</th>
-                    <th>序列号</th>
                     <th>等级</th>
                     <th>ID</th>
                     <th>状态</th>
@@ -203,8 +203,6 @@
                         a++;
                     }
                 }
-                console.log(11111);
-                console.log(a)
                 $('.disposed_message').text(a);
             },
             error: function (error) {
@@ -232,7 +230,7 @@
                 dom: 'rt<"#table_footer"Bp>',
                 buttons: [],
                 "bStateSave": false,
-                "stateSave": true,
+                stateSave: true,
                 "bFilter": true,   //是否启动过滤，搜索功能
                 "sPaginationType": "full_numbers",
                 "iDisplayLength": 10,
@@ -243,9 +241,9 @@
                 "columns": [
                     {"data": null},
                     {"data": "event_info"},
+                    {"data": "device"},
                     {"data": "creation"},
                     {"data": "event_type"},
-                    {"data": "device"},
                     {"data": "event_level"},
                     {"data": "name"},
                     {"data": "disposed"}
@@ -276,8 +274,8 @@
                 },
                 rowCallback: function (row, data, dataIndex) {
                     //时间截取----- 毫秒
-                    var timeText = $(row).children('td').eq(2).text();
-                    $(row).children('td').eq(2).text(timeText.substring(0,19));
+                    var timeText = $(row).children('td').eq(3).text();
+                    $(row).children('td').eq(3).text(timeText.substring(0,19));
                     //判断是否确认消息
                     if($(row).children('td').eq(7).text() == 0 ){
                         console.log('未确认');
@@ -301,7 +299,7 @@
                     {
                         //   指定第第2列
                         targets: [1],
-                        width: '55%',
+                        width: '25%',
                         render: function (data, type, row, meta) {
                             return '<i class="on"></i>' + data;
                         }
@@ -309,7 +307,7 @@
                     {
                         //   指定第第3列
                         targets: [2],
-                        width: '20%'
+                        width: '25%'
                     },
                     {
                         //   指定第第4列
@@ -318,14 +316,15 @@
                     },
                     {
                         //   指定第第5列
-                        className:"hide_column",
-                        targets: [4]
-
+                        // className:"hide_column",
+                        targets: [4],
+                        width: '13%'
                     },
                     {
                         //   指定第第6列
-                        className:"hide_column",
-                        targets: [5]
+                        // className:"hide_column",
+                        targets: [5],
+                        width: '12%'
                     },
                     {
                         //   指定第第7列
@@ -339,7 +338,8 @@
                     }
 
                 ],
-                "order" : [ [ 1, 'asc' ] ]
+                "order" : [ [ 1, 'asc' ] ],
+                'order' : [2,'desc']
             });
 
         //点击行进入详情
@@ -621,6 +621,7 @@
                                 title.eq(i).removeClass('disposed');
                             });
                             $("#platform_message").dataTable().fnDraw(true);
+                            document.execCommand('Refresh')
                         },
                         error:function(error){
                             console.log('error')

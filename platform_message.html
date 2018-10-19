@@ -111,14 +111,14 @@
                 <thead>
                 <tr>
                     <th><label class="checkbox"><input index="0" name="select_all" type="checkbox" class="box"><em></em></label></th>
-                    <th>消息内容</th>
+                    <th>标题</th>
+                    <th>设备号</th>
                     <th>发生时间</th>
                     <th>消息类型</th>
-                    <th>序列号</th>
                     <th>用户</th>
                     <th>ID</th>
                     <th>状态</th>
-                    <th>离线</th>
+                    <th>内容 </th>
                 </tr>
                 </thead>
             </table>
@@ -181,6 +181,7 @@
                 data:JSON.stringify(myfilters),
                 success: function (data) {
                     callback(data);
+                    console.log(data);
                 }
             })
         };
@@ -200,9 +201,9 @@
                 "columns": [
                     {"data": null},
                     {"data": "subject"},
+                    {"data": "device"},
                     {"data": "creation"},
                     {"data": "operation"},
-                    {"data": "device"},
                     {"data": "user"},
                     {"data": "name"},
                     {"data": "disposed"},
@@ -235,17 +236,26 @@
                 rowCallback: function (row, data, dataIndex) {
                     // console.log($(row));
                     //时间截取----- 毫秒
-                    var timeText = $(row).children('td').eq(2).text();
-                    $(row).children('td').eq(2).text(timeText.substring(0,19));
+                    var timeText = $(row).children('td').eq(3).text();
+                    $(row).children('td').eq(3).text(timeText.substring(0,19));
+                    // //判断是否确认消息
+                    // if($(row).children('td').eq(7).text() == 0 ){
+                    //     $(row).children('td').eq(1).children($("on")).addClass('disposed')
+                    // }else{
+                    //     $(row).children('td').eq(1).children($("on")).removeClass('disposed')
+                    // }
                     //判断是否确认消息
                     if($(row).children('td').eq(7).text() == 0 ){
+                        console.log('未确认');
                         $(row).children('td').eq(1).children($("on")).addClass('disposed')
                     }else{
-                        $(row).children('td').eq(1).children($("on")).removeClass('disposed')
+                        console.log('已确认')
                     }
                     //标题
                     var string = $(row).children('td').eq(8).text();
-                    console.log($.parseJSON(string));
+                    console.log(string);
+                    // console.log('---------------------')
+                    // console.log($.parseJSON(string));
                     if(string.indexOf('ONLINE')>-1){
                         $(row).children('td').eq(8).text('ONLINE')
                     }else if(string.indexOf('OFFLINE')>-1){
@@ -271,7 +281,7 @@
                     {
                         //   指定第第2列
                         targets: [1],
-                        width: '55%',
+                        width: '25%',
                         render: function (data, type, row, meta) {
                             return '<i class="on"></i>' + data;
                         }
@@ -280,7 +290,7 @@
                         //   指定第第3列
                         targets: [2],
                         class:'subject',
-                        width: '20%'
+                        width: '25%'
                     },
                     {
                         //   指定第第4列
@@ -289,14 +299,15 @@
                     },
                     {
                         //   指定第第5列
-                        className:"hide_column",
-                        targets: [4]
-
+                        className:"",
+                        targets: [4],
+                        width: '13%'
                     },
                     {
                         //   指定第第6列
                         className:"hide_column",
-                        targets: [5]
+                        targets: [5],
+                        width: '12%'
                     },
                     {
                         //   指定第第7列 ------  事件id
@@ -316,7 +327,8 @@
                     }
 
                 ],
-                "order" : [ [ 1, 'asc' ] ]
+                "order" : [ [ 1, 'asc' ] ],
+                'order' : [3,'desc']
             });
 
         // 获取全部消息条数 ---- 平台
@@ -492,22 +504,22 @@
             var content = $('.search_keyword1').text();
             if(content == "设备操作"){
                 table
-                    .column(3)
+                    .column(4)
                     .search("Action")
                     .draw();
             }else if(content == "设备状态"){
                 table
-                    .column(3)
+                    .column(4)
                     .search("Status")
                     .draw();
             }else if(content == "所有人变更"){
                 table
-                    .column(3)
+                    .column(4)
                     .search("Owner")
                     .draw();
             }else if(content != ""){
                 table
-                    .column(3)
+                    .column(4)
                     .search("")
                     .draw()
             }
@@ -667,9 +679,9 @@
                 var list = data.message;    //所有消息
                 var aList = [];
                 for(var i=0;i<list.length;i++){
-                    console.log(i)
+                    // console.log(i)
                     // console.log(list[i].disposed)
-                    console.log(title[i])
+                    // console.log(title[i])
                     if(list[i].disposed == 0){
                         aList.push(list[i].name);
                         title.eq(i).removeClass('disposed');
