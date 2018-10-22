@@ -234,37 +234,133 @@
                     }
                 },
                 rowCallback: function (row, data, dataIndex) {
-                    // console.log($(row));
                     //时间截取----- 毫秒
                     var timeText = $(row).children('td').eq(3).text();
                     $(row).children('td').eq(3).text(timeText.substring(0,19));
-                    // //判断是否确认消息
-                    // if($(row).children('td').eq(7).text() == 0 ){
-                    //     $(row).children('td').eq(1).children($("on")).addClass('disposed')
-                    // }else{
-                    //     $(row).children('td').eq(1).children($("on")).removeClass('disposed')
-                    // }
+
+                    // //标题
+                    var string = $(row).children('td').eq(8).text();
+                    var obj = JSON.parse(string);
+                    console.log(obj);
+                    //设备状态
+                    if(obj.hasOwnProperty('device_status')){
+                        $(row).children('td').eq(8).text(obj.device_status);
+                        if(obj.device_status == "ONLINE"){
+                            $(row).children('td').eq(1).html('<span>设备上线</span>');
+                        }else{
+                            $(row).children('td').eq(1).html('<span>设备离线</span>');
+                        }
+                    //设备操作
+                    }else if(obj.hasOwnProperty('action')){
+                        $(row).children('td').eq(8).text("ACTION");
+                        if(obj.channel == "app"){
+                            if(obj.action == "option"){   //开机自启动
+                                if(obj.data.value == 1){
+                                    $(row).children('td').eq(1).html('<span>开启应用'+obj.data.inst+'开机自启动</span>');
+                                }else if(obj.data.value == 0){
+                                    $(row).children('td').eq(1).html('<span>关闭应用'+obj.data.inst+'开机自启动</span>');
+                                }
+                            }else if(obj.action == "restart"){
+                                $(row).children('td').eq(1).html('<span>重启应用'+obj.data.inst+'</span>');
+                            }else if(obj.action == "start"){
+                                $(row).children('td').eq(1).html('<span>启动应用'+obj.data.inst+'</span>');
+                            }else if(obj.action == "stop"){
+                                $(row).children('td').eq(1).html('<span>停止应用'+obj.data.inst+'</span>');
+                            }else if(obj.action == "conf"){
+                                $(row).children('td').eq(1).html('<span>更改应用'+obj.data.inst+'应用配置</span>');
+                            }else if(obj.action == "upload_comm"){
+                                if(obj.data.sec == 0){
+                                    $(row).children('td').eq(1).html('<span>停止上传应用'+obj.data.inst+'报文</span>');
+                                }else if(obj.data.sec == 120){
+                                    $(row).children('td').eq(1).html('<span>上传应用'+obj.data.inst+'报文</span>');
+                                }
+                            }else if(obj.action == "install"){
+                                $(row).children('td').eq(1).html('<span>安装应用'+obj.data.name+'实例名'+obj.data.inst+'</span>');
+                            }else if(obj.action == "uninstall"){
+                                $(row).children('td').eq(1).html('<span>卸载应用'+obj.data.inst+'</span>');
+                            }else if(obj.action == "query_comm"){
+                                $(row).children('td').eq(1).html('<span>应用'+obj.data.inst+'查询报文</span>');
+                            }else if(obj.action == "query_log"){
+                                $(row).children('td').eq(1).html('<span>应用'+obj.data.inst+'查询日志</span>');
+                            }else if(obj.action == "list"){
+                                $(row).children('td').eq(1).html('<span>刷新应用列表</span>');
+                            }else if(obj.action == "upgrade"){
+                                $(row).children('td').eq(1).html('<span>应用'+obj.data.inst+'升级到最新版本</span>');
+                            }else if(obj.action == "rename"){
+                                $(row).children('td').eq(1).html('<span>应用'+obj.data.inst+'重命名为'+obj.data.new_name+'</span>');
+                            }
+                        }  //app
+                        else if(obj.channel == "sys"){
+                            if(obj.action == "enable/beta"){
+                                if(obj.data == 0){
+                                    $(row).children('td').eq(1).html('<span>网关关闭beta模式</span>');
+                                }else if(obj.data == 1){
+                                    $(row).children('td').eq(1).html('<span>网关开启beta模式</span>');
+                                }
+                            }else if(obj.action == "enable/data"){
+                                if(obj.data == 0){
+                                    $(row).children('td').eq(1).html('<span>网关关闭数据上传</span>');
+                                }else if(obj.data == 1){
+                                    $(row).children('td').eq(1).html('<span>网关开启数据上传</span>');
+                                }
+                            }else if(obj.action == "enable/log"){
+                                if(obj.data == ""){
+                                    $(row).children('td').eq(1).html('<span>网关关闭日志上送</span>');
+                                }else if(obj.data == 120){
+                                    $(row).children('td').eq(1).html('<span>网关开启日志上送</span>');
+                                }
+                            }else if(obj.action == "enable/comm"){
+                                if(obj.data.sec == 0){
+                                    $(row).children('td').eq(1).html('<span>网关停止报文上送</span>');
+                                }else if(obj.data.sec == 120){
+                                    $(row).children('td').eq(1).html('<span>网关开启报文上送</span>');
+                                }
+                            }else if(obj.action == "restart"){
+                                $(row).children('td').eq(1).html('<span>网关IOT程序重启</span>');
+                            }else if(obj.action == "reboot"){
+                                $(row).children('td').eq(1).html('<span>网关设备重启</span>');
+                            }else if(obj.action == "cloud_conf"){
+                                $(row).children('td').eq(1).html('<span>网关云中心配置选项更新</span>');
+                            }else if(obj.action == "enable/data_one_short"){
+                                if(obj.data.sec == ""){
+                                    $(row).children('td').eq(1).html('<span>网关关闭临时上传数据</span>');
+                                }else if(obj.data.sec == 120){
+                                    $(row).children('td').eq(1).html('<span>网关开启临时上传数据</span>');
+                                }
+                            }else if(obj.action == "ext/upgrade"){
+                                $(row).children('td').eq(1).html('<span>网关更新扩展库'+obj.data.name+'</span>');
+                            }else if(obj.action == "ext/list"){
+                                $(row).children('td').eq(1).html('<span>网关上传扩展库列表	</span>');
+                            }else if(obj.action == "cfg/download"){
+                                $(row).children('td').eq(1).html('<span>网关IOT固件配置下载</span>');
+                            }else if(obj.action == "cfg/upload"){
+                                $(row).children('td').eq(1).html('<span>网关IOT固件配置上传</span>');
+                            }else if(obj.action == "upgrade"){
+                                $(row).children('td').eq(1).html('<span>网关升级到最新版本</span>');
+                            }else if(obj.action == "enable/event"){
+                                $(row).children('td').eq(1).html('<span>网关更改事件上传等级</span>');
+                            }else if(obj.action == "enable/stat"){
+                                $(row).children('td').eq(1).html('<span>网关开启统计数据上传</span>');
+                            }else if(obj.action == "batch_script"){
+                                $(row).children('td').eq(1).html('<span>网关执行批量操作</span>');
+                            }else if(obj.action == "upgrade/ack"){
+                                $(row).children('td').eq(1).html('<span>网关IOT固件升级确认</span>');
+                            }
+                        }  //sys
+                        else if(obj.channel == "command"){
+                            $(row).children('td').eq(1).html('<span>网关应用设备执行'+obj.data.cmd+'指令</span>');
+                        } //command
+                        else if(obj.channel == "putput"){
+                            $(row).children('td').eq(1).html('<span>网关设备应用'+obj.data.output+'数据输出</span>');
+                        }  //output
+                    }
+
                     //判断是否确认消息
                     if($(row).children('td').eq(7).text() == 0 ){
-                        console.log('未确认');
-                        $(row).children('td').eq(1).children($("on")).addClass('disposed')
+                        $(row).children('td').eq(1).prepend('<i class="on disposed"></i>')
                     }else{
-                        console.log('已确认')
+                        console.log($(row).children('td').eq(1))
                     }
-                    //标题
-                    var string = $(row).children('td').eq(8).text();
-                    console.log(string);
-                    // console.log('---------------------')
-                    // console.log($.parseJSON(string));
-                    if(string.indexOf('ONLINE')>-1){
-                        $(row).children('td').eq(8).text('ONLINE')
-                    }else if(string.indexOf('OFFLINE')>-1){
-                        $(row).children('td').eq(8).text('OFFLINE')
-                    }
-                    var device = $(row).children('td').eq(4).text();
-                    var isLine = $(row).children('td').eq(8).text();
-                    $(row).children('td').eq(1).text("Device                    "+device+"                    "+isLine);
-
                 },
                 columnDefs: [
                     {
@@ -283,7 +379,7 @@
                         targets: [1],
                         width: '25%',
                         render: function (data, type, row, meta) {
-                            return '<i class="on"></i>' + data;
+                            return data;
                         }
                     },
                     {
@@ -363,21 +459,6 @@
                 console.log(error)
             }
         });
-        //获取表格所有行
-        var nTrs = $('#platform_message').dataTable().fnGetNodes();
-        var nTr = $('#platform_message').dataTable().Rows;
-        // console.log(nTr)
-        // console.log(nTrs)
-        // for(var i=0;i<nTrs.length;i++){
-        //         console.log(nTrs[i]);//fnGetData获取一行的数据
-        // }
-
-        // function getTableContent(){
-        //     var nTrs = table.fnGetNodes();//fnGetNodes获取表格所有行，nTrs[i]表示第i行tr对象
-        //     for(var i = 0; i < nTrs.length; i++){
-        //         console.log('[获取数据]' + table.fnGetData(nTrs[i]));//fnGetData获取一行的数据
-        //     }
-        // }
 
         //点击行进入详情
         $('#platform_message tbody').on('click','tr td:nth-child(2)',function() {
@@ -552,7 +633,6 @@
     // 全选
     var $selectAll = $('input[name=select_all]');
     var $selectSingle = $('input[name=select_single]');
-    console.log($selectSingle);
     $selectAll.click(function () {
         console.log('全选');
         if ($selectAll.prop("checked") == true) {
@@ -664,9 +744,10 @@
     // });
     //确认所有消息
     $('.confirmationAll').click(function () {
-        $("#platform_message").dataTable().fnDraw(true);
-        console.log('ok')
+        // $("#platform_message").dataTable().fnDraw(true);
+        // console.log('ok')
         var title = $('#device_message tbody tr td:nth-child(2)>i');
+        console.log(title)
         $.ajax({
             url: "/apis/api/method/iot.user_api.device_activity",
             type: "POST",
@@ -679,9 +760,6 @@
                 var list = data.message;    //所有消息
                 var aList = [];
                 for(var i=0;i<list.length;i++){
-                    // console.log(i)
-                    // console.log(list[i].disposed)
-                    // console.log(title[i])
                     if(list[i].disposed == 0){
                         aList.push(list[i].name);
                         title.eq(i).removeClass('disposed');
@@ -712,11 +790,14 @@
                     });
                     $('.disposed_message').text(0);
                 }else{
-                    alt("暂时没有未读消息",2)
+                    alt("暂时没有未读消息",3)
                 }
             },
             error: function (error) {
                 console.log(error)
+            },
+            complete: function () {
+                window.location.reload();
             }
         });
     });

@@ -62,10 +62,6 @@
                     <td id="owner_company"></td>
                 </tr>
                 <tr>
-                    <td>触发用户用户名</td>
-                    <td id="user"></td>
-                </tr>
-                <tr>
                     <td>发生时间</td>
                     <td id="creation"></td>
                 </tr>
@@ -130,7 +126,6 @@
                     $("#subject").text(data.event_info);
                     $("#device").text(data.device);
                     $("#owner_company").text(data.owner_company);
-                    $("#user").text(data.modified_by);
                     $("#creation").text(data.event_time);
                     if(data.event_level == 99){
                         $("#event_level").text("致命");
