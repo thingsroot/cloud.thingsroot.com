@@ -210,7 +210,7 @@
                     {"data": "message"}
                 ],
                 "language": {
-                    "sProcessing": "处理中...",
+                    "sProcessing": "",
                     "sLengthMenu": "显示 _MENU_ 项结果",
                     "sZeroRecords": "没有匹配结果",
                     "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
@@ -239,20 +239,23 @@
                     $(row).children('td').eq(3).text(timeText.substring(0,19));
 
                     // //标题
-                    var string = $(row).children('td').eq(8).text();
-                    var obj = JSON.parse(string);
+                    var str = $(row).children('td').eq(8).text();
+                    var obj = eval("("+str+")");
                     console.log(obj);
+                    console.log(obj.device_status);
+                    console.log(obj.hasOwnProperty('device_status'))
                     //设备状态
                     if(obj.hasOwnProperty('device_status')){
-                        $(row).children('td').eq(8).text(obj.device_status);
+
+                        // $(row).children('td').eq(8).text(obj.device_status);
                         if(obj.device_status == "ONLINE"){
                             $(row).children('td').eq(1).html('<span>设备上线</span>');
-                        }else{
+                        }else if(obj.device_status == "OFFLINE"){
                             $(row).children('td').eq(1).html('<span>设备离线</span>');
                         }
                     //设备操作
                     }else if(obj.hasOwnProperty('action')){
-                        $(row).children('td').eq(8).text("ACTION");
+                        // $(row).children('td').eq(8).text("ACTION");
                         if(obj.channel == "app"){
                             if(obj.action == "option"){   //开机自启动
                                 if(obj.data.value == 1){
@@ -359,7 +362,7 @@
                     if($(row).children('td').eq(7).text() == 0 ){
                         $(row).children('td').eq(1).prepend('<i class="on disposed"></i>')
                     }else{
-                        console.log($(row).children('td').eq(1))
+                        // console.log($(row).children('td').eq(1))
                     }
                 },
                 columnDefs: [
@@ -418,7 +421,7 @@
                     ,
                     {
                         //   指定第第9列 -------  设备状态
-                        // className:"hide_column",
+                        className:"hide_column",
                         targets: [8]
                     }
 
