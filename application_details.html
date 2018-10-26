@@ -177,13 +177,7 @@
                     <!--版本列表-->
                     <div class="tab-pane fade" id="C">
                         <button class="uploadNewVersion">上传新版本</button>
-                        <ul class="app_version">
-                            <!--<li>-->
-                            <!--<p><span>版本号：</span><span>1764</span></p>-->
-                            <!--<p><span>更新时间：</span><span>2018-09-09</span></p>-->
-                            <!--<p><span>功能介绍：</span><span>去问问而为丰富大V上档次地方</span></p>-->
-                            <!--</li>-->
-                        </ul>
+                        <ul class="app_version"></ul>
                         <p class="no_version">暂时还没有更新版本！</p>
                     </div>
                     <!--模板列表-->
@@ -192,7 +186,7 @@
                             <!--<li>-->
                             <!--<p><span>版本号：</span><span>1764</span></p>-->
                             <!--<p><span>更新时间：</span><span>2018-09-09</span></p>-->
-                            <!--<p><span>功能介绍：</span><span>去问问而为丰富大V上档次地方</span></p>-->
+                            <!--<p><span>更新日志：</span><span>去问问而为丰富大V上档次地方</span></p>-->
                             <!--</li>-->
                         </ul>
                         <p class="no_version">暂时还没有更新版本！</p>
@@ -338,7 +332,7 @@
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
                         '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,19) +'</span></p>'+
-                        '<p><span>功能介绍：</span><span>'+ datas.comment +'</span></p>'+
+                        '<p><span>更新日志：</span><span>'+ datas.comment +'</span></p>'+
                         '</li>'
                     )
                 }
@@ -699,7 +693,7 @@
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ num +'</span></p>'+
                         '<p><span>更新时间：</span><span>'+ nowDate +'</span></p>'+
-                        '<p><span>功能介绍：</span><span>'+ desc +'</span></p>'+
+                        '<p><span>更新日志：</span><span>'+ desc +'</span></p>'+
                         '</li>'
                     );
                     $('#version').val("");
