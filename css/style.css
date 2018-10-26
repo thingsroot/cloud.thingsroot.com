@@ -2682,7 +2682,7 @@ th .on{
 	right: 100px;
 	cursor: pointer;
 }
-.no_comment,.no_version{
+.no_comment,.no_version,.no_template{
 	display: none;
 	width: 100%;
 	text-align: center;
@@ -3106,5 +3106,12 @@ th .on{
 .cursor{
 	cursor: pointer;
 }
-
+#goBack{
+	color: #354E77;
+	font-weight: lighter;
+	font-size: 20px;
+	position: absolute;
+	right: 90px;
+	top: 30px;
+}
 

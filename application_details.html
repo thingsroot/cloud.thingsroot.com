@@ -42,7 +42,6 @@
             display: inline-block;
             width: 80px;
         }
-
     </style>
 </head>
 <body>
@@ -86,7 +85,7 @@
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
         <!-- 标题 -->
-        <div class="details_title"><span class="version_name app_name"></span>&nbsp;>&nbsp;<span class="version_option">描述</span></div>
+        <div class="details_title"><span class="version_name app_name"></span>&nbsp;>&nbsp;<span class="version_option">描述</span><i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i></div>
         <!--应用列表start-->
         <div class="app_details">
             <div class="app_infomation">
@@ -178,7 +177,7 @@
                     <div class="tab-pane fade" id="C">
                         <button class="uploadNewVersion">上传新版本</button>
                         <ul class="app_version"></ul>
-                        <p class="no_version">暂时还没有更新版本！</p>
+                        <p class="no_version">暂时还没有上传版本！</p>
                     </div>
                     <!--模板列表-->
                     <div class="tab-pane fade" id="D">
@@ -189,7 +188,7 @@
                             <!--<p><span>更新日志：</span><span>去问问而为丰富大V上档次地方</span></p>-->
                             <!--</li>-->
                         </ul>
-                        <p class="no_version">暂时还没有更新版本！</p>
+                        <p class="no_template">暂时还没有上传模板！</p>
                     </div>
                 </div>
             </div>
@@ -536,7 +535,7 @@
                 // console.log(req);
                 if(JSON.stringify(req) == "{}"){
                     $('.app_list').addClass('hd');
-                    $('.no_version').css('display','block');
+                    $('.no_template').css('display','block');
                 }else{
                     for(var i=0;i<req.message.length;i++){
                         $('.temp_list').append(
@@ -696,11 +695,14 @@
                         '<p><span>更新日志：</span><span>'+ desc +'</span></p>'+
                         '</li>'
                     );
+                    $('.no_version').hide();
+                    $('.progress-bar').css('width','1%');
                     $('#version').val("");
                     $('#explain').val("");
                     $('#app_file').val("");
                     $('.uploadVersion').hide();
                     document.body.style.overflow='auto';
+
                 },
                 error: function () {
                     alt('新版本上传失败',2);
