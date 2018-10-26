@@ -3103,5 +3103,8 @@ th .on{
 .temp_title>div>div{
 	margin-left: 14px;
 }
+.cursor{
+	cursor: pointer;
+}
 
 

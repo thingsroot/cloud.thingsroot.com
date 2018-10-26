@@ -72,7 +72,7 @@
                             <li data-name=""><a style="cursor:pointer">全部消息类型</a></li>
                             <li data-name="Status"><a style="cursor:pointer">设备状态</a></li>
                             <li data-name="Action"><a style="cursor:pointer">设备操作</a></li>
-                            <li data-name="Owner"><a style="cursor:pointer">所有人变更</a></li>
+                            <!--<li data-name="Owner"><a style="cursor:pointer">所有人变更</a></li>-->
                         </ul>
                     </div>
                     <div class="btn-group search_filter2" role="group">
@@ -96,6 +96,8 @@
                                 </button>
                                 <ul class="dropdown-menu" id="version">
                                     <li data-name=""><a style="cursor:pointer">名称</a></li>
+                                    <li data-name=""><a style="cursor:pointer">序列号</a></li>
+                                    <li data-name=""><a style="cursor:pointer">用户</a></li>
                                 </ul>·
                             </div><!-- /btn-group -->
                             <input type="text" class="form-control J_keyword"  placeholder="输入关键词">
@@ -237,16 +239,11 @@
                     //时间截取----- 毫秒
                     var timeText = $(row).children('td').eq(3).text();
                     $(row).children('td').eq(3).text(timeText.substring(0,19));
-
-                    // //标题
+                    //标题
                     var str = $(row).children('td').eq(8).text();
                     var obj = eval("("+str+")");
-                    console.log(obj);
-                    console.log(obj.device_status);
-                    console.log(obj.hasOwnProperty('device_status'))
                     //设备状态
                     if(obj.hasOwnProperty('device_status')){
-
                         // $(row).children('td').eq(8).text(obj.device_status);
                         if(obj.device_status == "ONLINE"){
                             $(row).children('td').eq(1).html('<span>设备上线</span>');
@@ -376,50 +373,41 @@
                             var gen_html = '<label class="checkbox"><input index="0" name="select_single" type="checkbox" class="box"><em></em></label>';
                             return gen_html;
                         }
-                    },
-                    {
+                    }, {
                         //   指定第第2列
                         targets: [1],
                         width: '25%',
                         render: function (data, type, row, meta) {
                             return data;
                         }
-                    },
-                    {
+                    }, {
                         //   指定第第3列
                         targets: [2],
                         class:'subject',
                         width: '25%'
-                    },
-                    {
+                    }, {
                         //   指定第第4列
                         targets: [3],
                         width: '20%'
-                    },
-                    {
+                    }, {
                         //   指定第第5列
                         className:"",
                         targets: [4],
                         width: '13%'
-                    },
-                    {
+                    }, {
                         //   指定第第6列
                         className:"hide_column",
                         targets: [5],
                         width: '12%'
-                    },
-                    {
+                    }, {
                         //   指定第第7列 ------  事件id
                         className:"hide_column",
                         targets: [6]
-                    },
-                    {
+                    }, {
                         //   指定第第8列 -------  是否查看
                         className:"hide_column",
                         targets: [7]
-                    }
-                    ,
-                    {
+                    }, {
                         //   指定第第9列 -------  设备状态
                         className:"hide_column",
                         targets: [8]
@@ -435,12 +423,9 @@
             url:"/apis/api/method/iot.user_api.count_device_activity",
             type:"GET",
             success:function (req) {
-                console.log(req.message);
                 $('.allMessage').text(req.message);
-            },
-            error:function (error) {
+            }, error:function (error) {
                 console.log('error');
-                console.log(error);
             }
         });
         //获取未读信息条数
@@ -494,7 +479,7 @@
                 date1 = timestampToTime(an_hour_ago);
                 var param1 = {
                     start: 0,
-                    limit: 20,
+                    limit: 100,
                     filters: {
                         creation:[">",date1]
                     }
@@ -517,8 +502,6 @@
                 }
                 table.settings()[0].ajax = myajax1;
                 table.ajax.reload();
-
-
             }else if(content == "24小时"){
                 //获取当前时间前24小时
                 var dataSet2 = [];
@@ -526,7 +509,7 @@
                 var date2 = timestampToTime(one_day_ago);
                 var param2 = {
                     start: 0,
-                    limit: 40,
+                    limit: 100,
                     filters: {
                         creation:[">",date2]
                     }
@@ -552,7 +535,7 @@
                 console.log(date3);
                 var param3 = {
                     start: 0,
-                    limit: 60,
+                    limit: 400,
                     filters: {
                         creation:[">",date3]
                     }
@@ -596,11 +579,6 @@
                     .column(4)
                     .search("Status")
                     .draw();
-            }else if(content == "所有人变更"){
-                table
-                    .column(4)
-                    .search("Owner")
-                    .draw();
             }else if(content != ""){
                 table
                     .column(4)
@@ -620,7 +598,7 @@
             }
             if($('.search_keyword3').text()=="序列号"){
                 table
-                    .columns(4)
+                    .columns(2)
                     .search(key)
                     .draw();            }
             if($('.search_keyword3').text()=="用户"){
@@ -631,179 +609,153 @@
             }
 
         } );
-    });
 
-    // 全选
-    var $selectAll = $('input[name=select_all]');
-    var $selectSingle = $('input[name=select_single]');
-    $selectAll.click(function () {
-        console.log('全选');
-        if ($selectAll.prop("checked") == true) {
-            // 上面的复选框已被选中
-            $(":checkbox[name='select_single']").prop("checked", true);
-        } else {
-            // 上面的复选框没被选中
-            $(":checkbox[name='select_single']").prop("checked", false);
-        }
-    });
-
-    //确认消息
-    $('.confirmation').click(function () {
-        var checkBox = $('input:checkbox[name=select_single]');
-        var eventId = $('#platform_message tbody tr td:nth-child(7)');
-        var title = $('#platform_message tbody tr td:nth-child(2)>i');
-        var dm = $('.disposed_message').text();
-        var arr = [];
-        console.log(checkBox.length);
-        console.log(eventId.length);
-        checkBox.each(function (i) {
-            if(checkBox[i].checked == true){
-                var ids = eventId.eq(i).text();
-                if(ids != 'undefined'){
-                    arr.push(ids);   //得到记录ID，放到arr数组中
-                }
-            }
-        })
-        console.log(arr);
-        //确认消息
-        var dataS = {
-            "disposed":1,
-            "activities": arr
-        };
-        console.log(dataS);
-        if( arr != 0 ){
-            $.ajax({
-                url:"/apis/api/method/iot.user_api.dispose_device_activities",
-                type:"POST",
-                data:JSON.stringify(dataS),
-                contentType:"application/json",
-                // dataType:'JSON',
-                success:function(data){
-                    checkBox.each(function (i) {
-                        if(checkBox[i].checked == true){
-                            checkBox[i].checked = false;
-                            var a = title.eq(i);
-                            a.removeClass('disposed')
-                        }
-                        if(dm>=10){
-                            $(".disposed_message").text( dm - arr.length )
-                        }else if(dm<=0){
-                            $(".disposed_message").text("0")
-                        }
-
-                    })
-
-                },
-                error:function(error){
-                    console.log('error')
-                }
-            });
-        }else{
-            alt("请选择需要确认的信息",2)
-        }
-    });
-
-    //确认所有消息
-    // $('.confirmationAll').click(function () {
-    //     var title = $('#platform_message tbody tr td:nth-child(2)>i');
-    //     $.ajax({
-    //         url: "/apis/api/method/iot.user_api.device_activity",
-    //         type: "POST",
-    //         dataType: "json", //返回数据格式json
-    //         success: function (data) {
-    //             var list = data.message;
-    //             var aList = [];   //所有唯独消息的记录ID集合
-    //             for(var i=0;i<list.length;i++){
-    //                if(list[i].disposed == 0){
-    //                    aList.push(list[i].name);
-    //                    //确认消息
-    //                    var dataS = {
-    //                        "disposed":1,
-    //                        "activities": aList
-    //                    };
-    //                    $.ajax({
-    //                        url:"apis/api/method/iot.user_api.dispose_device_activities",
-    //                        type:"POST",
-    //                        data:JSON.stringify(dataS),
-    //                        contentType:"application/json",
-    //                        dataType:'JSON',
-    //                        success:function(data){
-    //                            title.each(function (i) {
-    //                                title.eq(i).removeClass('disposed');
-    //                            });
-    //                        },
-    //                        error:function(error){
-    //                            console.log('error')
-    //                        }
-    //                    })
-    //                }
-    //                $('.disposed_message').text(0);
-    //             }
-    //         },
-    //         error: function (error) {
-    //             console.log(error)
-    //         }
-    //     });
-    // });
-    //确认所有消息
-    $('.confirmationAll').click(function () {
-        // $("#platform_message").dataTable().fnDraw(true);
-        // console.log('ok')
-        var title = $('#device_message tbody tr td:nth-child(2)>i');
-        console.log(title)
-        $.ajax({
-            url: "/apis/api/method/iot.user_api.device_activity",
-            type: "POST",
-            data:{
-                'start':0,
-                'limit':500
-            },
-            dataType: "json",
-            success: function (data) {
-                var list = data.message;    //所有消息
-                var aList = [];
-                for(var i=0;i<list.length;i++){
-                    if(list[i].disposed == 0){
-                        aList.push(list[i].name);
-                        title.eq(i).removeClass('disposed');
-                    }
-                }
-                console.log('list'+aList);
-                //确认消息
-                if(aList.length != 0){
-                    var dataS = {
-                        "disposed":1,
-                        "activities": aList
-                    };
-                    $.ajax({
-                        url:"/apis/api/method/iot.user_api.dispose_device_activities",
-                        type:"POST",
-                        data:JSON.stringify(dataS),
-                        contentType:"application/json",
-                        dataType:'JSON',
-                        success:function(data){
-                            title.each(function (i) {
-                                title.eq(i).removeClass('disposed');
-                            });
-                            $("#platform_message").dataTable().fnDraw(true);
-                        },
-                        error:function(error){
-                            console.log('error')
-                        }
-                    });
-                    $('.disposed_message').text(0);
-                }else{
-                    alt("暂时没有未读消息",3)
-                }
-            },
-            error: function (error) {
-                console.log(error)
-            },
-            complete: function () {
-                window.location.reload();
+        // 全选
+        var $selectAll = $('input[name=select_all]');
+        var $selectSingle = $('input[name=select_single]');
+        $selectAll.click(function () {
+            console.log('全选');
+            if ($selectAll.prop("checked") == true) {
+                // 上面的复选框已被选中
+                $(":checkbox[name='select_single']").prop("checked", true);
+            } else {
+                // 上面的复选框没被选中
+                $(":checkbox[name='select_single']").prop("checked", false);
             }
         });
+
+        //确认消息
+        $('.confirmation').click(function () {
+            var checkBox = $('input:checkbox[name=select_single]');
+            var eventId = $('#platform_message tbody tr td:nth-child(7)');
+            var title = $('#platform_message tbody tr td:nth-child(2)>i');
+            var dm = $('.disposed_message').text();
+            var arr = [];
+            console.log(checkBox.length);
+            console.log(eventId.length);
+            checkBox.each(function (i) {
+                if(checkBox[i].checked == true){
+                    var ids = eventId.eq(i).text();
+                    if(ids != 'undefined'){
+                        arr.push(ids);   //得到记录ID，放到arr数组中
+                    }
+                }
+            })
+            console.log(arr);
+            //确认消息
+            var dataS = {
+                "disposed":1,
+                "activities": arr
+            };
+            console.log(dataS);
+            if( arr != 0 ){
+                $.ajax({
+                    url:"/apis/api/method/iot.user_api.dispose_device_activities",
+                    type:"POST",
+                    data:JSON.stringify(dataS),
+                    contentType:"application/json",
+                    // dataType:'JSON',
+                    success:function(data){
+                        checkBox.each(function (i) {
+                            if(checkBox[i].checked == true){
+                                checkBox[i].checked = false;
+                                var a = title.eq(i);
+                                a.removeClass('disposed')
+                            }
+                            if(dm>=10){
+                                $(".disposed_message").text( dm - arr.length )
+                            }else if(dm<=0){
+                                $(".disposed_message").text("0")
+                            }
+
+                        })
+
+                    },
+                    error:function(error){
+                        console.log('error')
+                    }
+                });
+            }else{
+                alt("请选择需要确认的信息",2)
+            }
+        });
+        //点击确认所有消息
+        $('.confirmationAll').click(function () {
+            var title = $('#device_message tbody tr td:nth-child(2)>i');
+            $.ajax({
+                url: "/apis/api/method/iot.user_api.device_activity",
+                type: "POST",
+                data:{
+                    'start':0,
+                    'limit':500
+                },
+                dataType: "json",
+                success: function (data) {
+                    var list = data.message;    //所有消息
+                    var aList = [];
+                    for(var i=0;i<list.length;i++){
+                        if(list[i].disposed == 0){
+                            aList.push(list[i].name);
+                            title.eq(i).removeClass('disposed');
+                        }
+                    }
+                    //确认消息
+                    if(aList.length != 0){
+                        var dataS = {
+                            "disposed":1,
+                            "activities": aList
+                        };
+                        $.ajax({
+                            url:"/apis/api/method/iot.user_api.dispose_device_activities",
+                            type:"POST",
+                            data:JSON.stringify(dataS),
+                            contentType:"application/json",
+                            dataType:'JSON',
+                            success:function(data){
+                                title.each(function (i) {
+                                    title.eq(i).removeClass('disposed');
+                                });
+                                $("#platform_message").dataTable().fnDraw(true);
+                            },
+                            error:function(error){
+                                console.log('error')
+                            }, complete: function () {
+                                if(aList.length != 0){
+                                    var myfilters = {
+                                        start: 0,
+                                        limit: 100
+                                    };
+                                    var myajax11 = function(data, callback, oSettings ) {
+                                        return $.ajax({
+                                            url: "/apis/api/method/iot.user_api.device_activity",
+                                            type: "POST",
+                                            contentType: "application/json",
+                                            data:JSON.stringify(myfilters),
+                                            success: function (data) {
+                                                callback(data);
+                                                console.log(data);
+                                            }
+                                        })
+                                    };
+                                    table.settings()[0].ajax = myajax11;
+                                    table.ajax.reload();
+                                }
+                            }
+                        });
+                        $('.disposed_message').text(0);
+                    }else{
+                        alt("暂时没有未读消息",3)
+                    }
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+            });
+
+        });
     });
+
+
 
 </script>
 </body>
