@@ -50,7 +50,7 @@
         .template_select{
             position: absolute;
             top: -10px;
-            right: 170px;
+            right: 200px;
         }
         .temp_title{
             color: #333d53;
@@ -71,7 +71,19 @@
             line-height: 34px;
             outline: none;
         }
-
+        .download{
+            position: absolute;
+            top: 4px;
+            right: 170px;
+            font-size: 22px;
+            color: #354E77;
+        }
+        .download:hover{
+            color: #354E77;
+        }
+        .disabled{
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -114,7 +126,7 @@
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
         <!-- 标题 -->
-        <div class="mes_title" style="position: relative;">模板详情 > <span class="temp_name"></span>
+        <div class="mes_title" style="position: relative;">模板详情 > <span class="temp_name"></span> > <span class="temp_desc"></span> > <span class="temp_app"></span>
             <div class="template_select">
                 <span class="temp_title">版本：</span>
                 <div class="btn-group search_filter2" role="group">
@@ -128,7 +140,10 @@
                     </ul>
                 </div>
             </div>
+            <a class="download"><i class="glyphicon glyphicon-download"></i></a>
+            <a class="download disabled"><i class="glyphicon glyphicon-ban-circle"></i></a>
             <button class="create_ver_btn">上传新版本</button>
+            <i id="goBack" style="right: 17px; top: 17px;" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i>
         </div>
         <!-- 表格 -->
         <div class="table" style="margin: 15px;border: 1px solid #E5E9EE;">
@@ -161,6 +176,7 @@
 <script src="js/arrayFun.js" type="text/javascript"></script>
 <script src="js/common.js" type="text/javascript"></script>
 <script src="js/user.js" type="text/javascript"></script>
+<script src="js/fileSaver.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.4.0/papaparse.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.4.0/papaparse.min.js"></script>
 
@@ -192,16 +208,28 @@
         $('#ver_num').val(0);
     }
 
-    $('.temp_name').text($.getUrlParam('name'));
+    //获取模板详情
+    $.ajax({
+        url: "/apis/api/method/conf_center.api.app_conf_detail",
+        type: "GET",
+        data: {name: tempId},
+        success:function (req) {
+            console.log(req)
+            $('.temp_desc').text("模板描述："+req.message.description);
+            $('.temp_app').text("关联应用："+req.message.app_name)
+        },error:function () {}
+    });
+
+    $('.temp_name').text("模板名称："+$.getUrlParam('name'));
 
     function getVersion (v){
-        //获取模板内容
         var data = {
             app     : appId,
             conf    : tempId,
             version : v
         };
         console.log("当前版本"+v);
+        $('.search_keyword2').text(v)
         //模板数据
         $.ajax({
             url:"/apis/api/method/conf_center.api.app_conf_data",
@@ -231,10 +259,11 @@
 
     if(version == "" || version == "undefined"){
         $('.table').html("<H3>还没有上传版本!</H3>");
+        $('.disabled').css("display",'block');
     }else{
         //获取当前data
         getVersion(version);
-    };
+    }
 
     //获取版本列表
     getVerList();
@@ -365,6 +394,34 @@
         }
     });
 
+    //点击下载
+    $('.download').click(function () {
+        var data = {
+            app     : appId,
+            conf    : tempId,
+            version : $('.search_keyword2').text()
+        };
+        $.ajax({
+            url:"/apis/api/method/conf_center.api.app_conf_data",
+            type:"GET",
+            data: data,
+            async: false,
+            success: function(req){
+                console.log(req.message.data);
+                downloadFile("1.csv", req.message.data);
+            },
+            error: function () {console.log('error');}
+        });
+        //创建文件并下载到本地    '\ufeff'指定字符集为utf-8
+        function downloadFile(fileName, content) {
+            var aTag = document.createElement('a');
+            var blob = new Blob(['\ufeff'+content],{ type: "text/csv" });
+            aTag.download = fileName;
+            aTag.href = URL.createObjectURL(blob);
+            aTag.click();
+            URL.revokeObjectURL(blob);
+        }
+    })
 </script>
 
 

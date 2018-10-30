@@ -25,6 +25,7 @@
 			.vakata-context,.vakata-context ul {
 				z-index:999;
 			}
+
 		</style>
 		<title>应用调试</title>
 	</head>
@@ -49,28 +50,26 @@
 					<img src="img/nav_equipment_hover.png" class="hover_img"/>
 					<p class="sublist-title">我的网关</p>
 				</div>
-				<div class="subNav bg-color" onClick="location='application_list.html'">
+				<div class="subNav" onClick="location='application_list.html'">
 					<img src="img/my_app.png" class="hd_img"/>
-					<img src="img/myAPPs.png" class="hover_img"/>
+					<img src="img/my_apps.png" class="hover_img"/>
 					<p class="sublist-title">我的应用</p>
 				</div>
 				<div class="subNav" onClick="location='template.html'">
 					<img src="img/my_app.png" class="hd_img"/>
-					<img src="img/myAPPs.png" class="hover_img"/>
+					<img src="img/my_apps.png" class="hover_img"/>
 					<p class="sublist-title">我的模板</p>
 				</div>
 	  		</div>
 			<div class="right-product my-index right-full" style="padding: 15px 60px 15px 0">
 				<ol class="breadcrumb">
-				    <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
-				    <li class="active"><a href="mine.html">我的网关</a></li>
-				    <li class="active J_gate_name"><a href="#"></a></li>
-				    <li class="active J_current_inst"></li>
-				    <li class="active">应用调试</li>
+				    <li class="active"><a href="mine.html">我的应用</a></li>
+				    <li class="active get_name"><a href="#"></a></li>
+				    <li class="active get_version"></li>
 				</ol>
+				<i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i>
 				<div class="debug_top">
 					<div>
-						<span class="apply"><img src="img/icon_d_01.png" areaname="apply" title="打包并安装到应用"/></span><!--class off关闭-->
 						<span class="tag"><img src="img/icon_d_02.png" areaname="tag" title="发布新版本"/></span>
 						<span class="revert"><img src="img/icon_d_03.png" areaname="revert" title="重置工作区到指定版本"/></span>
 						<span class="folder"><img src="img/icon_d_04.png" areaname="folder" title="新目录"/></span>
@@ -126,8 +125,8 @@
 				<div class="add_content">
 					<!--<div class="tit">发布新版本</div>-->
 					<p>填写版本</p>
-					<input type="text" id="J_tag_version" value="0" />
-					<p>评论</p>
+					<input type="text" id="J_tag_version" value="" />
+					<p>更新日志</p>
 					<textarea rows="5" id="J_tag_comment"></textarea>
 					<div class="checkbox"><label><input class="J_protocol" type="checkbox">我同意使用条款<em></em></label></div>
 					<div class="bottom">
@@ -151,10 +150,12 @@
 				</div>
 			</div>
 		</div>
-		
+
     	<script src="js/debugger.js" type="text/javascript"></script>
 		<!--<script src="js/index.js?v=20180611" type="text/javascript"></script>-->
 		<input type="hidden" value="" id="J_current_inst"><!--当前应用的inst-->
+
+
 
 	</body>
 </html>

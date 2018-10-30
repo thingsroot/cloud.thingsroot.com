@@ -1,8 +1,6 @@
 /**
- * @file            collection.js
- * @description     单个网关管理。
- * @author          dongsun Team ( http://www.dongsun.com/ )
- * @date            2018-03-08 dongsun
+ * @file            debug1.js
+ * @description     应用调试。
  **/
 $(function(){
     var pageSize = 4; // 每页条数
@@ -418,53 +416,6 @@ $(function(){
 
 
 //------------------- 编辑器菜单栏操作
-    //打包并安装到应用 start
-    $('.debug_top .apply').click(function(){
-        var html = $('.J_apply').html();
-        html = html.replace(/value_device_sn/,device_sn);
-        // html = html.replace(/value_inst/,app_inst);
-        layui.use('layer', function(){
-            layui.layer.open({
-                title: '打包修改内容并安装到:',
-                type: 1,
-                skin: 'layui-layer-rim', //加上边框
-                area: ['460px', '400px'], //宽高
-                content: '<div class="ly">'+html+'</div>'
-            });
-        });
-    });
-    $('body').on('click','.ly #J_apply_do',function(){
-        var backend_url = '/api/method/app_center.editor.editor_apply';
-        var args = {
-            'app': cur_app
-            // 'device':$('.ly .J_apply_device').val(),
-            // 'inst':$('.ly .J_apply_inst').val(),
-            // 'version':version
-        };
-        if(!$('.ly .J_protocol').is(':checked')){
-            err('同意使用条款才能操作');
-            return false;
-        }
-        Ajax.call(backend_url, args, apply_do, 'POST', 'JSON', 'FORM',false);
-        function apply_do(req){
-            if(req && typeof(req.message)!=='undefined'){
-                layui.use('layer', function(){
-                    layer.closeAll();
-                });
-                alt('打包并安装成功',1);
-                setTimeout(function(){
-                    layui.use('layer', function(){
-                        window.location.reload();
-                    });
-                },2000);
-            }else{
-                alt('打包并安装失败',1);
-            }
-        }
-    });
-    //打包并安装到应用 end
-
-
     //发布新版本 start
     $('.debug_top .tag').click(function(){
         var html = $('.J_tag').html();
@@ -517,8 +468,6 @@ $(function(){
     });
     //发布新版本 end
 
-
-    //$('.debug_top .upload').click(upload_application); //
     //重置工作区到指定版本 start
     $('.debug_top .revert').click(function(){
         var html = $('.J_revert').html();
@@ -532,9 +481,10 @@ $(function(){
                 $.each(data,function(i,v){
                     version_list += `<option value="${data[i].version}">${data[i].version}</option>`;
                 })
+                localStorage.setItem('version_list',version_list);
 
                 html = html.replace(/version_list/,localStorage.getItem('version_list'));
-
+                console.log(html);
                 layui.use('layer', function(){
                     layui.layer.open({
                         title: '重置编辑器工作区内容到',
@@ -545,8 +495,6 @@ $(function(){
                     });
                 });
             }
-            // console.log('version_list',version_list);
-            localStorage.setItem('version_list',version_list);
         }
     });
     $('body').on('click','.ly #J_revert_do',function(){
@@ -634,7 +582,6 @@ $(function(){
     $('.debug_top .align_justify').click(function () {
         //code_editor.indent();
     });
-
     // ==ok
     var upload_application_file = function(name, content) {
         var backend_url = '/api/method/app_center.editor.editor';
@@ -688,7 +635,6 @@ $(function(){
         //		err('Upload Failed!');
         //	});
     };
-
     var upload_application = function() {
         $('.debug_top.upload').addClass('off');
         for (var name in doc_list) {
@@ -698,46 +644,102 @@ $(function(){
             }
         }
     };
-
-
     // 其他
     $('body').on('click','.J_content_close',function(){
         layui.use('layer', function(){
             layer.closeAll();
         });
     });
+    // 获取当前编辑区的版本号和设备安装版本的对比
 
-    $('.breadcrumb .J_gate_name').click(function(){
-        window.location.href='collection.html?type=manage&device_sn='+device_sn;
-    });
-    //获取当前编辑区的版本号和设备安装版本的对比
+
     Ajax.call('/api/method/app_center.editor.editor_worksapce_version?app=' + cur_app, "", editor_worksapce_version, 'GET', 'JSON', 'FORM');
     function editor_worksapce_version(req){
+        $('.get_version').text("版本"+req.message);
+        // 如果有版本的话，提示现在的版本
         if(req && typeof req.message !== 'undefined') {
-            if(req.message!=version){
-                layui.use('layer', function(){
-                    layui.layer.open({
-                        title: '版本提示',
-                        type: 1,
-                        skin: 'layui-layer-rim', //加上边框
-                        area: ['460px', '210px'], //宽高
-                        content: '<div class="debug_shade"><div class="add_content"><p>当前工作区是基于版本'+req.message+',请将设备中的应用升级到版本'+req.message+'，或者将工作区重置到之前版本。</p><div class="bottom"><button class="J_content_close">我知道了</button></div></div></div>'
-                    });
-                });
-            }
+            $.ajax({
+                url:"/apis/api/method/app_center.api.get_latest_version",
+                type: "GET",
+                data: {app:decodeURI(window.location.href.split("=")[1]),beta:1},
+                success:function(data){
+                    var version = data.message;
+                    if(req.message != version) {
+                        layui.use('layer', function () {
+                            layui.layer.open({
+                                title: '版本提示',
+                                type: 1,
+                                skin: 'layui-layer-rim', //加上边框
+                                area: ['420px', '180px'], //宽高
+                                content: '<div class="debug_shade"><div class="add_content"><p style="text-align: center">当前工作区是基于版本' + req.message + '，当前应用的最新版本为'+ version +'。</p><div class="bottom"><button class="J_content_close">我知道了</button></div></div></div>'
+                            });
+                        });
+                    }else if(req.message == version){
+                        layui.use('layer', function () {
+                            layui.layer.open({
+                                title: '版本提示',
+                                type: 1,
+                                skin: 'layui-layer-rim', //加上边框
+                                area: ['420px', '180px'], //宽高
+                                content: '<div class="debug_shade"><div class="add_content"><p style="text-align: center">当前工作区是基于最新版本' + req.message +'。</p><div class="bottom"><button class="J_content_close">我知道了</button></div></div></div>'
+                            });
+                        });
+                    }
+                }
+            })
+        } else{
+            console.log('kong');
+            //获取最新版本
+            $.ajax({
+                url: "/apis/api/method/app_center.api.get_latest_version",
+                type: "GET",
+                data: {app:decodeURI(window.location.href.split("=")[1]),beta:1},
+                success:function (req) {
+                    console.log('num');
+                    console.log(req);
+                    var num = req.message;
+                    if(num === "undefined"){
+                        $('.get_version').hide();
+                    }else if(num !="undefined"){
+                        $('.get_version').text("版本"+num);
+                    }
+                    //判断有没有最新版本
+                    if(req && req.message  === "undefined"){
+                        alt('暂时还没有版本，请先上传！',3);
+                    }else if(typeof req.message == "number"){
+                        //初始化工作区到最新版本
+                        localStorage.getItem('version_list')
+                        var data = {
+                            app:decodeURI(window.location.href.split("=")[1]),
+                            version: num
+                        };
+                        console.log(data);
+                        $.ajax({
+                            url: "/apis/api/method/app_center.editor.editor_init",
+                            type: "GET",
+                            data: data,
+                            success: function (req) {
+                                console.log('version');
+                                console.log(req);
+                                layui.use('layer', function(){
+                                    layui.layer.open({
+                                        title: '版本提示',
+                                        type: 1,
+                                        skin: 'layui-layer-rim', //加上边框
+                                        area: ['460px','210px'], //宽高
+                                        content: '<div class="debug_shade"><div class="add_content"><p>当前工作区是基于版本'+req.message+',请将设备中的应用升级到版本'+req.message+'，或者将工作区重置到之前版本。</p><div class="bottom"><button class="J_content_close">我知道了</button></div></div></div>'
+                                    });
+                                });
+                            },error:function(){}
+                        })
+                    }
+                },
+                error: function () {
+
+                }
+            })
         }
     }
-
-
-    //$('.debug_top span').mouseover(function(){
-    //	var areaname = $(this).find('img').attr('areaname');
-    //	var title = $(this).find('img').attr('title');
-    //	layui.use(['laypage', 'layer'], function(){
-    //	  	var laypage = layui.laypage,layer = layui.layer;
-    //		layer.tips(title, '.'+areaname,{
-    //		  tips: [1, '#354E77'] //还可配置颜色
-    //		});
-    //	});
-    //});
-
-})
+// 初始化工作区
+    $('.get_name>a').text(decodeURI(window.location.href.split("=")[1]));
+});

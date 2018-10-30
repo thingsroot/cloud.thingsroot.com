@@ -50,8 +50,13 @@
             padding: 5px 8px;
             border: 1px solid #CCCCCC;
         }
-        .is_open{
-            margin-left: 20px;
+        #yingyong>li>a{
+            position: relative;
+        }
+        #yingyong>li>a>span{
+            position: absolute;
+            top: 0;
+            right: 10px;
         }
     </style>
 </head>
@@ -120,7 +125,6 @@
                         <span class="input-group-addon search" id="searchBtn"></span>
                     </div><!-- /input-group -->
                 </div>
-                <span class="glyphicon glyphicon-refresh searchHtml" aria-hidden="true"></span>
             </div>
         </div>
         <!-- 表格 -->
@@ -204,13 +208,13 @@
                         <textarea id="miaoshu" name="miaoshu" cols="65" rows="6"></textarea>
                     </p>
                     <p class="version_file">权&nbsp;&nbsp;&nbsp;&nbsp;限：
-                        <label class="radio ib1"><input id="one" name="belong" value="User" type="radio" class="box"><em></em></label>个人
+                        <label class="radio ib1"><input id="one" checked name="belong" value="User" type="radio" class="box"><em></em></label>个人
                         <label class="radio ib"><input id="two" name="belong" value="Cloud Company Group" type="radio" class="box"><em></em></label>公司
                         <input type="hidden" value="" id="owner_type">
                     </p>
                     <p class="version_file">是否公开：
                         <label class="radio ib1"><input id="two1" name="isOpen" value="1" type="radio" class="box"><em></em></label>公开
-                        <label class="radio ib"><input id="one1" name="isOpen" value="0" type="radio" class="box"><em></em></label>不公开
+                        <label class="radio ib"><input id="one1" checked name="isOpen" value="0" type="radio" class="box"><em></em></label>不公开
                         <input type="hidden" value="" id="checkNum">
                     </p>
                 <p style="padding: 10px 0;text-align: right">
@@ -368,7 +372,7 @@
                     {
                         //   指定第第2列
                         targets: [1],
-                        width: '25%'
+                        width: '20%'
                     },
                     {
                         //   指定第第3列
@@ -388,7 +392,7 @@
                     {
                         //   指定第第6列
                         targets: [5],
-                        width: '20%',
+                        width: '25%',
                         render: function (data, type, row, meta) {
                             var btn = '<button class="temp_btn look">查看</button><button class="temp_btn copy">复制</button><button disabled="disabled" class="temp_btn" style="color: #CCCCCC; border-color: #CCCCCC;">删除</button>';
                             return btn;
@@ -396,7 +400,7 @@
                     },
                     {
                         targets: [6],
-                        // className:"hide_column"
+                        className:"hide_column"
                     },
                     {
                         targets: [7],
@@ -490,7 +494,7 @@
             var tempId2 = _this.find('td:nth-child(7)').text();
             var version = _this.find('td:nth-child(9)').text();
             $('#newTemplate').show();
-            $('#template_name').val(temp_name+"-副本");
+            $('#template_name').val(temp_name+"-copy");
             $('.search_keyword1').text(app);
             $('#miaoshu').val(miaoshu);
             $('#appId').val(appId1);
@@ -599,9 +603,11 @@
     };
     Ajax.call("/apis/api/method/iot_ui.iot_api.appstore_applist",JSON.stringify(data1),getName, 'POST', 'JSON', 'JSON',false)
     function getName(data){
+        console.log('yiingyong')
+        console.log(data)
         var arr = data.message;
         for(var i=0;i<arr.length;i++){
-            $('#yingyong').append('<li data-name=""><a style="cursor:pointer">'+ arr[i].app_name +'</a><input type="hidden" value="'+ arr[i].name +'"></li>')
+            $('#yingyong').append('<li data-name=""><a style="cursor:pointer">'+ arr[i].app_name +'<span>'+arr[i].device_supplier+'</span></a><input type="hidden" value="'+ arr[i].name +'"></li>')
         }
     };
     $('.search_filter1 li').on("click",function(){
