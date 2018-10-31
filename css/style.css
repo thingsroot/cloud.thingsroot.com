@@ -3112,3 +3112,7 @@ th .on{
 	top: 30px;
 }
 
+.isLook{
+	color: #354E77;
+	text-decoration: underline!important;
+}
