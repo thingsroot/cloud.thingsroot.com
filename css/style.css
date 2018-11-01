@@ -2366,11 +2366,12 @@ th .on{
 	color: #4D5054;
 }
 .mes_search>div{
-	width: 38%;
+	width: 650px;
 	padding: 14px 0;
 	float: right;
 	display: flex;
 	justify-items: center;
+	position: relative;
 }
 .mes_search>div>div{
 	margin-left: 14px;
@@ -3115,4 +3116,13 @@ th .on{
 .isLook{
 	color: #354E77;
 	text-decoration: underline!important;
+}
+#glyphicon-refresh{
+	color: #354E77;
+	font-size: 22px;
+	font-weight: bold;
+	float: right;
+	position: absolute;
+	right: 80px;
+	top: 20px;
 }

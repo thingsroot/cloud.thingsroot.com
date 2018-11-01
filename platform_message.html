@@ -22,14 +22,6 @@
             cursor:not-allowed;
             color: #CCCCCC!important;
         }
-        #glyphicon-refresh{
-            color: #354E77;
-            font-size: 22px;
-            font-weight: bold;
-            position: absolute;
-            right: 110px;
-            top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -72,7 +64,7 @@
 
         <div class="mes_content">
             <!-- 功能栏 -->
-            <div class="mes_search" style="position: relative;">
+            <div class="mes_search">
                 <button class="confirmation">确认消息</button>
                 <button class="confirmationAll">确认所有消息</button>
                 <div>
@@ -116,8 +108,8 @@
                             <span class="input-group-addon search"></span>
                         </div><!-- /input-group -->
                     </div>
+                    <i id="glyphicon-refresh" class="glyphicon glyphicon-repeat"></i>
                 </div>
-                <i id="glyphicon-refresh" class="glyphicon glyphicon-repeat"></i>
             </div>
         </div>
         <!-- 表格 -->
@@ -205,7 +197,7 @@
                 "bFilter": true,   //是否启动过滤，搜索功能
                 "sPaginationType": "full_numbers",
                 "iDisplayLength": 10,
-                "processing": true,
+                "processing": false,
                 "ajax": myajax,
                 "sAjaxDataProp": "message",
                 "columns": [
@@ -465,7 +457,6 @@
         });
         //点击查看所有未读消息
         $('.isLook').click(function () {
-
             if($(this).text() == "查看未确认"){
                 $('input[name=isLook]').val(0);   //查看未处理
                 table
@@ -531,14 +522,14 @@
                             oneData = data;
                             if(JSON.stringify(data) == "{}"){
                                 alt('一小时之内暂时没有消息',2);
-                            }else{
+                            }else if(JSON.stringify(data) != "{}"){
                                 console.log(data);
                                 callback(data);
                             }
                         }
                     })
                 }
-                if(JSON.stringify(oneData) !== "{}"){
+                if(JSON.stringify(oneData) != "{}"){
                     table.settings()[0].ajax = myajax1;
                     table.ajax.reload();
                 }
@@ -562,7 +553,12 @@
                         contentType: "application/json",
                         data:JSON.stringify(param2),
                         success: function (data) {
-                            callback(data);
+                            if(JSON.stringify(data) == "{}"){
+                                alt('24小时之内暂时没有消息',2);
+                            }else{
+                                console.log(data);
+                                callback(data);
+                            }
                         }
                     })
                 }
@@ -589,8 +585,12 @@
                         contentType: "application/json",
                         data:JSON.stringify(param3),
                         success: function (data) {
-                            callback(data);
-                            console.log(data)
+                            if(JSON.stringify(data) == "{}"){
+                                alt('三天之内暂时没有消息',2);
+                            }else{
+                                console.log(data);
+                                callback(data);
+                            }
                         }
                     })
                 }
