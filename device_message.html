@@ -59,7 +59,7 @@
             <div class="mes_search">
                 <button class="confirmation">确认消息</button>
                 <button class="confirmationAll">确认所有消息</button>
-                <div style="width: 420px;">
+                <div style="width: 730px;">
                     <div class="btn-group search_filter1" role="group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="search_keyword1" data-search_keyword="1">全部消息类型</span><input type="hidden" name="search_keyword1" value="">
@@ -97,6 +97,23 @@
                             <li data-name="device_time3"><a style="cursor:pointer">错误</a></li>
                             <li data-name="device_time4"><a style="cursor:pointer">致命</a></li>
                         </ul>
+                    </div>
+                    <div class="bs-example J_mineSearchForm">
+                        <div class="input-group"  style="width:300px;">
+                            <div class="input-group-btn search_filter4">
+                                <button type="button" class="btn btn-default dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="search_keyword4" data-search_keyword="1">标题</span><input type="hidden" name="search_keyword3" value="">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" id="version">
+                                    <li data-name=""><a style="cursor:pointer">标题</a></li>
+                                    <li data-name=""><a style="cursor:pointer">序列号</a></li>
+                                </ul>·
+                            </div><!-- /btn-group -->
+                            <input type="text" class="form-control J_keyword"  placeholder="输入关键词">
+                            <span class="input-group-addon search"></span>
+                        </div><!-- /input-group -->
                     </div>
                     <i id="glyphicon-refresh" class="glyphicon glyphicon-repeat"></i>
                 </div>
@@ -339,9 +356,20 @@
 
                 ],
                 "order" : [ [ 1, 'asc' ] ],
-                'order' : [2,'desc']
+                'order' : [3,'desc']
             });
 
+
+        var sn = decodeURI(window.location.href.split("=")[1]);
+        console.log(sn);
+        if(sn != "undefined"){
+            $('input.J_keyword').val(sn);
+            $('.search_keyword4').text("序列号");
+            table
+                .columns(2)
+                .search(sn)
+                .draw();
+        }
         //点击行进入详情
         $('#device_message tbody').on('click','tr td:nth-child(2)',function() {
             console.log($(this));
@@ -367,6 +395,28 @@
                 $(this).text("查看未确认");
             }
         });
+
+        //下拉框--- 关键词
+        $('.search_filter4 li').on('click', function(){
+            $('.search_keyword4').text($(this).text());
+        });
+        //下拉框--- 分类搜索
+        $('input.J_keyword').on( 'keyup click', function () {  //点击搜索框
+            var key = $('input.J_keyword').val();    //搜索框内容
+            if($('.search_keyword4').text()=="序列号"){
+                table
+                    .columns(2)
+                    .search(key)
+                    .draw();
+            }
+            if($('.search_keyword4').text()=="标题"){
+                table
+                    .columns(1)
+                    .search(key)
+                    .draw();
+            }
+
+        } );
 
         // 下拉框--- 时间
         $('.search_filter2 li').on('click', function(){

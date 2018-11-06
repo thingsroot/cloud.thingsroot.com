@@ -638,12 +638,6 @@
         //下拉框--- 分类搜索
         $('input.J_keyword').on( 'keyup click', function () {  //点击搜索框
             var key = $('input.J_keyword').val();    //搜索框内容
-            if($('.search_keyword3').text()=="标题"){
-                table
-                    .columns(1)
-                    .search(key)
-                    .draw();
-            }
             if($('.search_keyword3').text()=="序列号"){
                 table
                     .columns(2)
@@ -655,7 +649,6 @@
                     .search(key)
                     .draw();
             }
-
         } );
 
         // 全选

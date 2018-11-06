@@ -42,6 +42,11 @@
             display: inline-block;
             width: 80px;
         }
+        .upload_btn{
+            position: absolute;
+            right: 180px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +94,7 @@
         <!--应用列表start-->
         <div class="app_details">
             <div class="app_infomation">
-                <img class="app_img" src="img/app.jpg" alt="">
+                <img class="app_img" src="" alt="">
                 <div class="app_right">
                     <p class="app_name"></p>
                     <div>
@@ -276,7 +281,9 @@
             type: "GET",
             data: data,
             success: function (data) {
-                // console.log(data);
+                console.log(data);
+                console.log(data.message.icon_image);
+                $('.app_img').attr("src",data.message.icon_image);
                 $('#formAppId').val(data.message.name);
                 $('.app_name').text(data.message.app_name); //应用名称
                 $('.app_owner').text(data.message.owner);
@@ -331,7 +338,7 @@
                         '<li>'+
                         '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
                         '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,19) +'</span></p>'+
-                        '<p><span>更新日志：</span><span>'+ datas.comment +'</span></p>'+
+                        '<p style="position:relative"><span>更新日志：</span><span>'+ datas.comment +'</span><span class="temp_btn1 upload_btn">申请上传</span></p>'+
                         '</li>'
                     )
                 }

@@ -307,16 +307,8 @@
 
         //提交修改
         $('.app_edit_submit').click(function () {
-            var datas = {
-                app            : decodeURI(window.location.href.split("=")[1]),
-                app_name       : $('#app_name').val(),
-                category       : $('.search_keyword1').text(),
-                device_supplier: $('.search_keyword2').text(),
-                device_serial  : $('#shebeihao').val(),
-                description    :$('#test-editormd>textarea').text(),
-                icon_file     : $('input[name=icon_file]').get(0).files[0]
-            };
-            console.log(datas);
+            var form1 = new FormData(document.getElementById("myForm"));
+            console.log(form1);
             if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
                 $.ajax({
                     url: "/apis/api/method/app_center.appmgr.modify",
@@ -347,7 +339,8 @@
                 device_supplier: $('.search_keyword2').text(),
                 protocol       : $('.search_keyword3').text(),  //协议
                 device_serial  : $('#shebeihao').val(),
-                description    : $('#test-editormd>textarea').val()
+                description    : $('#test-editormd>textarea').val(),
+                icon_file     : $('input[name=icon_file]').files[0]
             };
             console.log(datas);
             if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){

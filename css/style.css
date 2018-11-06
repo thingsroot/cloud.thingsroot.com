@@ -3126,3 +3126,17 @@ th .on{
 	right: 80px;
 	top: 20px;
 }
+
+.app_edit_form>label{
+	position: absolute;
+	left: 0;
+	width: 130px;
+	height: 130px;
+	padding: 10px;
+}
+.app_edit_form>label>img{
+	width: 130px;
+	height: 130px;
+	padding: 10px;
+
+}

@@ -171,7 +171,6 @@ $(function(){
             		if(page_name.search("login") == -1){
                         redirect('login.html');
 					}
-
 				}
 
             }

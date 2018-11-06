@@ -37,87 +37,117 @@ $(function(){
 		// console.log('device_event_count_statistics',items);
 		localStorage.list_device_event_count_statistics_original = JSON.stringify(items.message);
 		localStorage.list_current = JSON.stringify(items.message);
-		//当天
-		display_error_today();
-		//一周
-		display_error_total();
 		$('#J_gateErrorTotal').html(items.message.length);
 	}
 
     /**
     *	当天前10的网关
-    */ 
-	function display_error_today(){
-		var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
-		var html='';
-        //创建新数组
-        var arr1 = [];
-        for (var i = 0; i < data.length; i++) {
-			//判断次数与时间
-			if(data[i].today != '0' && data[i].last_updated.indexOf(t) != -1){
-				arr1.push(data[i]);
-			}
-	    }
-        //渲染表格
-        for(var j=0;j<arr1.length;j++){
-        	console.log(arr1[j].today)
-            html += `
+    */
+    $.ajax({
+        url:"/apis/api/method/iot_ui.iot_api.device_event_count_statistics",
+        type:"GET",
+        success:function (data) {
+            var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
+            var html='';
+            //创建新数组
+            var arr1 = [];
+            for (var i = 0; i < data.length; i++) {
+                //判断次数与时间
+                if(data[i].today != '0' && data[i].last_updated.indexOf(t) != -1){
+                    arr1.push(data[i]);
+                }
+            }
+            //渲染表格
+            for(var j=0;j<arr1.length;j++){
+                html += `
 			    <tr class="myTr">
 			        <td>${j+1}</td>
 			        <td>${arr1[j].name}</td>
 			        <td>${arr1[j].position}</td>
 			        <td>${arr1[j].last_updated}</td>
 			        <td>${arr1[j].today}</td>
+			        <td>${arr1[j].sn}</td>
 			    </tr>`;
+            }
+
+            $('#J_error_today').html(html);
+            if($('#J_error_today').children().length == 0){
+                $('#one>table').hide();
+                $('#one>p').show();
+            }
+        },
+		complete:function () {
+        	var tr_len = $('#J_error_today>tr');
+			for (var q=0;q<tr_len.length;q++){
+				(function(j){
+                    tr_len[j].onclick = function () {
+                        location.href = 'device_message.html?sn=' + $(this).find($('td:nth-child(6)')).text()
+                    };
+                })(q)
+			}
         }
-	    $('#J_error_today').html(html);
-        if($('#J_error_today').children().length == 0){
-        	$('#one>table').hide();
-        	$('#one>p').show();
-		}
-	}
+    })
 
     /**
      *	一周内故障最多
      */
-    function display_error_total(){
-        var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
-        var html1='';
-        //创建新数组
-        var arr2 = [];
-        for (var i = 0; i < data.length; i++) {
-            //判断次数与时间
-			if( data[i].last_updated.indexOf(t) != -1
-            || data[i].last_updated.indexOf(t1) != -1
-            || data[i].last_updated.indexOf(t2) != -1
-            || data[i].last_updated.indexOf(t3) != -1
-            || data[i].last_updated.indexOf(t4) != -1
-            || data[i].last_updated.indexOf(t5) != -1
-            || data[i].last_updated.indexOf(t6) != -1){
-                if(data[i].total != '0'){
-                    arr2.push(data[i]);
+    $.ajax({
+        url:"/apis/api/method/iot_ui.iot_api.device_event_count_statistics",
+        type:"GET",
+        success:function (data) {
+            var data = JSON.parse(localStorage.list_device_event_count_statistics_original);
+            var html1='';
+            //创建新数组
+            var arr2 = [];
+            for (var i = 0; i < data.length; i++) {
+                //判断次数与时间
+                if( data[i].last_updated.indexOf(t) != -1
+                    || data[i].last_updated.indexOf(t1) != -1
+                    || data[i].last_updated.indexOf(t2) != -1
+                    || data[i].last_updated.indexOf(t3) != -1
+                    || data[i].last_updated.indexOf(t4) != -1
+                    || data[i].last_updated.indexOf(t5) != -1
+                    || data[i].last_updated.indexOf(t6) != -1){
+                    if(data[i].total != '0'){
+                        arr2.push(data[i]);
+                    }
                 }
-			}
-        }
-        //渲染表格
-        for(var j=0;j<arr2.length;j++){
-            html1 += `
+            }
+            console.log(arr2)
+            //渲染表格
+            for(var j=0;j<arr2.length;j++){
+                html1 += `
 			    <tr class="myTr">
 			        <td>${j+1} <input type="hidden" value='${arr2[j].sn}'></td>
 			        <td>${arr2[j].name}</td>
 			        <td>${arr2[j].position}</td>
 			        <td>${arr2[j].last_updated}</td>
 			        <td>${arr2[j].total}</td>
+			        <td>${arr2[j].sn}</td>
 			    </tr>`;
+            }
+            $('#J_error_total').html(html1);
+            if($('#J_error_total').children().length == 0){
+                $('#two>table').hide();
+                $('#two>p').show();
+            }
+        },
+        complete:function () {
+            var tr_len = $('#J_error_total>tr');
+            for (var q=0;q<tr_len.length;q++){
+                (function(j){
+                    tr_len[j].onclick = function () {
+                        location.href = 'device_message.html?sn=' + $(this).find($('td:nth-child(6)')).text()
+                    };
+                })(q)
+            }
         }
-        $('#J_error_total').html(html1);
-        if($('#J_error_total').children().length == 0){
-            $('#two>table').hide();
-            $('#two>p').show();
-        }
-    }
+    });
 
-	function device_online_statistics(chart_id, tag_name) {
+
+
+
+    function device_online_statistics(chart_id, tag_name) {
 		// console.log(chart_id);
 		var myChart = echarts.init(document.getElementById(chart_id), 'light');
 		//var url = 'http://iot.symgrid.com/api/method/iot_ui.iot_api.device_status_statistics';
