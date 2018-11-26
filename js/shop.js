@@ -222,17 +222,17 @@ $(function(){
 		// $(".J_install_html").show();
         $(".shade.app-install").show();
 		$(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
-	})
+	});
 	// 应用列表点击立即安装， 显示安装窗口
 	$('.J_appList').on('click','.shop_block .right button',function(){
 		var index = $(this).attr('index');
 		var app_name = $('.J_name_'+index).attr('name');
-		$('.J_app').val(app_name);
+        // location.href = 'application_config.html?name=' + app_name;
 
-
+		// $('.J_app').val(app_name);
 		// $(".J_install_html").show();
         $(".shade.app-install").show();
-		$(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
+		// $(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
 	})
 	
 	/**

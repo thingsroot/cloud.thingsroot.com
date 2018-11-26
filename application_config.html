@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+    <!-- 加载script start -->
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/jquery.timeago.js"></script>
+    <script src="js/transport.js" type="text/javascript"></script>
+    <script src="js/jQuery.cookie.js" type="text/javascript"></script>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/arrayFun.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/user.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+
+    <title>应用配置</title>
+    <style>
+        th,td{ white-space:nowrap;line-height: 40px;padding: 0 20px;text-align: center;}
+        td{min-width: 150px;line-height: 40px;height: 40px;padding: 0 20px;}
+        td input{border:1px solid orange;border-radius:5px;position:absolute;left: 1%;top: 4px;padding: 0 10px;text-align:center;width:98%;height: 34px;font-size:14px;}
+        td.input{padding:0;position:relative;}
+        table{min-width:60%;max-width:90%;}
+        .checkbox{width: 50px;height: 30px;margin: 10px 0;}
+        .checkbox em{top: 7px!important;}
+        .addRows{width: 100px;height: 30px;line-height: 30px;margin: 10px 0;}
+        .btn-default {color: #000!important;width: 260px;}
+        .btn{text-align: left}
+        .caret{position: absolute;right: 10px;top: 14px;}
+        .dropdown-menu{width:260px}
+
+    </style>
+</head>
+<body>
+
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p onclick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span style="display:none" class="redDot"></span></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='index.html'">
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">首页</p>
+        </div>
+        <div class="subNav" onClick="location='mine.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav" onClick="location='application_list.html'">
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
+        </div>
+        <div class="subNav" onClick="location='template.html'">
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
+            <p class="sublist-title">我的模板</p>
+        </div>
+    </div>
+    <!-- 左侧导航 start -->
+    <div class="right-product my-index right-full">
+        <!-- 标题 -->
+        <div class="details_title"><span class="version_name">应用配置</span><i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i></div>
+        <!-- 内容 -->
+        <div class="c_content">
+
+            <!--<div class="c_box">-->
+                <!--<p>应用常规</p>-->
+                <!--<div class="routine">-->
+                    <!--&lt;!&ndash;<div><span>名称</span>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<div class="sel_inp">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<input class="sel_input" type="text" value="">&ndash;&gt;-->
+                            <!--&lt;!&ndash;<ul class="sel_ul">&ndash;&gt;-->
+                                <!--&lt;!&ndash;<li>001</li>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<li>002</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="c_box">-->
+                <!--<p>应用模板</p>-->
+                <!--<div>-->
+                    <!--<table border="1" collapsing="0" borderColor="#e5e9ee">-->
+                        <!--<tr>-->
+                            <!--<th>名称</th>-->
+                            <!--<th>平台名称</th>-->
+                            <!--<th>描述</th>-->
+                            <!--<th>版本</th>-->
+                            <!--<th>创建时间</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td class="bj">1</td>-->
+                            <!--<td>2</td>-->
+                            <!--<td>3</td>-->
+                            <!--<td>4</td>-->
+                            <!--<td>5</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="c_box">-->
+                <!--<p>设备列表</p>-->
+                <!--<div>-->
+                    <!--<table border="1" collapsing="0" borderColor="#e5e9ee">-->
+                        <!--<tr>-->
+                            <!--<th>名称</th>-->
+                            <!--<th>平台名称</th>-->
+                            <!--<th>描述</th>-->
+                            <!--<th>版本</th>-->
+                            <!--<th>创建时间</th>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td class="bj">1</td>-->
+                            <!--<td class="bj">2</td>-->
+                            <!--<td class="bj">3</td>-->
+                            <!--<td class="bj">4</td>-->
+                            <!--<td class="bj">5</td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</div>-->
+            <!--</div>-->
+            <button class="config_save">保存配置</button>
+        </div>
+        <p class="copyright">SymTech Application © 2008-2017</p>
+    </div>
+</div>
+<script>
+    $(function () {
+        //获取token
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+        //获取用户信息
+        var user = getCookie('usr');
+
+
+        var temp_list;
+        $.ajax({
+            url: "/apis/api/method/conf_center.api.list_app_conf",
+            type: "GET",
+            async: false,
+            data: {app: decodeURI(window.location.href.split("=")[1]),start:0,limit:100},
+            success: function (req) {
+                temp_list = req;
+            }, error: function () {
+                console.log('error')
+            }
+        });
+
+        var data = {
+            app : decodeURI(window.location.href.split("=")[1])
+        };
+        $.ajax({
+            url: "/apis/api/method/app_center.api.app_detail",
+            type: "GET",
+            async: false,
+            data: data,
+            success: function (data) {
+                console.log(data.message.conf_template)
+                var con_temp = $.parseJSON(data.message.conf_template);
+                for (var i=0;i<con_temp.length;i++){
+                    if(con_temp[i].name == "protocol"){
+                        inp = '<div class="btn-group" role="group">' +
+                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                        '<span class="search_keyword1" data-search_keyword="1">'+con_temp[i].value[0]+'</span>' +
+                        '<input type="hidden" id="sel1" class="sel_input" value="'+con_temp[i].value[0]+'">' +
+                        '<span class="caret"></span>' +
+                        '</button>' +
+                        '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">' +
+                        '</ul>' +
+                        '</div>';
+                        $('.c_content').prepend('<div class="c_box '+ con_temp[i].name +'">' +
+                            '<div class="routine">' +
+                                '<div><span>'+con_temp[i].desc+'</span>' +
+                                    '<input type="hidden" value="">' +
+                                    '<div class="sel_inp" id="'+con_temp[i].name+'">' + inp+
+                                    '</div>' +
+                                '</div>'+
+                            '</div>'+
+                        '</div>');
+                        console.log($('#'+con_temp[i].name));
+                        for(var w=0;w<con_temp[i].value.length;w++){
+                            $('#'+con_temp[i].name+' ul').append('<li data-name=""><a style="cursor:pointer">'+ con_temp[i].value[w] +'</a></li>');
+                        }
+                    } else if(con_temp[i].type == "section"){
+                        if(con_temp[i].depends){
+                            var depend = con_temp[i].depends;
+                            var ids = depend.substring(depend.lastIndexOf(' ')+1,depend.length-1);
+                            $('.c_content').append('<div id="'+ids+'" class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
+                        }else{
+                            $('.c_content').append('<div class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
+                        }
+                        var child = con_temp[i].child;
+                        for (var j=0;j<child.length;j++){
+                            var inp;
+                            if(child[j].type == "dropdown"){   //下拉
+                                inp = '<div class="btn-group" role="group">' +
+                                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                          '<span class="search_keyword1" data-search_keyword="1">'+child[j].value[0]+'</span>' +
+                                            '<input type="hidden" class="sel_input" value="'+child[j].value[0]+'">' +
+                                          '<span class="caret"></span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu '+ child[j].name +'" role="menu" aria-labelledby="dLabel">' +
+                                        '</ul>' +
+                                      '</div>';
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<input type="hidden" value="">' +
+                                    '<div class="sel_inp" id="'+child[j].name+'">' + inp+
+                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>');
+                                for(var w=0;w<child[j].value.length;w++){
+                                    $('.'+child[j].name).append('<li data-name=""><a style="cursor:pointer">'+ child[j].value[w] +'</a></li>');
+                                }
+                            }else if(child[j].type == "text"){
+                                if(child[j].value ){
+                                    inp = "<input class='sel_input' type='text' value='"+ child[j].value +"'>";
+                                }else{
+                                    inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
+                                }
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<div class="sel_inp">' + inp+
+                                        '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                        '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>');
+                            }else if(child[j].type == "boolean"){
+                                if(child[j].value == true ){
+                                    inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='true' checked><em></em></label>";
+                                }else{
+                                    inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='false'><em></em></label>";
+                                }
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<div class="sel_inp">' + inp+
+                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>');
+                            }else if(child[j].type == "templates"){
+                                //判断有没有模板
+                                if(temp_list.message){
+                                    inp = '<div class="btn-group" role="group">' +
+                                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                        '<span class="search_keyword1" data-search_keyword="1">'+temp_list.message[0].conf_name+'</span>' +
+                                        '<input type="hidden" class="sel_input" value="'+temp_list.message[0].conf_name+'">' +
+                                        '<input type="hidden" class="conf_id" value="'+temp_list.message[0].name+'">' +
+                                        '<input type="hidden" class="conf_version" value="'+temp_list.message[0].version+'">' +
+                                        '<span class="caret"></span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu '+child[j].type+'_sel" role="menu" aria-labelledby="dLabel">' +
+                                        '</ul>' +
+                                        '</div>';
+
+                                }else{
+                                    inp = "<input class='sel_input' type='text' value='' placeholder='此应用暂时没有模板' disabled>";
+                                }
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<div class="sel_inp">' + inp+
+                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>'
+                                );
+                                if(temp_list.message){
+                                    for(var w=0;w<temp_list.message.length;w++){
+                                        $('.'+child[j].type+'_sel').append('<li data-name="">' +
+                                            '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
+                                            '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
+                                    }
+                                }
+                            }else if(child[j].type == "number"){
+                                if(child[j].value){
+                                    inp = "<input class='sel_input' type='number' value='"+ child[j].value[0] +"'>";
+                                }else{
+                                    inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
+                                }
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<div class="sel_inp">' + inp+
+                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>'
+                                );
+                            }else if(child[j].type == "table"){
+                                inp = "<table border='1' collspacing='0' class='"+child[j].name+"'><tr></tr></table>" +
+                                    "<input type='button' class='addRows' value='添加行'>";
+                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                    '<div><span>'+child[j].desc+'</span>' +
+                                    '<div class="sel_inp">' + inp+
+                                    '</div>' +
+                                    '</div>'+
+                                    '</div>');
+                                for (var a=0;a<child[j].cols.length;a++){
+                                    $('.'+child[j].name+'>tbody').append('<th id="'+child[j].cols[a].type+'">'+child[j].cols[a].desc+'<input type="hidden" value="'+child[j].cols[a].name+'"></th>')
+                                }
+                                $('.'+child[j].name+'>tbody').append('<th>操作</th>')
+                            }
+                        }
+                    }
+                }
+            }, error: function () {
+                console.log('no')
+            }, complete: function () {
+                //判斷通訊協議
+                if($('#sel1').val() == "Modbus RTU"){
+                    $('#RTU').show();
+                    $('#TCP').hide();
+                }else if($('#sel1').val() == "Modbus TCP"){
+                    $('#RTU').hide();
+                    $('#TCP').show();
+                }
+                //表格添加行
+                $('.addRows').click(function () {
+                    var table = $(this).parent().find($('table>tbody'));
+                    var tr_len = $(this).parent().find($('table th')).length;
+                    var html = '<tr class="sj">';
+                    for (var n=0;n<tr_len-1;n++){
+                        html += '<td class="bj '+$(this).parent().find($('table th:nth-child('+(n+2)+')>input')).val()+'" name="'+ $(this).parent().find($('table th:nth-child('+(n+2)+')')).attr('id') +'"></td>';
+                    }
+                    html += '<td><button class="delete_device_list">刪除</button></td></tr>';
+                    table.append(html);
+                    if(!temp_list.message){
+                        $('.tpl').text('————');
+                        $('.tpl').addClass('disabled')
+                    }
+                    //点击td进行编辑
+                    $('table>tbody .bj').click(function () {
+                        if( !$(this).is('.input') ){
+                            if( !$(this).is('.disabled') ){
+                                var html;
+                                if($(this).hasClass('tpl')){
+                                    html = '<div class="btn-group" role="group">' +
+                                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                        '<span class="search_keyword1" data-search_keyword="1">请选择</span>' +
+                                        '<input type="hidden" class="sel_input" value="">' +
+                                        '<span class="caret"></span>' +
+                                        '</button>' +
+                                        '<ul class="dropdown-menu tpl_sel" role="menu" aria-labelledby="dLabel">' +
+                                        '</ul>' +
+                                        '</div>';
+                                }else if(!$(this).hasClass('tpl')){
+                                    html = '<input type="'+ $(this).attr('name') +'" value="" />'
+                                }
+                                $(this).addClass('input')
+                                    .html(html)
+                                    .find('input').focus()
+                                    .blur(function(){
+                                        $(this).parent().removeClass('input').html($(this).val() );
+                                        $('.visualize').trigger('visualizeRefresh');
+                                    });
+                                if($(this).hasClass('tpl')){
+                                    if(temp_list.message){
+                                        for(var w=0;w<temp_list.message.length;w++){
+                                            $(this).find($('.tpl_sel')).append('<li data-name="">' +
+                                                '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
+                                                '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
+                                        }
+                                        var tpl_li = $('.tpl_sel>li');
+                                        tpl_li.each(function (i) {
+                                            tpl_li[i].index = i;
+                                            tpl_li.eq(i).click(function () {
+                                                console.log($(this).text());
+                                                $(this).parent().parent().parent().text($(this).text());
+                                                // $(this).find($('input').val())
+                                            })
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    //删除行
+                    $('table>tbody .delete_device_list').click(function () {
+                        $(this).parent().parent().remove()
+                    })
+                });
+                //这里是加载完，到这里已经有li了
+                var ali = $('li');   //获取页面所有LI
+                ali.each(function (p) {
+                    ali[p].index = p;
+                    ali[p].onclick = function () {
+                        $(this).parent().parent().find('.search_keyword1').text($(this).text());
+                        $(this).parent().parent().find('.sel_input').val($(this).text());
+                        if($(this).text() == "Modbus RTU"){
+                            $('#RTU').show();
+                            $('#TCP').hide();
+                        }else if($(this).text() == "Modbus TCP"){
+                            $('#RTU').hide();
+                            $('#TCP').show();
+                        }
+                    }
+                })
+            }
+        });
+
+        $('input[type=checkbox]').click(function () {
+            $(this).val($(this).prop('checked'));
+        })
+
+        //生成json
+        $('.config_save').click(function () {
+            //tcp数据
+            var tcp_data = [];
+            var tcp_s = $('.tcp_section .routine');
+            tcp_s.each(function (i) {
+                var a = {
+                    name  : tcp_s.eq(i).find($('.name')).val(),
+                    type  : tcp_s.eq(i).find($('.type')).val(),
+                    value : tcp_s.eq(i).find($('.sel_input')).val()
+                };
+                tcp_data.push(a);
+            });
+            //串口数据
+            var serial_data = [];
+            var serial_s = $('.serial_section .routine');
+            serial_s.each(function (i) {
+                var a = {
+                    name  : serial_s.eq(i).find($('.name')).val(),
+                    type  : serial_s.eq(i).find($('.type')).val(),
+                    value : serial_s.eq(i).find($('.sel_input')).val()
+                };
+                serial_data.push(a);
+            })
+            //设备模板选择
+            var temp_s = $('.template_section .routine');
+            var temp_data = {
+                name  : temp_s.find($('.name')).val(),
+                type  : temp_s.find($('.type')).val(),
+                value : temp_s.find($('.sel_input')).val()
+            };
+            //采集设备列表
+            var device_data = [];
+            var device_s = $('.device_section table .sj');
+            for (var i=0;i<device_s.length;i++){
+                var a = {
+                    tpl  : device_s.eq(i).find($('.tpl')).text(),
+                    name : device_s.eq(i).find($('.name')).text(),
+                    sn   : device_s.eq(i).find($('.sn')).text(),
+                    addr : device_s.eq(i).find($('.addr')).text()
+                }
+                device_data.push(a)
+            }
+            //通讯协议
+            var protocol = $('#sel1').val();
+            //返回json
+            var return_data;
+                if(!temp_data.value){
+                    temp_data = "";
+                }
+                if($('#sel1').val() == "Modbus TCP"){
+                    console.log(1)
+                    return_data = {
+                        templates : temp_data,
+                        tcp       : tcp_data,
+                        dev       : device_data,
+                        protocol  : protocol
+                    }
+                }else if($('#sel1').val() == "Modbus RTU"){
+                    console.log(2)
+                    return_data = {
+                        templates : temp_data,
+                        serial    : serial_data,
+                        dev       : device_data,
+                        protocol  : protocol
+                    }
+                }
+                console.log(return_data)
+        })
+
+
+
+    }); //$(function)
+
+
+
+
+</script>
+
+</body>
+</html>
+
+

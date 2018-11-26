@@ -27,9 +27,9 @@ function message1(req){
 //设备状态
             if(obj.hasOwnProperty('device_status')){
                 if(obj.device_status == "ONLINE"){
-                    text = '设备上线'
+                    text = '设备上线';
                 } else{
-                    text = '设备离线'
+                    text = '设备离线';
                 }
                 //设备操作
             } else if(obj.hasOwnProperty('action')){

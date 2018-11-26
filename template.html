@@ -243,11 +243,6 @@
                 <!--<span style="display: none;" class="message_id"></span>-->
                 <!--<span style="float: right;" class="message_ago"></span>-->
                 <!--</li>-->
-                <!--<li class="box_li">-->
-                <!--<span class="message_name"></span>-->
-                <!--<span style="display: none;" class="message_id"></span>-->
-                <!--<span style="float: right;" class="message_ago"></span>-->
-                <!--</li>-->
             </ul>
         </div>
         <p class="GoCenter" onClick="location='platform_message.html'">进入消息中心</p>
@@ -440,7 +435,6 @@
                     .search(key)
                     .draw();
             }
-
         } );
         //刷新页面
         $('.searchHtml').click(function(){
@@ -453,7 +447,6 @@
                     .draw();
             }
         });
-
         //点击行进入详情
         $('#myTemplate tbody').on('click','.look',function() {
             var name = $(this).parent('td').parent('tr').find('td:nth-child(1)').text();
@@ -511,11 +504,13 @@
             }
             initradio('belong','User');
             initradio('isOpen','0');
+            document.body.style.overflow='hidden';
         });
     });
     var newTemp;
     //创建新模板--确定
     $('.v_upload').click(function() {
+        console.log($("input[name='belong']:checked").val())
         var data2 = {
             app: $('#appId').val(),
             conf_name: $('#template_name').val(),
@@ -524,17 +519,14 @@
             public: $("input[name='isOpen']:checked").val()
         };
         console.log(data2)
-        if(!data2.conf_name){
-            console.log('buweikong')
-        }
         //创建新模板
         $.ajax({
             url: "/apis/api/method/conf_center.api.create_app_conf",
             type: "POST",
             data: data2,
             success: function (req) {
+                document.body.style.overflow='hidden';
                 alt("创建模板成功",1);
-                console.log(req.message);
                 newTemp = req.message;
                 //判断源模板和版本是否为空
                 var data3 = {
@@ -542,7 +534,6 @@
                     conf: $('#tempId1').val(),
                     version: parseInt($('.search_keyword3').text())
                 };
-                console.log(data3);
                 if(data3.conf == "" || data3.version == "NaN"){
                     console.log('不复制其他模板')
                 } else{
@@ -554,35 +545,33 @@
                         data: data3,
                         success: function (data) {
                             var csvData = data.message.data;
-                            console.log(csvData);
-                            console.log('获取模板数据成功');
                             var data4 = {
                                 app: $('#appId').val(),
                                 conf: newTemp,
                                 version: "1",
                                 data: csvData
                             };
-                            console.log(data4);
                             $.ajax({
                                 url: "/apis/api/method/conf_center.api.upload_conf_version",
                                 type: "POST",
                                 data: data4,
                                 success: function (req) {
-                                    console.log('ok');
-                                    console.log(req)
-                                },
-                                error: function () {
+                                }, error: function () {
                                     console.log('error');
                                 }
                             });
                         },
-                        error: function () {
+                        error: function (error) {
+                            console.log(error)
+                        },
+                        complete:function () {
+                            $('.newBox').hide();
+                            document.body.style.overflow='auto';
                         }
                     })
                 }
             },
             error: function (error) {
-                console.log(error.responseJSON. _server_messages)
                 if(error.responseJSON. _server_messages == '["{\\"message\\": \\"name must be unique\\"}"]'){
                     alt('模板名称不能重复',2)
                 }
@@ -590,7 +579,7 @@
         });
 
         setTimeout(function () {
-            // window.location.reload();
+            window.location.reload();
         },2000)
     });  //确定结尾
 
@@ -603,8 +592,6 @@
     };
     Ajax.call("/apis/api/method/iot_ui.iot_api.appstore_applist",JSON.stringify(data1),getName, 'POST', 'JSON', 'JSON',false)
     function getName(data){
-        console.log('yiingyong')
-        console.log(data)
         var arr = data.message;
         for(var i=0;i<arr.length;i++){
             $('#yingyong').append('<li data-name=""><a style="cursor:pointer">'+ arr[i].app_name +'<span>'+arr[i].device_supplier+'</span></a><input type="hidden" value="'+ arr[i].name +'"></li>')
@@ -625,12 +612,9 @@
             type: "GET",
             data: {app: app,start:0,limit:100},
             success: function (req) {
-                console.log(req);
                 if(JSON.stringify(req) == "{}"){
-                    console.log('当前app没有源模板');
                     $('.text1').hide();
                 }else{
-                    console.log('当前APP有源模板')
                     $('button[name=temp]').show();
                     $('button[name=ver]').hide();
                     $('.text1').show();
@@ -640,8 +624,7 @@
                         $('#muban').append('<li data-name=""><a style="cursor:pointer">'+ req.message[i].conf_name +'</a><input type="hidden" value="'+ req.message[i].name +'"></li>')
                     }
                 }
-            },
-            error: function () {
+            }, error: function () {
                 console.log('error')
             },
             complete: function () {
@@ -663,9 +646,7 @@
             type: "GET",
             data: {conf: temp},
             success: function (req) {
-                console.log(req)
                 if(JSON.stringify(req) == "{}"){
-                    console.log('当前源模板没有版本')
                     $('button[name=ver]').hide();
                     $('.text2').hide();
                 }else{
@@ -676,8 +657,7 @@
                         $('#banben').append('<li data-name=""><a style="cursor:pointer">'+ req.message[i].version +'</a></li>')
                     }
                 }
-            },
-            error: function () {
+            }, error: function () {
                 console.log('error');
             },
             complete: function () {
@@ -692,6 +672,8 @@
     //创建新模板--打开
     $('#createTemplate').click(function () {
         $('#newTemplate').show();
+        initradio('belong','User');
+        initradio('isOpen','0');
         document.body.style.overflow='hidden';
         $('#appId').val(""),
         $('#template_name').val(""),

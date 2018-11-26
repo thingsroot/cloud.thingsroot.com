@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
     <!-- 加载script start -->
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
-    <script src="js/jquery.timeago.js"></script>
     <script src="js/transport.js" type="text/javascript"></script>
     <script src="js/jQuery.cookie.js" type="text/javascript"></script>
     <script src="js/layui/layui.js" charset="utf-8"></script>
@@ -21,6 +20,7 @@
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/user.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
+    <script src="js/jquery.timeago.js"></script>
 
     <!--markdown   css-->
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
@@ -35,17 +35,19 @@
     <!--markdown   js -->
     <!--星星-->
     <script src="js/starScore.js"></script>
-    <!--<script src="js/message.js"></script>-->
     <title>应用详情</title>
     <style>
         .version{
             display: inline-block;
             width: 80px;
         }
-        .upload_btn{
+        .upload_btn,.upload_formal_btn{
             position: absolute;
             right: 180px;
             cursor: pointer;
+        }
+        .beta{
+            padding: 10px;
         }
     </style>
 </head>
@@ -102,7 +104,7 @@
                         <p>分类：<span class="category"></span></p>
                     </div>
                     <div>
-                        <p>通讯协议：888888888<span class="protocol"></span></p>
+                        <p>通讯协议：<span class="protocol"></span></p>
                         <p>设备厂家：<span class="device_supplier"></span></p>
                     </div>
                     <div>
@@ -136,7 +138,7 @@
                     <!--评论-->
                     <div class="tab-pane fade" id="B">
                         <div class="app_comment">
-                            <a class="comment_btn">我要评论</a>
+                            <!--<a class="comment_btn">我要评论</a>-->
                             <ul class="app_comment_list">
                                 <!--<li>-->
                                     <!--<p class="comment_title">123r34tgergvsadfbsdfb</p>-->
@@ -159,24 +161,24 @@
                                     <!--<img class="comment_images" src="img/top_avatar.png" alt="">-->
                                 <!--</li>-->
                             </ul>
-                            <a name="comment" style="display:none;"></a>
+                            <!--<a name="comment" style="display:none;"></a>-->
                             <!--添加评论-->
-                            <div>
-                                <input type="text" id="comments_title" placeholder="标题">
-                                <br>
-                                <br>
-                                <textarea placeholder="评测内容" name="" id="comments_content"></textarea>
-                                <div class="myStar">
-                                    <span>评星：</span>
-                                    <div id="starttwo"  class="block clearfix" >
-                                        <div class="star_score"></div>
-                                        <p style="float:left;"><span class="fenshu hd"></span></p>
-                                    </div>
-                                </div>
-                                <button style="margin-left: 0" class="app_edit_submit">Add Review</button>
-                            </div>
-                            <!--<p class="no_comment">暂时还没有评论！</p>-->
+                            <!--<div>-->
+                                <!--<input type="text" id="comments_title" placeholder="标题">-->
+                                <!--<br>-->
+                                <!--<br>-->
+                                <!--<textarea placeholder="评测内容" name="" id="comments_content"></textarea>-->
+                                <!--<div class="myStar">-->
+                                    <!--<span>评星：</span>-->
+                                    <!--<div id="starttwo"  class="block clearfix" >-->
+                                        <!--<div class="star_score"></div>-->
+                                        <!--<p style="float:left;"><span class="fenshu hd"></span></p>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<button style="margin-left: 0" class="app_edit_submit">Add Review</button>-->
+                            <!--</div>-->
                         </div>
+                        <p class="no_comment">暂时还没有评论！</p>
                     </div>
                     <!--版本列表-->
                     <div class="tab-pane fade" id="C">
@@ -204,7 +206,6 @@
 
     <!--上传新版本弹窗-->
     <div class="uploadVersion">
-
             <div class="uploadBox">
                 <p class="version_title">上传新版本</p>
                 <form id="myForm">
@@ -264,7 +265,6 @@
                 "X-Frappe-CSRF-Token": token
             }
         });
-
         //获取用户信息
         var user = getCookie('usr');
 
@@ -281,8 +281,6 @@
             type: "GET",
             data: data,
             success: function (data) {
-                console.log(data);
-                console.log(data.message.icon_image);
                 $('.app_img').attr("src",data.message.icon_image);
                 $('#formAppId').val(data.message.name);
                 $('.app_name').text(data.message.app_name); //应用名称
@@ -303,11 +301,9 @@
                 $('.device_serial').text(data.message.device_serial);   //适配型号
                 $('.app_img').src = data.message.icon_image;    //app图片
                 $('#test-editormd>textarea').val(data.message.description);  //Markdown内容
-            },
-            error: function () {
+            }, error: function () {
                 console.log('no')
-            },
-            complete: function () {
+            }, complete: function () {
                 //Markdown
                 testEditor = editormd.markdownToHTML("test-editormd", {
                     htmlDecode: "style,script,iframe",  // you can filter tags decode
@@ -330,28 +326,63 @@
             type: "GET",
             data: data1,
             success: function (req) {
-                var data = req.message;
-                for(var i=0;i<data.length;i++){
-                    var datas = data[i];
-                    // console.log(datas)
-                    $('.app_version').append(
-                        '<li>'+
-                        '<p><span>版本号：</span><span>'+ datas.version +'</span></p>'+
-                        '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,19) +'</span></p>'+
-                        '<p style="position:relative"><span>更新日志：</span><span>'+ datas.comment +'</span><span class="temp_btn1 upload_btn">申请上传</span></p>'+
-                        '</li>'
-                    )
-                }
-                //版本列表为空
-                if($('.app_version>li').length == 0){
+                if(JSON.stringify(req) == "{}") {
                     $('.app_list').addClass('hd');
                     $('.no_version').css('display','block');
+                }else{
+                    var data = req.message;
+                    console.log(req.message)
+                    for(var i=0;i<data.length;i++){
+                        var datas = data[i];
+                        // console.log(datas)
+                        $('.app_version').append(
+                            '<li>'+
+                            '<p><span>版本号：</span><span class="vs">'+ datas.version +'</span><span class="beta"></span></p>'+
+                            '<p><span>更新时间：</span><span>'+ datas.creation.substr(0,19) +'</span></p>'+
+                            '<p style="position:relative"><span>更新日志：</span><span>'+ datas.comment +'</span><span class="temp_btn1 upload_formal_btn">申请发布正式版</span></p>'+
+                            '<input type="hidden" value="'+ datas.version +'">'+
+                            '<input class="betadesc" type="hidden" value="'+ datas.beta +'">'+
+                            '</li>'
+                        )
+                    }
+                    var aLi = $('.app_version>li')
+                    aLi.each(function (i) {
+                        if(aLi.eq(i).find($('.betadesc')).val() == 0){
+                            aLi.eq(i).find($('p> .beta')).text("(正式版)");
+                            aLi.eq(i).find($('p> .upload_formal_btn')).hide();
+                        }else if(aLi.eq(i).find($('.betadesc')).val() == 1){
+                            aLi.eq(i).find($('p> .beta')).text("(测试版)");
+                            aLi.eq(i).find($('p> .upload_formal_btn')).show();
+                        }
+                    })
                 }
             },
             error: function (e) {
                 console.log('error')
+            },
+            complete: function () {
+                var btn = $('.upload_formal_btn');
+                for (var i=0;i<btn.length;i++){
+                    btn[i].index = i;
+                    btn.eq(i).click(function () {
+                        var data = {
+                            appid   : decodeURI(window.location.href.split("=")[1]),
+                            version : $(this).parent().parent().find($('input')).val()
+                        };
+                        $.ajax({
+                            url: "/apis/api/method/iot_ui.iot_api.apply_version_publish",
+                            type: "POST",
+                            data: data,
+                            success: function (req) {
+                                alt("已发布为正式版本",1)
+                            },error: function () {
+                                alt("发布正式版本失败",2)
+                            }
+                        })
+                    })
+                }
             }
-        })
+        });
 
         //获取应用评论列表
         var data2 = {
@@ -363,50 +394,56 @@
             type: "GET",
             data: data2,
             success: function (req) {
-                var data = req.data;
-                for(var i=0;i<data.length;i++){
-                    var datas = data[i];
-                    //渲染列表
-                    $('.app_comment_list').append(
-                        '<li>'+
-                        '<p class="comment_title">'+ datas.title +'</p>'+
-                        '<p class="comment_content"><span>'+ datas.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
-                        '<div>'+
-                        '<span>用户名：</span>'+
-                        '<span>'+ datas.owner +'</span>'+
-                        '<span>评论时间：</span>'+
-                        '<span>'+ datas.creation.substr(0,10) +'</span>'+
-                        '<ul class="show_number clearfix">'+
-                        '<li>'+
-                        '<div class="atar_Show">'+
-                        '<p tip="'+ datas.star +'"></p>'+
-                        '</div>'+
-                        '</li>'+
-                        '</ul>'+
-                        '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
-                        '<a class="clearfix"></a>'+
-                        '</div>'+
-                        '<img class="comment_images" src="img/top_avatar.png" alt="">'+
-                        '</li>'
-                    );
-                }
-                //星星展示分数
-                $(".show_number li p").each(function(index, element) {
-                    var num=$(this).attr("tip");
-                    var www=num*16;//
-                    $(this).css("width",www);
-                    $(this).parent(".atar_Show").siblings("span").text(num+"分");
-                });
-                //我要评论按钮隐藏
-                var liLen = req.data.length;
-                if( liLen == 0 ){
-                    $('.app_comment>div').css('display','block');
-                    $('.app_comment>a').css('display','none');
-                    // $('.no_comment').css('display','block');   //没有评论提示语
-                } else if( liLen >= 5){
-                    $('.app_comment>a').css('display','block');
-                }else if( 0 < liLen < 5 ){
-                    $('.app_comment>a').css('display','none');
+                // console.log(req.data.length)
+                if(req.data.length == 0) {
+                    $('.app_comment').addClass('hd');
+                    $('.no_comment').css('display', 'block');
+                }else{
+                    var data = req.data;
+                    for(var i=0;i<data.length;i++){
+                        var datas = data[i];
+                        //渲染列表
+                        $('.app_comment_list').append(
+                            '<li>'+
+                            '<p class="comment_title">'+ datas.title +'</p>'+
+                            '<p class="comment_content"><span>'+ datas.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
+                            '<div>'+
+                            '<span>用户名：</span>'+
+                            '<span>'+ datas.owner +'</span>'+
+                            '<span>评论时间：</span>'+
+                            '<span>'+ datas.creation.substr(0,10) +'</span>'+
+                            '<ul class="show_number clearfix">'+
+                            '<li>'+
+                            '<div class="atar_Show">'+
+                            '<p tip="'+ datas.star +'"></p>'+
+                            '</div>'+
+                            '</li>'+
+                            '</ul>'+
+                            '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
+                            '<a class="clearfix"></a>'+
+                            '</div>'+
+                            '<img class="comment_images" src="img/top_avatar.png" alt="">'+
+                            '</li>'
+                        );
+                    }
+                    //星星展示分数
+                    $(".show_number li p").each(function(index, element) {
+                        var num=$(this).attr("tip");
+                        var www=num*16;//
+                        $(this).css("width",www);
+                        $(this).parent(".atar_Show").siblings("span").text(num+"分");
+                    });
+                    //我要评论按钮隐藏
+                    // var liLen = req.data.length;
+                    // if( liLen == 0 ){
+                    //     $('.app_comment>div').css('display','block');
+                    //     $('.app_comment>a').css('display','none');
+                    //     // $('.no_comment').css('display','block');   //没有评论提示语
+                    // } else if( liLen >= 5){
+                    //     $('.app_comment>a').css('display','block');
+                    // }else if( 0 < liLen < 5 ){
+                    //     $('.app_comment>a').css('display','none');
+                    // }
                 }
             },
             error: function () {
@@ -464,74 +501,74 @@
         });
 
         // 添加评论
-        $('.app_edit_submit').click(function () {
-            //获取当前时间
-            var date = new Date();
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var day = date.getDate();
-            if (month < 10) {month = "0" + month;}
-            if (day < 10) {day = "0" + day;}
-            var nowDate = year + "-" + month + "-" + day;
-            var data3 = {
-                "app":$('.edit').val(),
-                "star":$('.fenshu').text(),
-                "title":$('#comments_title').val(),
-                "content":$('#comments_content').val()
-            };
-            if(data3.title == "" || data3.title.length < 10){
-                alt('评论标题应不少于10个字符',3)
-            }else if(data3.content == "" || data3.content.length < 20){
-                alt('评论内容应不少于20个字符',3);
-            }else if(data3.star == ""){
-                alt('请您为应用评分',3);
-            }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
-                $.ajax({
-                    url: "/apis/api/method/app_center.appmgr.add_review",
-                    type: "POST",
-                    data: data3,
-                    success: function (req) {
-                        alt(req.message,1);   //提示评测已添加
-                        // 列表添加新加的评测
-                        $('.app_comment_list').prepend(
-                        '<li>'+
-                            '<p class="comment_title">'+ data3.title +'</p>'+
-                            '<p class="comment_content"><span>'+ data3.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
-                            '<div>'+
-                                '<span>用户名：</span>'+
-                                '<span>'+ user +'</span>'+
-                                '<span>评论时间：</span>'+
-                                '<span>'+ nowDate +'</span>'+
-                                '<ul class="show_number clearfix">'+
-                                    '<li>'+
-                                        '<div class="atar_Show">'+
-                                        '<p tip="'+ data3.star +'"></p>'+
-                                        '</div>'+
-                                    '</li>'+
-                                '</ul>'+
-                            // '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
-                            '<a class="clearfix"></a>'+
-                            '</div>'+
-                            '<img class="comment_images" src="img/top_avatar.png" alt="">'+
-                        '</li>'
-                        );
-                        //星星展示分数
-                        $(".show_number li p").each(function(index, element) {
-                            var num=$(this).attr("tip");
-                            var www=num*16;//
-                            $(this).css("width",www);
-                            $(this).parent(".atar_Show").siblings("span").text(num+"分");
-                        });
-                        $('#comments_title').val("");
-                        $('#comments_content').val("");
-                    },
-                    error: function () {
-                        console.log('error')
-                    }
-                })
-            }
-
-        });
+        // $('.app_edit_submit').click(function () {
+        //     //获取当前时间
+        //     var date = new Date();
+        //     var year = date.getFullYear();
+        //     var month = date.getMonth() + 1;
+        //     var day = date.getDate();
+        //     if (month < 10) {month = "0" + month;}
+        //     if (day < 10) {day = "0" + day;}
+        //     var nowDate = year + "-" + month + "-" + day;
+        //     var data3 = {
+        //         "app":$('.edit').val(),
+        //         "star":$('.fenshu').text(),
+        //         "title":$('#comments_title').val(),
+        //         "content":$('#comments_content').val()
+        //     };
+        //     if(data3.title == "" || data3.title.length < 10){
+        //         alt('评论标题应不少于10个字符',3)
+        //     }else if(data3.content == "" || data3.content.length < 20){
+        //         alt('评论内容应不少于20个字符',3);
+        //     }else if(data3.star == ""){
+        //         alt('请您为应用评分',3);
+        //     }else if(data3.star!=""&&data3.content!=""&&data3.title!=""&&data3.app!=""){
+        //         $.ajax({
+        //             url: "/apis/api/method/app_center.appmgr.add_review",
+        //             type: "POST",
+        //             data: data3,
+        //             success: function (req) {
+        //                 alt(req.message,1);   //提示评测已添加
+        //                 // 列表添加新加的评测
+        //                 $('.app_comment_list').prepend(
+        //                 '<li>'+
+        //                     '<p class="comment_title">'+ data3.title +'</p>'+
+        //                     '<p class="comment_content"><span>'+ data3.content +'</span><img class="comment_more" src="img/comment_more.png" alt="更多" title="更多内容"></p>'+
+        //                     '<div>'+
+        //                         '<span>用户名：</span>'+
+        //                         '<span>'+ user +'</span>'+
+        //                         '<span>评论时间：</span>'+
+        //                         '<span>'+ nowDate +'</span>'+
+        //                         '<ul class="show_number clearfix">'+
+        //                             '<li>'+
+        //                                 '<div class="atar_Show">'+
+        //                                 '<p tip="'+ data3.star +'"></p>'+
+        //                                 '</div>'+
+        //                             '</li>'+
+        //                         '</ul>'+
+        //                     // '<span class="delete_comment">删除<input class="delete_name" type="hidden" value="'+ datas.name +'"></span>'+
+        //                     '<a class="clearfix"></a>'+
+        //                     '</div>'+
+        //                     '<img class="comment_images" src="img/top_avatar.png" alt="">'+
+        //                 '</li>'
+        //                 );
+        //                 //星星展示分数
+        //                 $(".show_number li p").each(function(index, element) {
+        //                     var num=$(this).attr("tip");
+        //                     var www=num*16;//
+        //                     $(this).css("width",www);
+        //                     $(this).parent(".atar_Show").siblings("span").text(num+"分");
+        //                 });
+        //                 $('#comments_title').val("");
+        //                 $('#comments_content').val("");
+        //             },
+        //             error: function () {
+        //                 console.log('error')
+        //             }
+        //         })
+        //     }
+        //
+        // });
 
         //请求模板列表
         $.ajax({
@@ -584,7 +621,7 @@
                         var appId =  decodeURI(window.location.href.split("=")[1]);
                         var version = $(this).parent().find('.version').text();
                         var dataTextarea = $(this).parent().parent().find('#txtarea');
-                        console.log(dataTextarea);
+                        // console.log(dataTextarea);
                         $.ajax({
                             url:"/apis/api/method/conf_center.api.app_conf_data",
                             type:"GET",
@@ -592,9 +629,8 @@
                             async: false,
                             success: function(req){
                                 var data = req.message.data;
-                                console.log(data);
+                                // console.log(data);
                                 dataTextarea.val(data);
-                                console.log(dataTextarea.val());
                                 dataTextarea.select(); // 选择对象
                                 document.execCommand("Copy"); // 执行浏览器复制命令
                                 alt("已复制好，可贴粘",1);
@@ -638,7 +674,7 @@
     //判断版本号是否大于旧版本号
     $('#version').blur(function(){
         var num1 = $('.app_version>li:last-child>p:nth-child(1)>span:nth-child(2)').text();
-        console.log(num1);
+        // console.log(num1);
         if($(this).val() == ""){
             alt('版本号不能为空',2);
         }else if($(this).val() == num1){
@@ -686,7 +722,7 @@
                             var loaded = e.loaded; //已经上传大小情况
                             var tot = e.total; //附件总大小
                             var per = Math.floor(100 * loaded / tot); //已经上传的百分比
-                            console.log(per)
+                            // console.log(per)
                             $('.progress-bar').css('width',per+'%');
                             // $.fn.progressInit.draw(per + '%'); //绘制经度条
                         }, false);
@@ -725,7 +761,7 @@
     
     //Omline editor
     $('.app_editor').click(function () {
-        console.log(111);
+        // console.log(111);
         location.href = 'debug1.html?app=' + decodeURI(window.location.href.split("=")[1]);
     });
 
@@ -734,66 +770,14 @@
         location.href = 'application_details.html?appId=' + $(this).val();
     })
 
-    //我要评论
-    $('.comment_btn').click(function () {
-        console.log('我要评论');
-        $(".app_edit_submit")[0].scrollIntoView();
-    })
-
-    //message
-    var datas = {
-        "start": 0,
-        "limit": 12
-    };
-    Ajax.call('/apis/api/method/iot.user_api.device_activity',JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
-    function message(req){
-        console.log(req.message)
-        var list = req.message;
-        var posed = [];
-        for (var j=0;j<list.length;j++){
-            console.log(list[j].disposed);
-            if(list[j].disposed == 0){
-                posed.push(list[j]);
-            }
-        }  //把所有未读消息集合
-        // console.log(posed);
-        if(posed.length == 0){
-            console.log('暂时没有未读信息');
-            $('.have').hide();
-            $('.no_have').show();
-            $('.redDot').hide();
-        }else{
-            console.log('有未读信息');
-            $('.have').show();
-            $('.no_have').hide();
-            $('.redDot').show();
-            //渲染列表
-            for (var i=0;i<12;i++){
-                $('.list_box').append(
-                    '<li class="box_li">' +
-                    '<span>'+posed[i].subject.substr(0,18)+'...'+ $.parseJSON(posed[i].message).device_status +'!</span>' +
-                    '<span class="message_id" style="display: none;">'+posed[i].name+'</span>' +
-                    '<span class="message_ago" title="'+posed[i].creation+'"></span>' +
-                    '</li>'
-                );
-                $('.message_ago').eq(i).timeago();
-                $('.box_li')[i].index = i;
-                $('.box_li')[i].onclick = function(){
-                    var name = $('.message_id').eq(this.index).text();
-                    location.href = 'platform_details.html?name=' + name;
-                }
-            }
-            var ago = $('.message_ago');
-            console.log(ago);
-            for(var i=0;i<ago.length;i++){
-                console.log(ago[i])
-            }
-            $('.message_ago').eq(i).timeago();
-        }
-    }
-    
+    // //我要评论
+    // $('.comment_btn').click(function () {
+    //     $(".app_edit_submit")[0].scrollIntoView();
+    // })
 
 </script>
+<script src="js/message.js"></script>
+
 
 </body>
 </html>

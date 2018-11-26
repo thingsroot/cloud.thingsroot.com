@@ -199,11 +199,9 @@
                     $(this).css("width",www);
                     $(this).parent(".atar_Show").siblings("span").text(num+"分");
                 });
-            },
-            error:function () {
+            }, error:function () {
                 console.log('error')
-            },
-            complete: function () {
+            }, complete: function () {
                 var aLi = $('.app_list>ul>li');
                 console.log(aLi.length);
                 //判断应用列表是否为空
@@ -220,7 +218,7 @@
                     name[i].onclick = function () {
                         var appId = $(this).parent().parent().parent().find('input').val();
                         location.href = 'application_details.html?appId=' + appId;
-                    }
+                     }
                 }
                 //点击图片进入详情
                 var app_img = $('.app_image');
@@ -230,14 +228,11 @@
                         var appId1 = $(this).parent().find('input').val();
                         location.href = 'application_details.html?appId=' + appId1;
                     }
-
                 }
             }
         })
-
     });
 
 </script>
-
 </body>
 </html>

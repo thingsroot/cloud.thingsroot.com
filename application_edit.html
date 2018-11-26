@@ -20,7 +20,7 @@
     <script src="js/common.js" type="text/javascript"></script>
     <script src="js/user.js" type="text/javascript"></script>
     <script src="js/index.js" type="text/javascript"></script>
-
+    <script src="js/message.js"></script>
     <!--markdown   css-->
     <link rel="stylesheet" href="js/editor.md-master/css/editormd.min.css" />
     <script src="js/editor.md-master/editormd.min.js"></script>
@@ -71,73 +71,79 @@
         <!-- 标题 -->
         <div class="details_title"><span class="version_name">修改应用详情</span><i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i></div>
         <!-- 表单 -->
-        <div class="app_edit_form">
-            <label for="icon_file" style="">
-                <img src="assets/app_center/img/logo.png" alt="" title="点击切换图片" id="icon_img1">
-                <input type="file" name="icon_file" id="icon_file" style="display: none;"/>
-            </label>
-            <div>
+        <form id="form">
+            <div class="app_edit_form">
+                <label for="icon_file" style="">
+                    <img src="blank" alt="" title="点击切换图片" id="icon_img1">
+                    <input type="file" name="icon_file" id="icon_file" style="display: none;"/>
+                </label>
+                <input type="hidden" name="app" value="">
                 <div>
-                    <span>应用名称 <i>*</i></span>
-                    <input type="text" id="app_name" class="form-control boot_input" placeholder="应用名称" aria-describedby="basic-addon2">
-                    <span>授权类型 <i>*</i></span>
-                    <div class="btn-group search_filter4" role="group">
-                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword4 select_text" data-search_keyword="1">免费</span>
-                            <span class="caret select_arrow"></span>
-                        </button>
-                        <ul class="dropdown-menu select_menu over"  >
-                            <li data-name=""><a style="cursor:pointer">免费</a></li>
-                        </ul>
+                    <div>
+                        <span>应用名称 <i>*</i></span>
+                        <input name="app_name" type="text" id="app_name" class="form-control boot_input" placeholder="应用名称" aria-describedby="basic-addon2">
+                        <span>授权类型 <i>*</i></span>
+                        <div class="btn-group search_filter4" role="group">
+                            <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="search_keyword4 select_text" data-search_keyword="1">免费</span>
+                                <span class="caret select_arrow"></span>
+                                <input type="hidden" name="license_type" value="Open">
+                            </button>
+                            <ul class="dropdown-menu select_menu over"  >
+                                <li data-name=""><a style="cursor:pointer">免费</a></li>
+                            </ul>
+                        </div>
+                        <span>应用厂商 <i>*</i></span>
+                        <div class="btn-group search_filter2" role="group">
+                            <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="search_keyword2 select_text" data-search_keyword="1">应用厂商</span>
+                                <span class="caret select_arrow"></span>
+                                <input type="hidden" name="device_supplier" value="">
+                            </button>
+                            <ul class="dropdown-menu select_menu over" id="changshang">
+                                <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
+                            </ul>
+                        </div>
                     </div>
-                    <span>应用厂商 <i>*</i></span>
-                    <div class="btn-group search_filter2" role="group">
-                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword2 select_text" data-search_keyword="1">应用厂商</span>
-                            <span class="caret select_arrow"></span>
-                        </button>
-                        <ul class="dropdown-menu select_menu over" id="changshang">
-                            <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <span>设备型号 <i>*</i></span>
-                    <input type="text" id="shebeihao" class="form-control boot_input" placeholder="设备型号" aria-describedby="basic-addon2">
-                    <span>协议 <i>*</i></span>
-                    <div class="btn-group search_filter3" role="group">
-                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword3 select_text" data-search_keyword="1">协议</span>
-                            <span class="caret select_arrow"></span>
-                        </button>
-                        <ul class="dropdown-menu select_menu  over" id="shouquan">
-                            <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
-                        </ul>
-                    </div>
-                    <span>类别 <i>*</i></span>
-                    <div class="btn-group search_filter1" role="group">
-                        <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="search_keyword1 select_text" data-search_keyword="1">类别</span>
-                            <span class="caret select_arrow"></span>
-                        </button>
-                        <ul class="dropdown-menu select_menu  over" id="leibie">
-                            <!--<li data-name=""><a style="cursor:pointer">2</a></li>-->
-                        </ul>
+                    <div>
+                        <span>设备型号 <i>*</i></span>
+                        <input name="device_serial" type="text" id="shebeihao" class="form-control boot_input" placeholder="设备型号" aria-describedby="basic-addon2">
+                        <span>协议 <i>*</i></span>
+                        <div class="btn-group search_filter3" role="group">
+                            <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="search_keyword3 select_text" data-search_keyword="1">协议</span>
+                                <span class="caret select_arrow"></span>
+                                <input type="hidden" value="" name="protocol">
+                            </button>
+                            <ul class="dropdown-menu select_menu  over" id="shouquan">
+                                <!--<li data-name=""><a style="cursor:pointer">1</a></li>-->
+                            </ul>
+                        </div>
+                        <span>类别 <i>*</i></span>
+                        <div class="btn-group search_filter1" role="group">
+                            <button type="button" class="select_width btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="search_keyword1 select_text" data-search_keyword="1">类别</span>
+                                <span class="caret select_arrow"></span>
+                                <input type="hidden" name="category" value="">
+                            </button>
+                            <ul class="dropdown-menu select_menu  over" id="leibie"                                           >
+                                <!--<li data-name=""><a style="cursor:pointer">2</a></li>-->
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!--markdown 编辑器-->
-        <div class="myMarkdown">
-            <p>描述</p>
-            <div class="editormd" id="test-editormd">
-                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
-                <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
-                <textarea class="editormd-html-textarea" name="text"></textarea>
+            <!--markdown 编辑器-->
+            <div class="myMarkdown">
+                <p>描述</p>
+                <div class="editormd" id="test-editormd">
+                    <textarea id="mk" class="editormd-markdown-textarea" name="description"></textarea>
+                    <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+                    <textarea class="editormd-html-textarea"></textarea>
+                </div>
             </div>
-            <p><button class="app_edit_submit">提交</button><button class="app_add">创建</button></p>
-        </div>
-
+        </form>
+        <p><button class="app_edit_submit">提交</button><button class="app_add">创建</button></p>
         <p class="copyright">SymTech Application © 2008-2017</p>
     </div>
     <!--消息弹框-->
@@ -163,8 +169,8 @@
 
 <script>
     $(function() {
+        $('input[name=app]').val(decodeURI(window.location.href.split("=")[1]))
         $('.J_nickname').text(getCookie('full_name'));
-
         if(window.location.href.split("=")[1] == 1){
             document.title = "创建新应用";
             $('.version_name').text('创建新应用');
@@ -182,19 +188,22 @@
                 type: "GET",
                 data: appId,
                 success: function (data) {
-                    console.log(data.message);
+                    // console.log(datas.protocol);
                     var datas = data.message;
+                    console.log(datas)
                     $('#app_name').val(datas.app_name);   //应用名称
                     $('#shebeihao').val(datas.device_serial);   //设备型号
                     $('.search_keyword2').text(datas.device_supplier);   //设备厂商
+                    $('input[name=device_supplier]').val(datas.device_supplier)
                     $('.search_keyword3').text(datas.protocol);   //协议
+                    $('input[name=protocol]').val(datas.protocol)
                     $('.search_keyword1').text(datas.category);   //应用分类
+                    $('input[name=category]').val(datas.category)
+                    $('#mk').text(datas.description);   //markdown
                     if(datas.category == 'Open'){
                         $('.search_keyword4').text("免费");   //授权类型  ---免费
                     }
-                    $('#test-editormd>textarea').text(datas.description)   //markdown
-                },
-                error: function () {
+                }, error: function () {
                     console.log('no');
                 }
             });
@@ -224,10 +233,8 @@
         $("#icon_file").change(function(event){
             var name=$(this).attr("name");
             var val = $(this).val();
-            var tmppath = URL.createObjectURL(event.target.files[0]);
+            tmppath = URL.createObjectURL(event.target.files[0]);
             $('#icon_img1').attr('src', tmppath);
-            console.log(tmppath)
-
         });
 
         //获取设备厂商
@@ -244,13 +251,12 @@
                         '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
                     )
                 }
-            },
-            error: function () {
+            }, error: function () {
                 console.log('error');
-            },
-            complete: function () {
+            }, complete: function () {
                 $('.search_filter2 li').on('click', function() {
                     $('.search_keyword2').text($(this).text());
+                    $('input[name=device_supplier]').val($(this).text())
                 });
             }
         });
@@ -269,13 +275,12 @@
                         '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
                     )
                 }
-            },
-            error: function () {
+            }, error: function () {
                 console.log('error')
-            },
-            complete: function () {
+            }, complete: function () {
                 $('.search_filter3 li').on('click', function() {
                     $('.search_keyword3').text($(this).text());
+                    $('input[name=protocol]').val($(this).text())
                 });
             }
         });
@@ -293,69 +298,73 @@
                         '<li data-name=""><a style="cursor:pointer">'+ data[i].name +'</a></li>'
                     )
                 }
-            },
-            error: function () {
+            }, error: function () {
                 console.log('error')
-            },
-            complete: function () {
+            }, complete: function () {
                 $('.search_filter1 li').on('click', function() {
                     $('.search_keyword1').text($(this).text());
+                    $('input[name=category]').val($(this).text())
                 });
             }
         })
 
-
         //提交修改
         $('.app_edit_submit').click(function () {
-            var datas = {
-                app            : decodeURI(window.location.href.split("=")[1]),
-                app_name       : $('#app_name').val(),
-                category       : $('.search_keyword1').text(),
-                device_supplier: $('.search_keyword2').text(),
-                device_serial  : $('#shebeihao').val(),
-                description    :$('#test-editormd>textarea').text(),
-                icon_file     : $('input[name=icon_file]').get(0).files[0]
-            };
-            console.log(datas);
-            if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
+            if($('input[name=app_name]').val() == ''){
+                alt('请输入应用名称',3)
+            } else if($('input[name=device_supplier]').val() == ''){
+                alt('请输入应用厂商',3)
+            } else if($('input[name=device_serial]').val() == ''){
+                alt('请输入设备型号',3)
+            } else if($('input[name=protocol]').val() == ''){
+                alt('请输入协议',3)
+            } else if($('input[name=category]').val() == ''){
+                alt('请输入类别',3)
+            } else {
+                var form1 = new FormData(document.getElementById("form"));
+                console.log(form1);
                 $.ajax({
                     url: "/apis/api/method/app_center.appmgr.modify",
                     type: "POST",
-                    data: JSON.stringify(datas),
-                    contentType:'application/json',
+                    data: form1,
+                    processData:false,
+                    contentType:false,
                     success:function (req) {
+                        console.log('============')
                         console.log(req);
                         alt('修改成功',1);
+                        setTimeout(function () {
+                            window.location = "application_list.html";
+                        },1000)
                     },
                     error: function () {
-                        alt('修改失败',3);
+                        alt('修改失败',2);
                     }
                 })
-            }else{
-                alt('修改信息不能为空',2);
-            }
+            }//
         });
-
-        var form1 = new FormData(document.getElementById("myForm"));
 
         //创建新应用
         $('.app_add').click(function () {
-            var datas = {
-                app_name       : $('#app_name').val(),
-                category       : $('.search_keyword1').text(),
-                license_type   : 'Open',
-                device_supplier: $('.search_keyword2').text(),
-                protocol       : $('.search_keyword3').text(),  //协议
-                device_serial  : $('#shebeihao').val(),
-                description    : $('#test-editormd>textarea').val()
-            };
-            console.log(datas);
-            if(datas.app!=''&&datas.app_name!=''&&datas.category!=''&&datas.device_supplier!=''&&datas.device_serial!=''&&datas.description!=''){
+            if($('input[name=app_name]').val() == ''){
+                alt('请输入应用名称',3)
+            } else if($('input[name=device_supplier]').val() == ''){
+                alt('请输入应用厂商',3)
+            } else if($('input[name=device_serial]').val() == ''){
+                alt('请输入设备型号',3)
+            } else if($('input[name=protocol]').val() == ''){
+                alt('请输入协议',3)
+            } else if($('input[name=category]').val() == ''){
+                alt('请输入类别',3)
+            } else {
+                var form2 = new FormData(document.getElementById("form"));
+                console.log(form2);
                 $.ajax({
                     url: "/apis/api/method/app_center.appmgr.new",
                     type: "POST",
-                    data: JSON.stringify(datas),
-                    contentType:'application/json',
+                    data: form2,
+                    processData:false,
+                    contentType:false,
                     success:function (req) {
                         $('#app_name').val("");
                         $('.search_keyword1').text("类别");
@@ -363,7 +372,7 @@
                         $('.search_keyword3').text("协议");
                         $('.search_keyword4').text("免费");
                         $('#shebeihao').val("");
-                        $('#test-editormd>textarea').val("");
+                        // $('.editormd-markdown-textarea').val("");
                         alt('创建成功',1);
                         setTimeout(function () {
                             window.location = "application_list.html";
@@ -373,64 +382,10 @@
                         alt('创建失败',3);
                     }
                 })
-            }else{
-                alt('修改信息不能为空',2);
             }
         })
-
     });
 
-    //message
-    var datas = {
-        "start": 0,
-        "limit": 12
-    };
-    Ajax.call('/apis/api/method/iot.user_api.device_activity',JSON.stringify(datas), message, 'POST', 'JSON', 'JSON');
-    function message(req){
-        console.log(req.message)
-        var list = req.message;
-        var posed = [];
-        for (var j=0;j<list.length;j++){
-            console.log(list[j].disposed);
-            if(list[j].disposed == 0){
-                posed.push(list[j]);
-            }
-        }  //把所有未读消息集合
-        // console.log(posed);
-        if(posed.length == 0){
-            console.log('暂时没有未读信息');
-            $('.have').hide();
-            $('.no_have').show();
-            $('.redDot').hide();
-        }else{
-            console.log('有未读信息');
-            $('.have').show();
-            $('.no_have').hide();
-            $('.redDot').show();
-            //渲染列表
-            for (var i=0;i<12;i++){
-                $('.list_box').append(
-                    '<li class="box_li">' +
-                    '<span>'+posed[i].subject.substr(0,18)+'...'+ $.parseJSON(posed[i].message).device_status +'!</span>' +
-                    '<span class="message_id" style="display: none;">'+posed[i].name+'</span>' +
-                    '<span class="message_ago" title="'+posed[i].creation+'"></span>' +
-                    '</li>'
-                );
-                $('.message_ago').eq(i).timeago();
-                $('.box_li')[i].index = i;
-                $('.box_li')[i].onclick = function(){
-                    var name = $('.message_id').eq(this.index).text();
-                    location.href = 'platform_details.html?name=' + name;
-                }
-            }
-            var ago = $('.message_ago');
-            console.log(ago);
-            for(var i=0;i<ago.length;i++){
-                console.log(ago[i])
-            }
-            $('.message_ago').eq(i).timeago();
-        }
-    }
 </script>
 
 </body>

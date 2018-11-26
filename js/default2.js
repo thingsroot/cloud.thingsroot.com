@@ -24,6 +24,7 @@ $(function(){
     var t4 = getBeforeDate(-4);
     var t5 = getBeforeDate(-5);
     var t6 = getBeforeDate(-6);
+    console.log(t)
 
 	$(".right-product").css("height",$(document).height()-20);
 	var pageSize = 7; // 每页条数
@@ -53,20 +54,20 @@ $(function(){
             var arr1 = [];
             for (var i = 0; i < data.length; i++) {
                 //判断次数与时间
-                if(data[i].today != '0' && data[i].last_updated.indexOf(t) != -1){
+                if(data[i].today != '0' && data[i].last_updated.indexOf(t) >= 0){
                     arr1.push(data[i]);
                 }
             }
             //渲染表格
             for(var j=0;j<arr1.length;j++){
                 html += `
-			    <tr class="myTr">
+			    <tr class="myTr" style="cursor: pointer">
 			        <td>${j+1}</td>
 			        <td>${arr1[j].name}</td>
 			        <td>${arr1[j].position}</td>
 			        <td>${arr1[j].last_updated}</td>
 			        <td>${arr1[j].today}</td>
-			        <td>${arr1[j].sn}</td>
+			        <td style="display: none;">${arr1[j].sn}</td>
 			    </tr>`;
             }
 
@@ -117,13 +118,13 @@ $(function(){
             //渲染表格
             for(var j=0;j<arr2.length;j++){
                 html1 += `
-			    <tr class="myTr">
+			    <tr class="myTr" style="cursor: pointer">
 			        <td>${j+1} <input type="hidden" value='${arr2[j].sn}'></td>
 			        <td>${arr2[j].name}</td>
 			        <td>${arr2[j].position}</td>
 			        <td>${arr2[j].last_updated}</td>
 			        <td>${arr2[j].total}</td>
-			        <td>${arr2[j].sn}</td>
+			        <td style="display: none;">${arr2[j].sn}</td>
 			    </tr>`;
             }
             $('#J_error_total').html(html1);
