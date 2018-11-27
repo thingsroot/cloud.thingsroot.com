@@ -227,11 +227,11 @@ $(function(){
 	$('.J_appList').on('click','.shop_block .right button',function(){
 		var index = $(this).attr('index');
 		var app_name = $('.J_name_'+index).attr('name');
-        // location.href = 'application_config.html?name=' + app_name;
+        location.href = 'application_config.html?name=' + app_name +'&device_sn=' +device_sn;
 
 		// $('.J_app').val(app_name);
 		// $(".J_install_html").show();
-        $(".shade.app-install").show();
+        // $(".shade.app-install").show();
 		// $(".J_install_html").css({"top":($(window).height()-$(".J_install_html").height())/2})
 	})
 	

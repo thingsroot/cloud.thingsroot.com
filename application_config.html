@@ -23,11 +23,11 @@
 
     <title>应用配置</title>
     <style>
-        th,td{ white-space:nowrap;line-height: 40px;padding: 0 20px;text-align: center;}
-        td{min-width: 150px;line-height: 40px;height: 40px;padding: 0 20px;}
-        td input{border:1px solid orange;border-radius:5px;position:absolute;left: 1%;top: 4px;padding: 0 10px;text-align:center;width:98%;height: 34px;font-size:14px;}
-        td.input{padding:0;position:relative;}
-        table{min-width:60%;max-width:90%;}
+        .c_box th,.c_box td{ white-space:nowrap;line-height: 40px;padding: 0 20px;text-align: center;}
+        .c_box td{min-width: 120px;line-height: 40px;height: 40px;padding: 0 20px;}
+        .c_box td input{border:1px solid orange;border-radius:5px;position:absolute;left: 1%;top: 4px;padding: 0 10px;text-align:center;width:98%;height: 34px;font-size:14px;}
+        .c_box td.input{padding:0;position:relative;}
+        .c_box table{min-width:60%;max-width:90%;}
         .checkbox{width: 50px;height: 30px;margin: 10px 0;}
         .checkbox em{top: 7px!important;}
         .addRows{width: 100px;height: 30px;line-height: 30px;margin: 10px 0;}
@@ -35,7 +35,8 @@
         .btn{text-align: left}
         .caret{position: absolute;right: 10px;top: 14px;}
         .dropdown-menu{width:260px}
-
+        .temp_list td:nth-child(4){display: none;}
+        .temp_list1 td:nth-child(3){display: none;background-color: red}
     </style>
 </head>
 <body>
@@ -79,11 +80,29 @@
     </div>
     <!-- 左侧导航 start -->
     <div class="right-product my-index right-full">
+        <ol class="breadcrumb">
+            <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+            <li class="active"><a href="mine.html">我的网关</a></li>
+            <li class="active J_gate_name"></li>
+            <li class="active">安装新应用</li>
+            <li class="active j_get_app"></li>
+            <li class="active">应用配置</li>
+        </ol>
         <!-- 标题 -->
         <div class="details_title"><span class="version_name">应用配置</span><i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i></div>
         <!-- 内容 -->
         <div class="c_content">
-
+            <div class="c_box">
+                <p></p>
+                <div class="routine">
+                    <div>
+                        <span>实例名称</span>
+                        <div class="sel_inp">
+                            <input class="sel_input" id="inst_name" type="text" value="" placeholder="请输入...">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!--<div class="c_box">-->
                 <!--<p>应用常规</p>-->
                 <!--<div class="routine">-->
@@ -145,9 +164,27 @@
         </div>
         <p class="copyright">SymTech Application © 2008-2017</p>
     </div>
+
+
+</div>
+<div id="template_box">
+    <div id="select_template">
+        <p>模板列表 <span>×</span></p>
+        <div>
+            <table class="temp_list1">
+                <tr>
+                    <th style="width: 40%">模板名称</th>
+                    <th style="width: 45%">模板描述</th>
+                    <th style="display: none;">版本</th>
+                    <th style="width: 15%"></th>
+                </tr>
+            </table>
+        </div>
+    </div>
 </div>
 <script>
     $(function () {
+        //获取token
         //获取token
         var token = $.cookie('DS_auth_token');
         $.ajaxSetup({
@@ -158,30 +195,48 @@
         //获取用户信息
         var user = getCookie('usr');
 
+        var device_sn = getParam('device_sn');
+        var app = getParam('name');
 
-        var temp_list;
+        $('.J_gate_name').text(device_sn);
+        $('.j_get_app').text(app);
+
+
+        //应用名称
+        var app_name;
+        //模板接口返回数据
+        var list;
+        //templates -- template
+        var template_list = [];
+
         $.ajax({
             url: "/apis/api/method/conf_center.api.list_app_conf",
             type: "GET",
             async: false,
-            data: {app: decodeURI(window.location.href.split("=")[1]),start:0,limit:100},
+            data: {app:app,start:0,limit:100},
             success: function (req) {
-                temp_list = req;
+                list = req.message;
+                console.log(list)
+                if(list){
+                    for(var i=0;i<list.length;i++){
+                        var html = '<tr>';
+                        html += '<td>'+list[i].conf_name+'</td><td>'+list[i].description+'</td><td>'+list[i].name+'</td><td><button class="add_single">添加</button></td></tr>'
+                        $('#select_template table').append(html);
+                    }
+                }
             }, error: function () {
                 console.log('error')
             }
         });
 
-        var data = {
-            app : decodeURI(window.location.href.split("=")[1])
-        };
         $.ajax({
             url: "/apis/api/method/app_center.api.app_detail",
             type: "GET",
             async: false,
-            data: data,
+            data: {app:app},
             success: function (data) {
-                console.log(data.message.conf_template)
+                app_name = data.message.app_name;
+                // console.log(data.message.conf_template);
                 var con_temp = $.parseJSON(data.message.conf_template);
                 for (var i=0;i<con_temp.length;i++){
                     if(con_temp[i].name == "protocol"){
@@ -194,7 +249,7 @@
                         '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">' +
                         '</ul>' +
                         '</div>';
-                        $('.c_content').prepend('<div class="c_box '+ con_temp[i].name +'">' +
+                        $('.c_content').append('<div class="c_box '+ con_temp[i].name +'">' +
                             '<div class="routine">' +
                                 '<div><span>'+con_temp[i].desc+'</span>' +
                                     '<input type="hidden" value="">' +
@@ -270,21 +325,13 @@
                                     '</div>');
                             }else if(child[j].type == "templates"){
                                 //判断有没有模板
-                                if(temp_list.message){
-                                    inp = '<div class="btn-group" role="group">' +
-                                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-                                        '<span class="search_keyword1" data-search_keyword="1">'+temp_list.message[0].conf_name+'</span>' +
-                                        '<input type="hidden" class="sel_input" value="'+temp_list.message[0].conf_name+'">' +
-                                        '<input type="hidden" class="conf_id" value="'+temp_list.message[0].name+'">' +
-                                        '<input type="hidden" class="conf_version" value="'+temp_list.message[0].version+'">' +
-                                        '<span class="caret"></span>' +
-                                        '</button>' +
-                                        '<ul class="dropdown-menu '+child[j].type+'_sel" role="menu" aria-labelledby="dLabel">' +
-                                        '</ul>' +
-                                        '</div>';
-
+                                if(list){
+                                    inp = '<table class="temp_list" border="1" collspacing="0">' +
+                                            '<tr><th>模板名称</th><th>模板描述</th><th>关联应用</th><th style="display: none;">id</th><th>操作</th></tr>'+
+                                        '</table>' +
+                                        '<button class="add_temp temp">添加模板</button>'
                                 }else{
-                                    inp = "<input class='sel_input' type='text' value='' placeholder='此应用暂时没有模板' disabled>";
+                                    inp = '<button class="temp">此应用暂时没有模板</button>'
                                 }
                                 $('.'+ con_temp[i].name +'').append('<div class="routine">' +
                                     '<div><span>'+child[j].desc+'</span>' +
@@ -295,13 +342,15 @@
                                     '</div>'+
                                     '</div>'
                                 );
-                                if(temp_list.message){
-                                    for(var w=0;w<temp_list.message.length;w++){
-                                        $('.'+child[j].type+'_sel').append('<li data-name="">' +
-                                            '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
-                                            '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
-                                    }
-                                }
+                                var temp_list = $('.temp_list>tr>td:nth-child(1)')
+                                console.log(temp_list)
+                                // if(temp_list.message){
+                                //     for(var w=0;w<temp_list.message.length;w++){
+                                //         $('.'+child[j].type+'_sel').append('<li data-name="">' +
+                                //             '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
+                                //             '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
+                                //     }
+                                // }
                             }else if(child[j].type == "number"){
                                 if(child[j].value){
                                     inp = "<input class='sel_input' type='number' value='"+ child[j].value[0] +"'>";
@@ -337,6 +386,11 @@
             }, error: function () {
                 console.log('no')
             }, complete: function () {
+                if($('.temp_list tr').length <= 1){
+                    $('.temp_list').hide();
+                }else{
+                    $('.temp_list').show();
+                }
                 //判斷通訊協議
                 if($('#sel1').val() == "Modbus RTU"){
                     $('#RTU').show();
@@ -355,9 +409,9 @@
                     }
                     html += '<td><button class="delete_device_list">刪除</button></td></tr>';
                     table.append(html);
-                    if(!temp_list.message){
+                    if(!list){
                         $('.tpl').text('————');
-                        $('.tpl').addClass('disabled')
+                        $('.tpl').addClass('disabled');
                     }
                     //点击td进行编辑
                     $('table>tbody .bj').click(function () {
@@ -385,19 +439,17 @@
                                         $('.visualize').trigger('visualizeRefresh');
                                     });
                                 if($(this).hasClass('tpl')){
-                                    if(temp_list.message){
-                                        for(var w=0;w<temp_list.message.length;w++){
+                                    if(template_list){
+                                        for(var w=0;w<template_list.length;w++){
                                             $(this).find($('.tpl_sel')).append('<li data-name="">' +
-                                                '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
-                                                '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
+                                                '<a style="cursor:pointer">'+template_list[w]+'</a>' +
+                                                '</li>');
                                         }
                                         var tpl_li = $('.tpl_sel>li');
                                         tpl_li.each(function (i) {
                                             tpl_li[i].index = i;
                                             tpl_li.eq(i).click(function () {
-                                                console.log($(this).text());
-                                                $(this).parent().parent().parent().text($(this).text());
-                                                // $(this).find($('input').val())
+                                                $(this).parent().parent().find('.search_keyword1').text($(this).text());
                                             })
                                         })
                                     }
@@ -406,7 +458,7 @@
                         }
                     });
                     //删除行
-                    $('table>tbody .delete_device_list').click(function () {
+                    $('.delete_device_list').click(function () {
                         $(this).parent().parent().remove()
                     })
                 });
@@ -431,7 +483,38 @@
 
         $('input[type=checkbox]').click(function () {
             $(this).val($(this).prop('checked'));
-        })
+        });
+
+        $('.add_temp').click(function () {
+            $('#template_box').show();
+            document.body.style.overflow='hidden';
+        });
+        $('#select_template>p>span').click(function () {
+            $('#template_box').hide();
+            document.body.style.overflow='auto';
+        });
+        $('.add_single').click(function () {
+            var name = $(this).parent().parent().find($('td:nth-child(1)')).text();
+            var desc = $(this).parent().parent().find($('td:nth-child(2)')).text();
+            var id = $(this).parent().parent().find($('td:nth-child(3)')).text();
+            $('.temp_list').show();
+            $('.temp_list').append('<tr>' +
+                '<td>'+ name +'</td>' +
+                '<td>'+ desc +'</td>' +
+                '<td>'+ app_name +'</td>' +
+                '<td>'+ id +'</td>' +
+                '<td><button class="delete_device_list">删除</button></td>'+
+                '</tr>');
+            template_list.push(name);
+            $(this).text('已添加');
+            $(this).unbind('click')
+            $('.delete_device_list').click(function () {
+                $(this).parent().parent().remove();
+                if($('.temp_list tr').length <= 1){
+                    $('.temp_list').hide();
+                }
+            })
+        });
 
         //生成json
         $('.config_save').click(function () {
@@ -441,10 +524,12 @@
             tcp_s.each(function (i) {
                 var a = {
                     name  : tcp_s.eq(i).find($('.name')).val(),
-                    type  : tcp_s.eq(i).find($('.type')).val(),
                     value : tcp_s.eq(i).find($('.sel_input')).val()
-                };
-                tcp_data.push(a);
+                };var obj = {};
+                var k = a.name;
+                var v = a.value;
+                obj[k] = v;
+                tcp_data.push(obj);
             });
             //串口数据
             var serial_data = [];
@@ -452,58 +537,84 @@
             serial_s.each(function (i) {
                 var a = {
                     name  : serial_s.eq(i).find($('.name')).val(),
-                    type  : serial_s.eq(i).find($('.type')).val(),
                     value : serial_s.eq(i).find($('.sel_input')).val()
                 };
-                serial_data.push(a);
+                var obj = {};
+                var k = a.name;
+                var v = a.value;
+                obj[k] = v;
+                serial_data.push(obj);
             })
-            //设备模板选择
-            var temp_s = $('.template_section .routine');
-            var temp_data = {
-                name  : temp_s.find($('.name')).val(),
-                type  : temp_s.find($('.type')).val(),
-                value : temp_s.find($('.sel_input')).val()
-            };
             //采集设备列表
             var device_data = [];
             var device_s = $('.device_section table .sj');
             for (var i=0;i<device_s.length;i++){
                 var a = {
-                    tpl  : device_s.eq(i).find($('.tpl')).text(),
+                    tpl  : device_s.eq(i).find($('.tpl .search_keyword1')).text(),
                     name : device_s.eq(i).find($('.name')).text(),
                     sn   : device_s.eq(i).find($('.sn')).text(),
                     addr : device_s.eq(i).find($('.addr')).text()
-                }
+                };
                 device_data.push(a)
             }
             //通讯协议
             var protocol = $('#sel1').val();
+            //模板数据
+            var templates = $('.temp_list tr');
+            var temp_data = [];
+            for (var i=1;i<templates.length;i++){
+                var a = {
+                    name  : templates.eq(i).find($('td:nth-child(1)')).text(),
+                    id    : templates.eq(i).find($('td:nth-child(4)')).text(),
+                }
+                temp_data.push(a)
+            }
             //返回json
             var return_data;
-                if(!temp_data.value){
-                    temp_data = "";
+            if(template_list.length == 0){
+                template_list = "";
+            }
+            if($('#sel1').val() == "Modbus TCP"){
+                return_data = {
+                    templates : template_list,
+                    tcp       : tcp_data,
+                    dev       : device_data,
+                    protocol  : protocol,
+                    link_type : 'tcp'
                 }
-                if($('#sel1').val() == "Modbus TCP"){
-                    console.log(1)
-                    return_data = {
-                        templates : temp_data,
-                        tcp       : tcp_data,
-                        dev       : device_data,
-                        protocol  : protocol
-                    }
-                }else if($('#sel1').val() == "Modbus RTU"){
-                    console.log(2)
-                    return_data = {
-                        templates : temp_data,
-                        serial    : serial_data,
-                        dev       : device_data,
-                        protocol  : protocol
-                    }
+            }else if($('#sel1').val() == "Modbus RTU"){
+                return_data = {
+                    templates : template_list,
+                    serial    : serial_data,
+                    dev       : device_data,
+                    protocol  : protocol,
+                    link_type : 'serial'
                 }
-                console.log(return_data)
+            }
+            var data = {
+                device: device_sn,
+                id    : app,
+                data  : {
+                    inst : $('#inst_name').val(),
+                    conf : return_data
+                }
+            };
+            if(!$('#inst_name').val()){
+                alt('请填写实例名称',2);
+            }else{
+                Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
+                function app_config(req) {
+                    if(req.message!=''){
+                        alt('命令已发送，等待结果返回',1);
+                    }else{
+                        err('命令执行失败');
+                    }
+                    setTimeout(function () {
+                        // window.location.href='collection.html?type=manage&device_sn='+device_sn;
+                    },2000)
+                }
+            }
         })
-
-
 
     }); //$(function)
 
