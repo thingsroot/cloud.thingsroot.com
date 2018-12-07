@@ -298,6 +298,7 @@
                     $('.license_type').text("免费")
                 }
                 $('.protocol').text(data.message.protocol);   //通讯协议
+                console.log(data.message.protocol)
                 $('.device_serial').text(data.message.device_serial);   //适配型号
                 $('.app_img').src = data.message.icon_image;    //app图片
                 $('#test-editormd>textarea').val(data.message.description);  //Markdown内容

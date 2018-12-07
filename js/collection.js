@@ -294,9 +294,11 @@ $(function(){
 			device: "iotiotiot", //网关序列号
 		    id: "viccom.dong@symid.com uninstall iotiotiot's App bms", //执行指令附带的ID
 		    data: {
-		        "inst": "bms" //应用名称
+		        "inst": "bms", //应用名称
+				"name": appId
 		    }
 		}
+		console.log(data);
 		Ajax.call('/apis/api/method/iot.device_api.app_upgrade', data, getList, 'app_upgrade', 'JSON', 'JSON');
 		function app_upgrade(req){
 			console.log(req);
@@ -393,7 +395,7 @@ $(function(){
 	// 启动应用/关闭
 	$('.J_app_contorl,.J_app_restart').click(function(){
 		var _this = $(this);
-		var inst = _this.parent().attr('data-inst'); // 实例名称id
+		var inst = _this.parent().attr('data-inst'); // 实例名称
 		var app_name = _this.parent().attr('data-app_name');
 		var isRunning = _this.parent().attr('data-isRunning');
 		// 重启
@@ -403,12 +405,12 @@ $(function(){
 		}
 		// 重启end		
 		var id = isRunning+" "+device_sn+"'s "+inst+ ' '+Date.parse(new Date());
+		console.log(id);
 		var param = {
 		    "device": device_sn,
-		    "data": {"inst": inst},	
+		    "data": {"inst": inst,name: app_name},
 		    "id": id
 		};
-		// console.log(param);
 		if(isRunning=='已停止'){//去关闭
 			Ajax.call('/apis/api/method/iot.device_api.app_start', JSON.stringify(param), app_start,'POST', 'JSON', 'JSON');
 			function app_start(req){
@@ -420,8 +422,8 @@ $(function(){
 						'docid':'',
 						'type':'app_start',
 						'title':"应用启动",
-						'crontabDesc':inst,
-					}
+						'crontabDesc':inst
+					};
 					addCrontab(idarr);
 					alt('命令已发送，等待结果返回',1);return ;
 				}else{
@@ -448,6 +450,7 @@ $(function(){
 				}
 			}
 		}else if(isRunning=='restart'){// 启动重启
+		    console.log(param)
 			Ajax.call('/apis/api/method/iot.device_api.app_restart', JSON.stringify(param), app_restart,'POST', 'JSON', 'JSON');
 			function app_restart(req){
 				// console.log('app_restart',req);
@@ -498,7 +501,8 @@ $(function(){
 		Ajax.call('/apis/api/method/iot_ui.iot_api.gate_applist', {'sn':device_sn}, getList, 'GET', 'JSON', 'FORM');
 		// 主动请求列表数据
 		function getList(items){//0050562F49F7
-			//console.log('gate_applist',items);
+			// console.log(items);
+			console.log('gate_applist',items);
 			var app_list = new Array();
 			if (items.message) {
 				items.message.forEach(function(d) {
@@ -753,7 +757,7 @@ $(function(){
         editor.setValue(JSON.stringify(appconfigs[$(".shade .J_oneAppInfo").attr('data-inst')], null, 4));
 
         var session = editor.getSession();
-    })
+    });
 
     // 应用配置确定
     $('.button.config_confirm').click(function(){
@@ -793,22 +797,17 @@ $(function(){
                 err('命令执行失败');
             }
         }
-
     });
-
-
 
     // 应用配置取消
     $('.button.config_cancle').click(function(){
         $('div.useinfo_main').removeClass('hd');
         $('div.app_config_modify').addClass('hd');
-
     });
 
     // 应用升级
     $('.J_app_more_update').click(function(){
         $(".more_content").addClass("hd");
-
         var inst = $(".shade .J_oneAppInfo").attr('data-inst');
         var app_name = $(".shade .J_oneAppInfo").attr('data-app_name');
         var cloudver = $(".shade .J_oneAppInfo").attr('data-cloudver');
@@ -847,7 +846,8 @@ $(function(){
 
 	// 应用调试跳转
 	$('.J_app_more_debug').click(function(){
-		var url = 'debug.html?app='+$(".J_oneAppInfo").attr("data-app_name")+'&device_sn='+device_sn+'&app_inst='+$(".J_oneAppInfo").attr("data-inst")+'&version='+$(".J_oneAppInfo").attr("data-version")+'';
+		// var url = 'debug.html?app='+$(".J_oneAppInfo").attr("data-app_name")+'&device_sn='+device_sn+'&app_inst='+$(".J_oneAppInfo").attr("data-inst")+'&version='+$(".J_oneAppInfo").attr("data-version")+'';
+		var url = 'debug1.html?app='+$(".J_oneAppInfo").attr("data-app_name");
 		window.location.href=url;
 	});
 
@@ -926,7 +926,7 @@ $(function(){
 						var _liclass='';
 						if(k==0 && j==0){_liclass = 'color';}
 						html += `<li class="${_liclass}" data-vsn="${v.sn}">├ <a title="${v.sn}">${v.inst}</a></li>`;
-					})
+					});
 				html += `</ul>
 				</div>`;
 			j++;
@@ -1398,7 +1398,6 @@ $(function(){
 
 
 	});
-
 
     function gate_netcfg(req){
         req = req.message;

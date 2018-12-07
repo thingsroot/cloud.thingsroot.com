@@ -22,7 +22,6 @@ function message1(req){
         //渲染列表
         for (var i=0;i<posed.length;i++){
             var obj = JSON.parse(posed[i].message);
-            console.log(obj);
             var text;
 //设备状态
             if(obj.hasOwnProperty('device_status')){

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link rel="shortcut icon" href="/img/favicon.ico" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/viccom.css" rel="stylesheet" />
+    <link href="css/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
+    <!-- 加载script start -->
+    <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/crontab.js?v=20180706" type="text/javascript"></script>
+    <script src="js/jquery.timeago.js"></script>
+    <script src="js/transport.js" type="text/javascript"></script>
+    <script src="js/jQuery.cookie.js" type="text/javascript"></script>
+    <script src="js/layui/layui.js" charset="utf-8"></script>
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/arrayFun.js" type="text/javascript"></script>
+    <script src="js/common.js" type="text/javascript"></script>
+    <script src="js/user.js" type="text/javascript"></script>
+    <script src="js/index.js" type="text/javascript"></script>
+    <title>应用监控</title>
+</head>
+<body>
+
+<!-- 顶部导航 start -->
+<nav class="nav_herder">
+    <div class="nav_left gate_hand" onClick="location='index.html'"><img src="img/cloud_thingslink_logo.png" class="logo"/>冬笋物联网</div>
+    <div class="pull-right nav_right">
+        <p class="J_getMembers hd"><img src="img/top_management.png"/><span>成员管理</span></p><em>|</em>
+        <p onclick="javascript:$('#messageBox').show()" style="position: relative;"><img src="img/top_news.png"/><span style="display:none" class="redDot"></span></p><em>|</em>
+        <p onClick="location='personal_info.html'"><img src="img/top_avatar.png"/><span class="J_nickname">昵称</span></p><em>|</em>
+        <p><img src="img/top_quit.png" id="J_logout"/></p>
+    </div>
+</nav>
+<!-- 顶部导航 end -->
+
+<div class="down-main">
+    <!-- 左侧导航 start -->
+    <div class="left-main left-full">
+        <div class="sidebar-fold"><img src="img/nav_shrink.png"/></div>
+        <div class="subNav" onClick="location='index.html'">
+            <img src="img/nav_home.png" class="hd_img"/>
+            <img src="img/nav_home_hover.png" class="hover_img"/>
+            <p class="sublist-title">首页</p>
+        </div>
+        <div class="subNav" onClick="location='mine.html'">
+            <img src="img/nav_equipment.png" class="hd_img"/>
+            <img src="img/nav_equipment_hover.png" class="hover_img"/>
+            <p class="sublist-title">我的网关</p>
+        </div>
+        <div class="subNav" onClick="location='application_list.html'">
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
+            <p class="sublist-title">我的应用</p>
+        </div>
+        <div class="subNav" onClick="location='template.html'">
+            <img src="img/my_app.png" class="hd_img"/>
+            <img src="img/my_apps.png" class="hover_img"/>
+            <p class="sublist-title">我的模板</p>
+        </div>
+    </div>
+    <!-- 左侧导航 start -->
+    <div class="right-product my-index right-full">
+        <ol class="breadcrumb">
+            <li><a href="index.html"><img src="img/icon_nav.png" />首页</a></li>
+            <li class="active"><a href="mine.html">我的网关</a></li>
+            <li class="active J_gate_name"></li>
+            <li class="active">安装新应用</li>
+            <li class="active j_get_app"></li>
+            <li class="active">应用配置</li>
+        </ol>
+        <!-- 标题 -->
+        <!--<div class="details_title"><span class="version_name">应用配置</span><i id="goBack" onclick="history.go(-1)" class="glyphicon glyphicon-arrow-left"></i></div>-->
+        <!-- 内容 -->
+        <div class="main_content shop_content info_shade">
+                <div class="J_content">
+                    <div class="content_main">
+                        <div class="useinfo_top">
+                            <div class="logo"><img src="img/nav_home_hover.png"></div>
+                            <div>
+                                <div class="tit">appname</div>
+                                <p class="see J_appcenter_see">在应用商店中查看</p>
+                                <p class="J_app_version">版本：<span class="version"></span><em>|</em>上次更新：<span class="new_version"></span></p>
+                                <div class="J_oneAppInfo" data-autorunning="" data-isRunning="" data-app_name="" data-inst="" data-cloudver="" data-version="">
+                                    <input type="hidden" value="" id="J_current_inst"><!--当前应用的inst-->
+                                    <input type="hidden" value="" id="J_current_name"><!--当前应用的平台名称-->
+                                    <div class="button J_app_contorl" >启动</div>
+                                    <input id="status" type="hidden" value="">
+                                    <!--<div class="button color">停止</div>-->
+                                    <div class="button color J_app_restart" data-isRunning="restart">重启</div>
+
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            更多
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li class="J_app_more_config" ><a style="cursor:pointer">应用配置</a></li>
+                                            <li class="J_app_more_debug"><a style="cursor:pointer">应用调试</a></li>
+                                            <li class="J_app_more_fork hd"><a style="cursor:pointer">克隆&调试</a></li>
+                                            <li class="J_app_more_update hd"><a style="cursor:pointer">应用升级</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="useinfo_main">
+                            <div class="runtime_top">
+                                <ul class="nav nav-tabs J_tabs">
+                                    <li class="active"><a href="#three" data-toggle="tab">运行日志</a></li>
+                                    <li><a href="#four" data-toggle="tab">通讯报文</a></li>
+                                </ul>
+
+                                <!--运行日志的工具栏-->
+                                <div class="running_time running_time1" style="margin-right: 60px">
+                                    <div class="button" id="J_contorlLogListFlag">上传日志</div>
+                                    <div class="button off"  id="J_clearLogListFlag">清除记录</div>
+                                    <div class="bs-example J_logSearchForm">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control J_logkeyword" placeholder="输入搜索内容">
+                                            <span class="input-group-addon"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--通讯报文的工具栏-->
+                                <div class="running_time running_time2 hd" style="margin-right: 60px">
+                                    <div class="button"  id="J_contorlCommListFlag">上传报文</div>
+                                    <div class="button off"  id="J_clearCommListFlag">清除记录</div>
+                                    <div class="bs-example J_commSearchForm">
+                                        <div class="input-group">
+                                            <input type="search" class="form-control J_commkeyword" placeholder="输入搜索内容">
+                                            <span class="input-group-addon"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="three">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th data-ordername="localeTime" data-ordertype="desc">时间<i class=""></i></th>
+                                            <th data-ordername="cateName" data-ordertype="desc">类型<i class=""></i></th>
+                                            <th data-ordername="content" data-ordertype="desc">内容<i class=""></i></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="J_gate_log_list">
+                                        <!--<tr>
+                                            <td>1</td>
+                                            <td>Q120-imax6ull-01</td>
+                                            <td>2018-2-12 10:57:08</td>
+                                        </tr>-->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="four">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th data-ordername="localeTime" data-ordertype="desc">时间<i></i></th>
+                                            <th data-ordername="cateName" data-ordertype="desc">应用<i></i></th>
+                                            <th data-ordername="direction" data-ordertype="desc">方向<i></i></th>
+                                            <th data-ordername="content" data-ordertype="desc">报文<i></i></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="J_gate_comm_list"></tbody>
+                                    </table>
+                                    <!--分页-->
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="app_config_modify main_content hd">
+                            <div class="txt_main">
+                                <div>
+                                    <p>应用配置：</p>
+                                    <div id="json_editor"  style="height:300px; border: 0px solid #e1e1e1;">
+                                    </div>
+
+                                    <script>
+                                        //console.log('-------------------session1',session.getValue());
+                                    </script>
+                                </div>
+                                <div class="text-center"><span class="button config_confirm">确定</span>
+                                    <span class="button config_cancle">取消</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <p class="copyright">SymTech Application © 2008-2017</p>
+    </div>
+</div>
+<!-- 上传报文和上传日志 -->
+<script src="js/paho-mqtt.js"></script>
+<script src="js/mqtt_utility.js"></script>
+<script src="js/collection_sys_enable.js?v=20180709"></script>
+
+<script>
+    $(function () {
+        //获取token
+        //获取token
+        var token = $.cookie('DS_auth_token');
+        $.ajaxSetup({
+            headers: { // 默认添加请求头
+                "X-Frappe-CSRF-Token": token
+            }
+        });
+        //获取用户信息
+        var user = getCookie('usr');
+        var current_vsn = "192929";
+        var device_sn = getParam('device_sn');
+        var app = getParam('name');
+        var appId = getParam('appId');
+        var status = getParam('status');
+        if(status == 0){   //正在运行
+            $('#status').val('运行中');
+            $(".J_app_contorl").text('停止');
+            $(".J_app_contorl").addClass('color');
+        }else if(status == 1){    //停止运行
+            $('#status').val('已停止');
+            $(".J_app_contorl").text('启动');
+            $(".J_app_contorl").removeClass('color');
+        }
+        $.ajax({
+            url: "/apis/api/method/iot_ui.iot_api.gate_app_detail",
+            type: "GET",
+            data: {sn: device_sn,inst: app},
+            success: function (req) {
+                if(req.message){
+                    $('.J_app_version .version').text(req.message.info.version);
+                    if(!req.message.cloud){
+                        $('.J_app_version .new_version').text('无');
+                    }else{
+                        $('.J_app_version .new_version').text(req.message.cloud.ver);
+                    }
+                    if(req.message.info.version<req.message.cloud.ver){
+                        $('.J_app_more_update').removeClass('hd');
+                    }
+                    $('.tit').text(req.message.inst);
+                    $('#J_current_name').val(req.message.cloud.name);                }else{
+                    console.log($('#J_current_name').val())
+                }
+
+            }
+        });
+
+        //点击启动或停止应用
+        $('.J_app_contorl').click(function () {
+            if($(this).text() == "启动"){
+                //启动应用
+                var _this_id = $('#status').val() + device_sn+"'s"+ app + Date.parse(new Date());
+                var data1 = {
+                    device:device_sn,
+                    data:{inst:app,name:$('#J_current_name').val()},
+                    id:_this_id
+                };
+                Ajax.call('/apis/api/method/iot.device_api.app_start', JSON.stringify(data1), app_start,'POST', 'JSON', 'JSON');
+                function app_start(req){
+                    if(req.message!=''){
+                        var idarr = {
+                            'id':_this_id,
+                            'times':10,
+                            'docid':'',
+                            'type':'app_start',
+                            'title':"应用启动",
+                            'crontabDesc':app
+                        };
+                        addCrontab(idarr);
+                        alt('命令已发送，等待结果返回',1);
+                        $(".J_app_contorl").text('停止');
+                        $(".J_app_contorl").addClass('color');
+                        return ;
+                    }else{
+                        err('命令执行失败');return ;
+                    }
+                }
+
+            }else if($(this).text() == "停止"){
+                //停止应用
+                var _this_id2 = $('#status').val() + device_sn+"'s"+ app + Date.parse(new Date());
+                var data2 = {
+                    device:device_sn,
+                    data:{inst:app,name:$('#J_current_name').val()},
+                    id:_this_id2
+                };
+                Ajax.call('/apis/api/method/iot.device_api.app_stop', JSON.stringify(data2), app_stop,'POST', 'JSON', 'JSON');
+                function app_stop(req){
+                    if(req.message!=''){
+                        var idarr = {
+                            'id':_this_id2,
+                            'times':10,
+                            'docid':'',
+                            'type':'app_stop',
+                            'title':"应用停止",
+                            'crontabDesc':app
+                        }
+                        addCrontab(idarr);
+                        alt('命令已发送，等待结果返回',1);return ;
+                    }else{
+                        err('命令执行失败');return ;
+                    }
+                }
+                $(".J_app_contorl").text('启动');
+                $(".J_app_contorl").removeClass('color');
+            }
+        })
+        //重启应用
+        $('.J_app_restart').click(function () {
+            var _this_id3 = "restart" + device_sn+"'s"+ app + Date.parse(new Date());
+            var data3 = {
+                device:device_sn,
+                data:{inst:app,name:$('#J_current_name').val()},
+                id:_this_id3
+            };
+            Ajax.call('/apis/api/method/iot.device_api.app_restart', JSON.stringify(data3), app_restart,'POST', 'JSON', 'JSON');
+            function app_restart(req){
+                if(req.message!=''){
+                    var idarr = {
+                        'id':_this_id3,
+                        'times':10,
+                        'docid':'',
+                        'type':'app_restart',
+                        'title':"应用重启",
+                        'crontabDesc':app
+                    }
+                    addCrontab(idarr);
+                    alt('命令已发送，等待结果返回',1);return ;
+                }else{
+                    err('命令执行失败');return ;
+                }
+            }
+        });
+
+        //切换工具栏
+        $('.J_tabs>li').click(function () {
+            if($(this).index() == 0){
+                $('.running_time2').hide();
+                $('.running_time1').show();
+            }else{
+                $('.running_time2').show();
+                $('.running_time1').hide();
+            }
+        });
+
+        // 应用调试跳转
+        $('.J_app_more_debug').click(function(){
+            location.href = 'debug1.html?app='+ $('#J_current_name').val();
+        });
+
+        console.log($('#J_current_name').val());
+
+        //网关升级
+        $('.J_app_more_update').click(function(){
+            $(".more_content").addClass("hd");
+            var cloudver = $('.new_version').text();
+            var id = app +" upgrade "+ ' '+Date.parse(new Date());
+            var data = {
+                "device": device_sn,
+                "id": id,
+                "data": {
+                    "inst": app,
+                    "name": $('#J_current_name').val(),
+                    "version": cloudver
+                }
+            };
+            Ajax.call('/apis/api/method/iot.device_api.app_upgrade', JSON.stringify(data), app_upgrade, 'POST', 'JSON', 'JSON');
+            function app_upgrade(req){
+                if(req.message!=''){
+                    var idarr = {
+                        'id':id,
+                        'times':20,
+                        'docid':'',
+                        'type':'app_upgrade',
+                        'title':"应用升级",
+                        'crontabDesc':app+"升级",
+                    };
+                    addCrontab(idarr);
+                    alt('命令已发送，等待结果返回',1);
+                    $('.J_app_more_update').addClass('hd');
+                }else{
+                    err('命令执行失败');
+                }
+            }
+        });
+    }); //$(function)
+    //http://localhost/application_monit.html?device_sn=000C29805399&name=dev_simulotor&appId=APP00000014&status=1
+
+</script>
+
+
+
+
+</body>
+</html>
+
+

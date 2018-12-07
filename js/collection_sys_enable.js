@@ -33,6 +33,7 @@ $(function(){
         };
         Ajax.call('/api/method/iot.device_api.sys_enable_log', JSON.stringify(data), sys_enable_log, 'POST', 'JSON', 'JSON',false);
         function sys_enable_log(req){
+        	console.log(req)
 	        if(client && time==0){// 停止订阅
 				client.unsubscribe(device_sn+'/comm', {
                     onSuccess: unsubscribeSuccess,
@@ -92,7 +93,7 @@ $(function(){
             }
 
             if(lastWillTopic){
-                var lastWillMessage = new Paho.MQTT.Message(lastWillMessage);
+            	var lastWillMessage = new Paho.MQTT.Message(lastWillMessage);
                 lastWillMessage.destinationName = lastWillTopic;
                 lastWillMessage.qos = lastWillQos;
                 lastWillMessage.retained = lastWillRetain;
@@ -276,15 +277,6 @@ $(function(){
 	   }
 	}	
 	//-------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
     
 	/**
 	*	获取报文列表

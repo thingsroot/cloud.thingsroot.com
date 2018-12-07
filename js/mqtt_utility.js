@@ -298,7 +298,6 @@ function connect(){
     var hostname = document.getElementById("hostInput").value;
     var port = document.getElementById("portInput").value;
     var clientId = document.getElementById("clientIdInput").value;
-
     var path = document.getElementById("pathInput").value;
     var user = document.getElementById("userInput").value;
     var pass = document.getElementById("passInput").value;

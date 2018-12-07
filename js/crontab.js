@@ -22,6 +22,7 @@ function addCrontab(arr){
 // 监控开机启动关闭的执行结果
 function doCrontab(){
 	var q = localStorage.getItem('crontab_list');
+	console.log(q)
 	if(q==null){
 		console.log('crontab null');
 		return false;

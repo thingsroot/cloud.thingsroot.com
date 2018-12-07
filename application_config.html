@@ -605,6 +605,7 @@
                 Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
                 function app_config(req) {
                     if(req.message!=''){
+                        addCrontab(idarr);
                         alt('命令已发送，等待结果返回',1);
                     }else{
                         err('命令执行失败');

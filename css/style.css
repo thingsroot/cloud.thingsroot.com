@@ -500,9 +500,6 @@ input:checked + .slider::after {
 .refresh img{
 	width: 15px;
 }
-.main_content .tit{
-	background: #F5F6FA;
-}
 .main_content .tit .color{
 	background: #354E77;
 	color: #fff;
@@ -1260,14 +1257,12 @@ th .on{
 }
 /*网关应用详情*/
 .info_shade{
-	max-width: 1100px;
-	width:65%;
-	height: 75%;
-	margin: 7% auto;
+	/*max-width: 1100px;*/
+	/*width:65%;*/
+	/*height: 75%;*/
+	margin: 15px;
 	padding: 0;
 	overflow-y: scroll;
-	border:7px solid rgba(0,0,0,0.6);
-	border-radius: 7px;
 }
 .info_shade .btn{
 	padding: 4px 12px;
