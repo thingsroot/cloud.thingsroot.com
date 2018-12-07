@@ -251,7 +251,7 @@
                         '</div>';
                         $('.c_content').append('<div class="c_box '+ con_temp[i].name +'">' +
                             '<div class="routine">' +
-                                '<div><span>'+con_temp[i].desc+'</span>' +
+                                '<div><p style="width: 100%;height: 20px;"></p><span>'+con_temp[i].desc+'</span>' +
                                     '<input type="hidden" value="">' +
                                     '<div class="sel_inp" id="'+con_temp[i].name+'">' + inp+
                                     '</div>' +
@@ -576,14 +576,17 @@
             }
             if($('#sel1').val() == "Modbus TCP"){
                 return_data = {
+                    temp_name : $('#inst_name').val(),
                     templates : template_list,
                     tcp       : tcp_data,
                     dev       : device_data,
                     protocol  : protocol,
                     link_type : 'tcp'
                 }
+
             }else if($('#sel1').val() == "Modbus RTU"){
                 return_data = {
+                    temp_name : $('#inst_name').val(),
                     templates : template_list,
                     serial    : serial_data,
                     dev       : device_data,
@@ -602,10 +605,11 @@
             if(!$('#inst_name').val()){
                 alt('请填写实例名称',2);
             }else{
+                console.log(return_data)
                 Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
                 function app_config(req) {
                     if(req.message!=''){
-                        addCrontab(idarr);
+                        // addCrontab(idarr);
                         alt('命令已发送，等待结果返回',1);
                     }else{
                         err('命令执行失败');
