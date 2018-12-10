@@ -11,6 +11,20 @@
     <link rel="stylesheet" href="js/layui/css/layui.css"  media="all">
     <!-- 加载script start -->
     <script src="js/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="js/crontab.js?v=20180706" type="text/javascript"></script>
+
+    <!--markdown start-->
+    <script src="js/editor.md-master/lib/marked.min.js"></script>
+    <script src="js/editor.md-master/lib/prettify.min.js"></script>
+    <script src="js/editor.md-master/lib/raphael.min.js"></script>
+    <script src="js/editor.md-master/lib/underscore.min.js"></script>
+    <script src="js/editor.md-master/lib/sequence-diagram.min.js"></script>
+    <script src="js/editor.md-master/lib/flowchart.min.js"></script>
+    <script src="js/editor.md-master/lib/jquery.flowchart.min.js"></script>
+    <script src="js/editor.md-master/editormd.js"></script>
+    <!--markdown end-->
+    <script src="js/ace/ace.js" charset="utf-8" type="text/javascript"></script>
+    <script src="js/ace/ext-language_tools.js" type="text/javascript"></script>
     <script src="js/jquery.timeago.js"></script>
     <script src="js/transport.js" type="text/javascript"></script>
     <script src="js/jQuery.cookie.js" type="text/javascript"></script>
@@ -37,6 +51,7 @@
         .dropdown-menu{width:260px}
         .temp_list td:nth-child(4){display: none;}
         .temp_list1 td:nth-child(3){display: none;background-color: red}
+        .no_config{display: none;width: 90%;height: 500px;z-index: 9999;position: absolute;top: 200px;left: 130px;}
     </style>
 </head>
 <body>
@@ -165,6 +180,44 @@
         <p class="copyright">SymTech Application © 2008-2017</p>
     </div>
 
+    <div class="no_config">
+        <div class="txt_main" style="height: 100%;">
+            <div>
+                <p>应用配置：</p>
+                <div id="code1" class="ace_editor" style="min-height:400px; border: 1px solid #e1e1e1;"><textarea rows=20 class="ace_text-input">{}</textarea></div>
+                <script>
+                    //初始化对象
+                    editor = ace.edit("code1");
+                    //设置风格和语言（更多风格和语言，请到github上相应目录查看）
+                    theme = "clouds"
+                    language = "json"
+                    editor.setTheme("ace/theme/" + theme);
+                    editor.session.setMode("ace/mode/" + language);
+
+                    //字体大小
+                    editor.setFontSize(16);
+
+                    //设置只读（true时只读，用于展示代码）
+                    editor.setReadOnly(false);
+
+                    //自动换行,设置为off关闭
+                    editor.setOption("wrap", "free")
+
+                    //启用提示菜单
+                    ace.require("ace/ext/language_tools");
+                    editor.setOptions({
+                        enableBasicAutocompletion: true,
+                        enableSnippets: true,
+                        enableLiveAutocompletion: true
+                    });
+
+                    var session = editor.getSession();
+                    //console.log('-------------------session1',session.getValue());
+                </script>
+            </div>
+            <div id="button" class="button">确定</div>
+        </div>
+    </div>
 
 </div>
 <div id="template_box">
@@ -235,154 +288,161 @@
             async: false,
             data: {app:app},
             success: function (data) {
+                console.log(data)
                 app_name = data.message.app_name;
                 // console.log(data.message.conf_template);
-                var con_temp = $.parseJSON(data.message.conf_template);
-                for (var i=0;i<con_temp.length;i++){
-                    if(con_temp[i].name == "protocol"){
-                        inp = '<div class="btn-group" role="group">' +
-                        '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-                        '<span class="search_keyword1" data-search_keyword="1">'+con_temp[i].value[0]+'</span>' +
-                        '<input type="hidden" id="sel1" class="sel_input" value="'+con_temp[i].value[0]+'">' +
-                        '<span class="caret"></span>' +
-                        '</button>' +
-                        '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">' +
-                        '</ul>' +
-                        '</div>';
-                        $('.c_content').append('<div class="c_box '+ con_temp[i].name +'">' +
-                            '<div class="routine">' +
+                if(data.message.has_conf_template){
+                    var con_temp = $.parseJSON(data.message.conf_template);
+                    for (var i=0;i<con_temp.length;i++){
+                        if(con_temp[i].name == "protocol"){
+                            inp = '<div class="btn-group" role="group">' +
+                                '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
+                                '<span class="search_keyword1" data-search_keyword="1">'+con_temp[i].value[0]+'</span>' +
+                                '<input type="hidden" id="sel1" class="sel_input" value="'+con_temp[i].value[0]+'">' +
+                                '<span class="caret"></span>' +
+                                '</button>' +
+                                '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">' +
+                                '</ul>' +
+                                '</div>';
+                            $('.c_content').append('<div class="c_box '+ con_temp[i].name +'">' +
+                                '<div class="routine">' +
                                 '<div><p style="width: 100%;height: 20px;"></p><span>'+con_temp[i].desc+'</span>' +
-                                    '<input type="hidden" value="">' +
-                                    '<div class="sel_inp" id="'+con_temp[i].name+'">' + inp+
-                                    '</div>' +
+                                '<input type="hidden" value="">' +
+                                '<div class="sel_inp" id="'+con_temp[i].name+'">' + inp+
+                                '</div>' +
                                 '</div>'+
-                            '</div>'+
-                        '</div>');
-                        console.log($('#'+con_temp[i].name));
-                        for(var w=0;w<con_temp[i].value.length;w++){
-                            $('#'+con_temp[i].name+' ul').append('<li data-name=""><a style="cursor:pointer">'+ con_temp[i].value[w] +'</a></li>');
-                        }
-                    } else if(con_temp[i].type == "section"){
-                        if(con_temp[i].depends){
-                            var depend = con_temp[i].depends;
-                            var ids = depend.substring(depend.lastIndexOf(' ')+1,depend.length-1);
-                            $('.c_content').append('<div id="'+ids+'" class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
-                        }else{
-                            $('.c_content').append('<div class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
-                        }
-                        var child = con_temp[i].child;
-                        for (var j=0;j<child.length;j++){
-                            var inp;
-                            if(child[j].type == "dropdown"){   //下拉
-                                inp = '<div class="btn-group" role="group">' +
+                                '</div>'+
+                                '</div>');
+                            console.log($('#'+con_temp[i].name));
+                            for(var w=0;w<con_temp[i].value.length;w++){
+                                $('#'+con_temp[i].name+' ul').append('<li data-name=""><a style="cursor:pointer">'+ con_temp[i].value[w] +'</a></li>');
+                            }
+                        } else if(con_temp[i].type == "section"){
+                            if(con_temp[i].depends){
+                                var depend = con_temp[i].depends;
+                                var ids = depend.substring(depend.lastIndexOf(' ')+1,depend.length-1);
+                                $('.c_content').append('<div id="'+ids+'" class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
+                            }else{
+                                $('.c_content').append('<div class="c_box '+ con_temp[i].name +' "><p>'+con_temp[i].desc+'</p></div>');
+                            }
+                            var child = con_temp[i].child;
+                            for (var j=0;j<child.length;j++){
+                                var inp;
+                                if(child[j].type == "dropdown"){   //下拉
+                                    inp = '<div class="btn-group" role="group">' +
                                         '<button type="button" class="btn btn-default dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' +
-                                          '<span class="search_keyword1" data-search_keyword="1">'+child[j].value[0]+'</span>' +
-                                            '<input type="hidden" class="sel_input" value="'+child[j].value[0]+'">' +
-                                          '<span class="caret"></span>' +
+                                        '<span class="search_keyword1" data-search_keyword="1">'+child[j].value[0]+'</span>' +
+                                        '<input type="hidden" class="sel_input" value="'+child[j].value[0]+'">' +
+                                        '<span class="caret"></span>' +
                                         '</button>' +
                                         '<ul class="dropdown-menu '+ child[j].name +'" role="menu" aria-labelledby="dLabel">' +
                                         '</ul>' +
-                                      '</div>';
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<input type="hidden" value="">' +
-                                    '<div class="sel_inp" id="'+child[j].name+'">' + inp+
-                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
-                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>');
-                                for(var w=0;w<child[j].value.length;w++){
-                                    $('.'+child[j].name).append('<li data-name=""><a style="cursor:pointer">'+ child[j].value[w] +'</a></li>');
-                                }
-                            }else if(child[j].type == "text"){
-                                if(child[j].value ){
-                                    inp = "<input class='sel_input' type='text' value='"+ child[j].value +"'>";
-                                }else{
-                                    inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
-                                }
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<div class="sel_inp">' + inp+
+                                        '</div>';
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<input type="hidden" value="">' +
+                                        '<div class="sel_inp" id="'+child[j].name+'">' + inp+
                                         '<input type="hidden" class="name" value="'+child[j].name+'">'+
                                         '<input type="hidden" class="type" value="'+child[j].type+'">'+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>');
-                            }else if(child[j].type == "boolean"){
-                                if(child[j].value == true ){
-                                    inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='true' checked><em></em></label>";
-                                }else{
-                                    inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='false'><em></em></label>";
-                                }
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<div class="sel_inp">' + inp+
-                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
-                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>');
-                            }else if(child[j].type == "templates"){
-                                //判断有没有模板
-                                if(list){
-                                    inp = '<table class="temp_list" border="1" collspacing="0">' +
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>');
+                                    for(var w=0;w<child[j].value.length;w++){
+                                        $('.'+child[j].name).append('<li data-name=""><a style="cursor:pointer">'+ child[j].value[w] +'</a></li>');
+                                    }
+                                }else if(child[j].type == "text"){
+                                    if(child[j].value ){
+                                        inp = "<input class='sel_input' type='text' value='"+ child[j].value +"'>";
+                                    }else{
+                                        inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
+                                    }
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<div class="sel_inp">' + inp+
+                                        '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                        '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>');
+                                }else if(child[j].type == "boolean"){
+                                    if(child[j].value == true ){
+                                        inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='true' checked><em></em></label>";
+                                    }else{
+                                        inp = "<label class='checkbox'><input type='checkbox' class='sel_input box' value='false'><em></em></label>";
+                                    }
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<div class="sel_inp">' + inp+
+                                        '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                        '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>');
+                                }else if(child[j].type == "templates"){
+                                    //判断有没有模板
+                                    if(list){
+                                        inp = '<table class="temp_list" border="1" collspacing="0">' +
                                             '<tr><th>模板名称</th><th>模板描述</th><th>关联应用</th><th style="display: none;">id</th><th>操作</th></tr>'+
-                                        '</table>' +
-                                        '<button class="add_temp temp">添加模板</button>'
-                                }else{
-                                    inp = '<button class="temp">此应用暂时没有模板</button>'
+                                            '</table>' +
+                                            '<button class="add_temp temp">添加模板</button>'
+                                    }else{
+                                        inp = '<button class="temp">此应用暂时没有模板</button>'
+                                    }
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<div class="sel_inp">' + inp+
+                                        '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                        '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>'
+                                    );
+                                    var temp_list = $('.temp_list>tr>td:nth-child(1)')
+                                    console.log(temp_list)
+                                    // if(temp_list.message){
+                                    //     for(var w=0;w<temp_list.message.length;w++){
+                                    //         $('.'+child[j].type+'_sel').append('<li data-name="">' +
+                                    //             '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
+                                    //             '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
+                                    //     }
+                                    // }
+                                }else if(child[j].type == "number"){
+                                    if(child[j].value){
+                                        inp = "<input class='sel_input' type='number' value='"+ child[j].value[0] +"'>";
+                                    }else{
+                                        inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
+                                    }
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<div class="sel_inp">' + inp+
+                                        '<input type="hidden" class="name" value="'+child[j].name+'">'+
+                                        '<input type="hidden" class="type" value="'+child[j].type+'">'+
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>'
+                                    );
+                                }else if(child[j].type == "table"){
+                                    inp = "<table border='1' collspacing='0' class='"+child[j].name+"'><tr></tr></table>" +
+                                        "<input type='button' class='addRows' value='添加行'>";
+                                    $('.'+ con_temp[i].name +'').append('<div class="routine">' +
+                                        '<div><span>'+child[j].desc+'</span>' +
+                                        '<div class="sel_inp">' + inp+
+                                        '</div>' +
+                                        '</div>'+
+                                        '</div>');
+                                    for (var a=0;a<child[j].cols.length;a++){
+                                        $('.'+child[j].name+'>tbody').append('<th id="'+child[j].cols[a].type+'">'+child[j].cols[a].desc+'<input type="hidden" value="'+child[j].cols[a].name+'"></th>')
+                                    }
+                                    $('.'+child[j].name+'>tbody').append('<th>操作</th>')
                                 }
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<div class="sel_inp">' + inp+
-                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
-                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>'
-                                );
-                                var temp_list = $('.temp_list>tr>td:nth-child(1)')
-                                console.log(temp_list)
-                                // if(temp_list.message){
-                                //     for(var w=0;w<temp_list.message.length;w++){
-                                //         $('.'+child[j].type+'_sel').append('<li data-name="">' +
-                                //             '<a style="cursor:pointer">'+temp_list.message[w].conf_name+'</a>' +
-                                //             '<input type="hidden" value="'+temp_list.message[w].name+'"></li>');
-                                //     }
-                                // }
-                            }else if(child[j].type == "number"){
-                                if(child[j].value){
-                                    inp = "<input class='sel_input' type='number' value='"+ child[j].value[0] +"'>";
-                                }else{
-                                    inp = "<input class='sel_input' type='text' value='' placeholder='请输入...'>";
-                                }
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<div class="sel_inp">' + inp+
-                                    '<input type="hidden" class="name" value="'+child[j].name+'">'+
-                                    '<input type="hidden" class="type" value="'+child[j].type+'">'+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>'
-                                );
-                            }else if(child[j].type == "table"){
-                                inp = "<table border='1' collspacing='0' class='"+child[j].name+"'><tr></tr></table>" +
-                                    "<input type='button' class='addRows' value='添加行'>";
-                                $('.'+ con_temp[i].name +'').append('<div class="routine">' +
-                                    '<div><span>'+child[j].desc+'</span>' +
-                                    '<div class="sel_inp">' + inp+
-                                    '</div>' +
-                                    '</div>'+
-                                    '</div>');
-                                for (var a=0;a<child[j].cols.length;a++){
-                                    $('.'+child[j].name+'>tbody').append('<th id="'+child[j].cols[a].type+'">'+child[j].cols[a].desc+'<input type="hidden" value="'+child[j].cols[a].name+'"></th>')
-                                }
-                                $('.'+child[j].name+'>tbody').append('<th>操作</th>')
                             }
                         }
                     }
+                }else{
+                    $('.c_content').html()
+                    $('.no_config').show();
                 }
+
             }, error: function () {
                 console.log('no')
             }, complete: function () {
@@ -463,7 +523,7 @@
                     })
                 });
                 //这里是加载完，到这里已经有li了
-                var ali = $('li');   //获取页面所有LI
+                var ali = $('ul>li');   //获取页面所有LI
                 ali.each(function (p) {
                     ali[p].index = p;
                     ali[p].onclick = function () {
@@ -480,6 +540,60 @@
                 })
             }
         });
+
+        /**
+         *	购买或安装(已添加监控)
+         */
+        $("#button").click(function(){
+            console.log(111)
+            // var app = $('.J_app').val();
+            var inst = $('#inst_name').val(); // 手动填写的
+            var session = editor.getSession();
+            var devs = JSON.parse(session.getValue());
+            console.log('----------------------')
+            console.log(devs)
+            // if(devs==''){
+            //     devs = {};
+            // }
+            if(inst==''){
+                err('应用实例不能为空');
+                return false;
+            }
+            var id = "install "+device_sn+"'s App "+app+ ' '+Date.parse(new Date());
+            var data = {
+                "device": device_sn,
+                "id": id,
+                "data": {
+                    "inst": inst,
+                    "name": app,
+                    "version": localStorage.getItem('app_lastest_version_'+app),
+                    "conf": devs
+                }
+            }
+            console.log(localStorage.getItem('app_lastest_version_'+app))
+            // // console.log('-------------------data',data);
+            Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+            function app_install(req){
+                if(req.message!=''){
+                    var idarr = {
+                        'id':id,
+                        'times':20,
+                        'docid':'',
+                        'type':'app_install',
+                        'title':"应用安装",
+                        'crontabDesc':inst+"安装",
+                    }
+                    addCrontab(idarr);
+                    alt('命令已发送，等待结果返回',1);
+                }else{
+                    err('命令执行失败');
+                }
+
+                setTimeout(function(){
+                    window.location.href='collection.html?type=manage&device_sn='+device_sn;
+                }, 2000);
+            }
+        })
 
         $('input[type=checkbox]').click(function () {
             $(this).val($(this).prop('checked'));
@@ -606,17 +720,50 @@
                 alt('请填写实例名称',2);
             }else{
                 console.log(return_data)
-                Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
-                function app_config(req) {
+                // Ajax.call('/apis/api/method/iot.device_api.app_conf', JSON.stringify(data), app_config, 'POST', 'JSON', 'JSON');
+                // function app_config(req) {
+                //     if(req.message!=''){
+                //         // addCrontab(idarr);
+                //         alt('命令已发送，等待结果返回',1);
+                //     }else{
+                //         err('命令执行失败');
+                //     }
+                //     setTimeout(function () {
+                //         window.location.href='collection.html?type=manage&device_sn='+device_sn;
+                //     },2000)
+                // }
+                var inst = $('#inst_name').val(); // 手动填写的
+                var id = "install "+device_sn+"'s App "+app+ ' '+Date.parse(new Date());
+                var data = {
+                    "device": device_sn,
+                    "id": id,
+                    "data": {
+                        "inst": inst,
+                        "name": app,
+                        "version": localStorage.getItem('app_lastest_version_'+app),
+                        "conf": return_data
+                    }
+                }
+                Ajax.call('/api/method/iot.device_api.app_install', JSON.stringify(data), app_install, 'POST', 'JSON', 'JSON');
+                function app_install(req){
                     if(req.message!=''){
-                        // addCrontab(idarr);
+                        var idarr = {
+                            'id':id,
+                            'times':20,
+                            'docid':'',
+                            'type':'app_install',
+                            'title':"应用安装",
+                            'crontabDesc':inst+"安装",
+                        }
+                        addCrontab(idarr);
                         alt('命令已发送，等待结果返回',1);
                     }else{
                         err('命令执行失败');
                     }
-                    setTimeout(function () {
-                        // window.location.href='collection.html?type=manage&device_sn='+device_sn;
-                    },2000)
+
+                    setTimeout(function(){
+                        window.location.href='collection.html?type=manage&device_sn='+device_sn;
+                    }, 2000);
                 }
             }
         })

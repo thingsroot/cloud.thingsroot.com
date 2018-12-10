@@ -218,8 +218,11 @@
 							*/
 							$(".J_install_html .button").click(function(){
 								var app = $('.J_app').val();
+								console.log(app)
 								var inst = $('.J_inst').val(); // 手动填写的
+								console.log(inst)
 								var devs = JSON.parse(session.getValue());
+								console.log(devs)
 								if(devs==''){
 									devs = {};
 								}
